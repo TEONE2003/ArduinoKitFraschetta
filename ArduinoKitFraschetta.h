@@ -4,69 +4,360 @@
 #include "Servo.h"
 #include "Stepper.h"
 
-enum UNITA_DI_TEMPO:unsigned long {
-MICROSECONDI=1,MILLISECONDI=1000,SECONDI=1000000,MINUTI=60000000
-};
+enum UNITA_DI_TEMPO{NANOSECONDI,MICROSECONDI,MILLISECONDI,SECONDI,MINUTI,ORE,GIORNI,SETTIMANE,MESE_COMMERCIALE,ANNI,ANNI_COMMERCIALI};
+struct TEMPO{
+    UNITA_DI_TEMPO UNITA
+    uint_64_t VALORE;
+    uint_64_t NANOSECONDI(){
+        switch(UNITA){
+            case NANOSECONDI:
+                return VALORE;
+            case MICROSECONDI:
+                return VALORE*1000;
+            case MILLISECONDI:
+                return VALORE*1000000;
+            case SECONDI:
+                return VALORE*1000000000;
+            case MINUTI:
+                return VALORE*60000000000;
+            case ORE:
+                return VALORE*3600000000000;
+            case GIORNI:
+                return VALORE*8640000000000;
+            case SETTIMANE:
+                return VALORE*60480000000000;
+            case MESI_COMMERCIALI:
+                return VALORE*259200000000000;
+            case ANNI:
+                return VALORE*3153600000000000;
+            case ANNI_COMMERCIALI:
+                return VALORE*3110400000000000;
+        }
+    }
+    uint_64_t MICROSECONDI(){
+        switch(UNITA){
+            case NANOSECONDI:
+                return VALORE/1000;
+            case MICROSECONDI:
+                return VALORE;
+            case MILLISECONDI:
+                return VALORE*1000;
+            case SECONDI:
+                return VALORE*1000000;
+            case MINUTI:
+                return VALORE*60000000;
+            case ORE:
+                return VALORE*3600000000;
+            case GIORNI:
+                return VALORE*86400000000;
+            case SETTIMANE:
+                return VALORE*604800000000;
+            case MESI_COMMERCIALI:
+                return VALORE*60000000;
+            case ANNI:
+                return VALORE*60000000;
+            case ANNI_COMMERCIALI:
+                return VALORE*60000000;
+        }
+    }
+    uint_64_t MILLISECONDI(){
+        switch(UNITA){
+            case NANOSECONDI:
+                return VALORE;
+            case MICROSECONDI:
+                return VALORE*1000;
+            case MILLISECONDI:
+                return VALORE*1000;
+            case SECONDI:
+                return VALORE*1000000;
+            case MINUTI:
+                return VALORE*60000000;
+            case ORE:
+                return VALORE*60000000;
+            case GIORNI:
+                return VALORE*60000000;
+            case SETTIMANE:
+                return VALORE*60000000;
+            case MESI_COMMERCIALI:
+                return VALORE*60000000;
+            case ANNI:
+                return VALORE*60000000;
+            case ANNI_COMMERCIALI:
+                return VALORE*60000000;
+        }
+    }
+    uint_64_t SECONDI(){
+        switch(UNITA){
+            case NANOSECONDI:
+                return VALORE;
+            case MICROSECONDI:
+                return VALORE*1000;
+            case MILLISECONDI:
+                return VALORE*1000;
+            case SECONDI:
+                return VALORE*1000000;
+            case MINUTI:
+                return VALORE*60000000;
+            case ORE:
+                return VALORE*60000000;
+            case GIORNI:
+                return VALORE*60000000;
+            case SETTIMANE:
+                return VALORE*60000000;
+            case MESI_COMMERCIALI:
+                return VALORE*60000000;
+            case ANNI:
+                return VALORE*60000000;
+            case ANNI_COMMERCIALI:
+                return VALORE*60000000;
+        }
+    }
+    uint_64_t MINUTI(){
+        switch(UNITA){
+            case NANOSECONDI:
+                return VALORE;
+            case MICROSECONDI:
+                return VALORE*1000;
+            case MILLISECONDI:
+                return VALORE*1000;
+            case SECONDI:
+                return VALORE*1000000;
+            case MINUTI:
+                return VALORE*60000000;
+            case ORE:
+                return VALORE*60000000;
+            case GIORNI:
+                return VALORE*60000000;
+            case SETTIMANE:
+                return VALORE*60000000;
+            case MESI_COMMERCIALI:
+                return VALORE*60000000;
+            case ANNI:
+                return VALORE*60000000;
+            case ANNI_COMMERCIALI:
+                return VALORE*60000000;
+        }
+    }
+    uint_64_t ORE(){
+        switch(UNITA){
+            case NANOSECONDI:
+                return VALORE;
+            case MICROSECONDI:
+                return VALORE*1000;
+            case MILLISECONDI:
+                return VALORE*1000;
+            case SECONDI:
+                return VALORE*1000000;
+            case MINUTI:
+                return VALORE*60000000;
+            case ORE:
+                return VALORE*60000000;
+            case GIORNI:
+                return VALORE*60000000;
+            case SETTIMANE:
+                return VALORE*60000000;
+            case MESI_COMMERCIALI:
+                return VALORE*60000000;
+            case ANNI:
+                return VALORE*60000000;
+            case ANNI_COMMERCIALI:
+                return VALORE*60000000;
+        }
+    }
+    uint_64_t GIORNI(){
+        switch(UNITA){
+            case NANOSECONDI:
+                return VALORE;
+            case MICROSECONDI:
+                return VALORE*1000;
+            case MILLISECONDI:
+                return VALORE*1000;
+            case SECONDI:
+                return VALORE*1000000;
+            case MINUTI:
+                return VALORE*60000000;
+            case ORE:
+                return VALORE*60000000;
+            case GIORNI:
+                return VALORE*60000000;
+            case SETTIMANE:
+                return VALORE*60000000;
+            case MESI_COMMERCIALI:
+                return VALORE*60000000;
+            case ANNI:
+                return VALORE*60000000;
+            case ANNI_COMMERCIALI:
+                return VALORE*60000000;
+        }
+    }
+    uint_64_t MESI_COMMERCIALI(){
+        switch(UNITA){
+            case NANOSECONDI:
+                return VALORE;
+            case MICROSECONDI:
+                return VALORE*1000;
+            case MILLISECONDI:
+                return VALORE*1000;
+            case SECONDI:
+                return VALORE*1000000;
+            case MINUTI:
+                return VALORE*60000000;
+            case ORE:
+                return VALORE*60000000;
+            case GIORNI:
+                return VALORE*60000000;
+            case SETTIMANE:
+                return VALORE*60000000;
+            case MESI_COMMERCIALI:
+                return VALORE*60000000;
+            case ANNI:
+                return VALORE*60000000;
+            case ANNI_COMMERCIALI:
+                return VALORE*60000000;
+        }
+    }
+    uint_64_t ANNI(){
+        switch(UNITA){
+            case NANOSECONDI:
+                return VALORE;
+            case MICROSECONDI:
+                return VALORE*1000;
+            case MILLISECONDI:
+                return VALORE*1000;
+            case SECONDI:
+                return VALORE*1000000;
+            case MINUTI:
+                return VALORE*60000000;
+            case ORE:
+                return VALORE*60000000;
+            case GIORNI:
+                return VALORE*60000000;
+            case SETTIMANE:
+                return VALORE*60000000;
+            case MESI_COMMERCIALI:
+                return VALORE*60000000;
+            case ANNI:
+                return VALORE*60000000;
+            case ANNI_COMMERCIALI:
+                return VALORE*60000000;
+        }
+    }
+    uint_64_t ANNI_COMMERCIALI(){
+        switch(UNITA){
+            case NANOSECONDI:
+                return VALORE;
+            case MICROSECONDI:
+                return VALORE*1000;
+            case MILLISECONDI:
+                return VALORE*1000;
+            case SECONDI:
+                return VALORE*1000000;
+            case MINUTI:
+                return VALORE*60000000;
+            case ORE:
+                return VALORE*60000000;
+            case GIORNI:
+                return VALORE*60000000;
+            case SETTIMANE:
+                return VALORE*60000000;
+            case MESI_COMMERCIALI:
+                return VALORE*60000000;
+            case ANNI:
+                return VALORE*60000000;
+            case ANNI_COMMERCIALI:
+                return VALORE*60000000;
+        }
+    }
+    void CONVERTI_IN(UNITA_DI_TEMPO UNITA){
+        switch(UNITA){
+            case NANOSECONDI:
+                VALORE = NANOSECONDI();
+            case MICROSECONDI:
+                VALORE = MICROSECONDI();
+            case MILLISECONDI:
+                VALORE = MILLISECONDI();
+            case SECONDI:
+                VALORE = SECONDI();
+            case MINUTI:
+                VALORE = MINUTI();
+            case ORE:
+                VALORE = ORE();
+            case GIORNI:
+                VALORE = GIORNI();
+            case SETTIMANE:
+                VALORE = SETTIMANE();
+            case MESI_COMMERCIALI:
+                VALORE = MESI_COMMERCIALI();
+            case ANNI:
+                VALORE = ANNI();
+            case ANNI_COMMERCIALI:
+                VALORE = ANNI_COMMERCIALI();
+        }
+        this->UNITA=UNITA;
+    }
+}
+
 class CRONOMETRO{
 protected:
 boolean CRONOMETRO_ATTIVO;
-unsigned long T0;
+TEMPO T0(0,MICROSECONDI);
+TEMPO TEMPO_PASSATO;
 UNITA_DI_TEMPO UNITA_DI_TEMPO_CRONOMETRO;
 public:
-void IMPOSTA_UNITA_DI_TEMPO(UNITA_DI_TEMPO UNITA_DI_TEMPO_CRONOMETRO){
-this->UNITA_DI_TEMPO_CRONOMETRO = UNITA_DI_TEMPO_CRONOMETRO;
-}
+void IMPOSTA_UNITA_DI_TEMPO(UNITA_DI_TEMPO UNITA_DI_TEMPO_CRONOMETRO){this->UNITA_DI_TEMPO_CRONOMETRO = UNITA_DI_TEMPO_CRONOMETRO;}
 CRONOMETRO(UNITA_DI_TEMPO UNITA){IMPOSTA_UNITA_DI_TEMPO(UNITA);}
 void AVVIA(){
 CRONOMETRO_ATTIVO=1;
-T0 = micros();
+T0.VALORE = micros();
 }
-void STOPPA(){
-CRONOMETRO_ATTIVO=0;
+void STOPPA(){CRONOMETRO_ATTIVO=0;}
+TEMPO TEMPO_PASSATO(){
+if(CRONOMETRO_ATTIVO){
+TEMPO_PASSATO = TEMPO(micros()-T0.VALORE,MICROSECONDI);
+TEMPO_PASSATO.CONVERTI_IN(UNITA);
+return TEMPO_PASSATO;
 }
-unsigned long TEMPO_PASSATO(){
-if(CRONOMETRO_ATTIVO){return (micros()-T0)/UNITA_DI_TEMPO_CRONOMETRO;}
 else{return 0;}
 }
 };
 
 class TIMER:CRONOMETRO{
-  protected:
-  unsigned long RITARDO;
-  public:
-void ABILITA(){AVVIA();}
-void DISABILITA(){STOPPA();}
-unsigned long TEMPO_PASSATO_FINO_AD_ORA(){return TEMPO_PASSATO();}
-void IMPOSTA_RITARDO_E_UNITA_DI_TEMPO(unsigned long RITARDO,UNITA_DI_TEMPO UNITA){
+protected:
+  TEMPO RITARDO;
+public:
+boolean ABILITATO;
+void ABILITA(){AVVIA(); ABILITATO=1;}
+void DISABILITA(){STOPPA(); ABILITATO=0;}
+TEMPO TEMPO_PASSATO_FINO_AD_ORA(){return TEMPO_PASSATO();}
+void IMPOSTA_RITARDO_E_UNITA_DI_TEMPO(uint_64_t RITARDO,UNITA_DI_TEMPO UNITA){
 IMPOSTA_UNITA_DI_TEMPO(UNITA);
-this->RITARDO=(RITARDO*UNITA_DI_TEMPO_CRONOMETRO)/UNITA_DI_TEMPO_CRONOMETRO;
+RITARDO = TEMPO(RITARDO,UNITA);
+RITARDO.CONVERTI_IN(MICROSECONDI);
 }
 boolean STOP(){
-if(TEMPO_PASSATO()>=RITARDO){DISABILITA();return 1;}
+if(TEMPO_PASSATO()>=RITARDO.VALORE){DISABILITA(); return 1;}
 return 0;
 }
 TIMER():CRONOMETRO(MICROSECONDI){}
-TIMER(unsigned long RITARDO,UNITA_DI_TEMPO UNITA):CRONOMETRO(UNITA){
-    IMPOSTA_RITARDO_E_UNITA_DI_TEMPO(RITARDO,UNITA);
-}
+TIMER(uint_64_t RITARDO,UNITA_DI_TEMPO UNITA):CRONOMETRO(UNITA){IMPOSTA_RITARDO_E_UNITA_DI_TEMPO(RITARDO,UNITA);}
 };
 
 class CICLO_TIMER:TIMER{
-protected:
-  boolean NON_ABILITATO=1;
 public:
   boolean INIZIALIZZATO;
-  CICLO_TIMER(unsigned long RITARDO,UNITA_DI_TEMPO UNITA):TIMER(RITARDO,UNITA){INIZIALIZZATO=1;}
+  CICLO_TIMER(uint_64_t RITARDO,UNITA_DI_TEMPO UNITA):TIMER(RITARDO,UNITA){INIZIALIZZATO=1;}
   CICLO_TIMER():TIMER(0,MICROSECONDI){}
 boolean TICK(){
-if(NON_ABILITATO){ABILITA(); NON_ABILITATO=0;}
-if(STOP()){
-ABILITA();
-return 1;
-}
+if(!ABILITATO){ABILITA();}
+if(STOP()){ABILITA(); return 1;}
 return 0;
 }
 };
+
+void ASPETTA(uint_64_t TEMPO,UNITA_DI_TEMPO UNITA){
+    TEMPO T(TEMPO,UNITA);
+    delayMicroseconds(T.MICROSECONDI());
+}
 
 enum MODALITA_RESISTENZA{RESISTENZA_ESTERNA,PULLUP,PULLDOWN}
 enum MODALITA_LETTURA_DIGITALE{NORMALE,INVERTITA};
@@ -126,26 +417,30 @@ public:
     uint16_t LETTURA_ANALOGICA(){return analogRead(PIN);}
 };
 
-enum ENUM_SALVA_STATO:boolean{NON_SALVARE_LO_STATO=0,SALVA_STATO=1};
-enum TIPO_USCITA:boolean{NORMALE=0,INVERTITA=1}
+enum MEMORIZZA_STATO:boolean{NON_SALVARE_LO_STATO=0,SALVA_STATO=1};
+enum TIPO_USCITA_DIGITALE{NORMALE,INVERTITA}
 class USCITA{
 protected:
     uint8_t PIN;
-    CICLO_TIMER CICLO;
-    TIPO_USCITA TIPO;
-    ENUM_SALVA_STATO SALVA;
+    CICLO_TIMER LAMPEGGIO;
+    TIMER RITARDO;
+    TIPO_USCITA_DIGITALE TIPO_D;
+    MEMORIZZA_STATO SALVA;
     void IMPOSTA_PIN(uint8_t PIN){this->PIN=PIN; pinMode(PIN,OUTPUT);}
 public:
-    void IMPOSTA_STATO(boolean STATO){
-     switch(TIPO){
-        case NORMALE:
-            digitalWrite(PIN,STATO);
-            break;
-        case INVERTITA:
-            digitalWrite(PIN,!STATO);
-            break;
+    void IMPOSTA_STATO(uint8_t PERCENTUALE){
+     if(PERCENTUALE==100){
+        switch(TIPO_D){
+            case NORMALE:
+                digitalWrite(PIN,1);
+                break;
+            case INVERTITA:
+                digitalWrite(PIN,0);
+                break;
+            }
         }
-    if(SALVA){EEPROM.update(PIN,digitalRead(PIN));}
+    else{analogWrite(PIN,(PERCENTUALE*255)/100);}
+    if(SALVA){EEPROM.update(PIN,PERCENTUALE);}
     }
     USCITA(){}
     USCITA(uint8_t PIN){IMPOSTA_PIN(PIN);}
@@ -158,22 +453,42 @@ public:
      IMPOSTA_PIN(PIN);
      IMPOSTA_STATO(EEPROM.read(PIN));
     }
-    USCITA(uint8_t PIN,TIPO_USCITA TIPO,ENUM_SALVA_STATO SALVA){
-     this->TIPO=TIPO;
+    USCITA(uint8_t PIN,TIPO_USCITA_DIGITALE TIPO_D,ENUM_SALVA_STATO SALVA){
+     this->TIPO_D=TIPO_D;
      this->SALVA=SALVA;
      IMPOSTA_PIN(PIN);
      IMPOSTA_STATO(EEPROM.read(PIN));
     }
-    void ACCENDI(){IMPOSTA_STATO(1);}
+    void ACCENDI(){IMPOSTA_STATO(100);}
     void SPEGNI(){IMPOSTA_STATO(0);}
+    void IMPOSTA_STATO_IN_RITARDO(uint8_t PERCENTUALE,unsigned long RITARDO,UNITA_DI_TEMPO UNITA){
+        ASPETTA(RITARDO,UNITA);
+        IMPOSTA_STATO(PERCENTUALE);
+    }
+    void IMPOSTA_STATO_IN_RITARDO_CON_TIMER(uint8_t PERCENTUALE,unsigned long RITARDO,UNITA_DI_TEMPO UNITA){
+        if(RITARDO.ABILITATO == 0){RITARDO=TIMER(RITARDO,UNITA);}
+        if(RITARDO.STOP()){IMPOSTA_STATO(PERCENTUALE);}
+    }
+    void ACCENDI_CON_DISSOLVENZA(uint8_t PERCENTUALE_MASSIMA,uint16_t RITARDO,UNITA_DI_TEMPO UNITA){
+        for(uint8_t P;P<PERCENTUALE_MASSIMA;P++){
+            ASPETTA(RITARDO,UNITA);
+            IMPOSTA_STATO(P);
+        }
+    }
+    void SPEGNI_CON_DISSOLVENZA(uint8_t PERCENTUALE_MASSIMA,uint16_t RITARDO,UNITA_DI_TEMPO UNITA){
+        for(uint8_t P=PERCENTUALE_MASSIMA;P>0;P--){
+            ASPETTA(RITARDO,UNITA);
+            IMPOSTA_STATO(P);
+        }
+    }
     void INVERTI_STATO(){digitalWrite(PIN,!digitalRead(PIN));}
     void LAMPEGGIO(uint16_t RITARDO,UNITA_DI_TEMPO UNITA){
-     if(CICLO.INIZIALIZZATO == 0){CICLO = CICLO_TIMER(RITARDO,UNITA);}
-     if(CICLO.TICK()){INVERTI_STATO();}
+     if(!LAMPEGGIO.INIZIALIZZATO){LAMPEGGIO = CICLO_TIMER(RITARDO,UNITA);}
+     if(LAMPEGGIO.TICK()){INVERTI_STATO();}
     }
-    void PULSAZIONE(uint16_t RITARDO,UNITA_DI_TEMPO UNITA){
-     if(CICLO.INIZIALIZZATO == 0){CICLO = CICLO_TIMER(RITARDO,UNITA);}
-     if(CICLO.TICK()){ }
+    void PULSAZIONE(uint8_t PERCENTUALE_MASSIMA,uint16_t RITARDO,UNITA_DI_TEMPO UNITA){
+     ACCENDI_CON_DISSOLVENZA(PERCENTUALE_MASSIMA);
+     SPEGNI_CON_DISSOLVENZA(PERCENTUALE_MASSIMA);
     }
 };
 
@@ -186,11 +501,24 @@ public:
     LED(uint8_t PIN,TIPO_USCITA TIPO,ENUM_SALVA_STATO SALVA):USCITA(PIN,TIPO,SALVA){}
 };
 
+struct VALORI_RGB{
+    uint8_t VERDE,ROSSO,BLU;
+    VALORI_RGB(uint8_t VERDE,uint8_t ROSSO,uint8_t BLU){
+        this->VERDE=VERDE;
+        this->ROSSO=ROSSO;
+        this->ROSSO=ROSSO;
+    }
+}
+enum COLORI:VALORI_RGB{
+    VERDE=VALORI_RGB(0,128,0),
+    ROSSO=VALORI_RGB(255,0,0),
+    BLU=VALORI_RGB(0,0,255),
+    BIANCO=VALORI_RGB(255,255,255)
+}
 class LED_RGB{
 public:
-    LED VERDE();
-    LED ROSSO();
-    LED BLU();
+    LED VERDE(),ROSSO(),BLU();
+    VALORI_RGB COLORE;
     LED_RGB(){}
     LED_RGB(uint8_t PIN_VERDE,uint8_t PIN_ROSSO,uint8_t PIN_BLU){
      VERDE = LED(PIN_VERDE);
@@ -202,6 +530,28 @@ public:
      ROSSO = LED(PIN_ROSSO,SALVA);
      BLU = LED(PIN_BLU,SALVA);
     }
+    void IMPOSTA_COLORE(VALORI_RGB COLORE){
+        VERDE.IMPOSTA_STATO(COLORE.VERDE);
+        ROSSO.IMPOSTA_STATO(COLORE.BLU);
+        BLU.IMPOSTA_STATO(COLORE.BLU);
+    }
+    
+    void LAMPEGGIO(){
+        
+    }
+    
+    void ACCENDI_CON_DISSOLVENZA(){
+        
+    }
+    
+    void SPEGNI_CON_DISSOLVENZA(){
+        
+    }
+
+    void PULSAZIONE(uint8_t PERCENTUALE_MASSIMA,uint16_t RITARDO,UNITA_DI_TEMPO UNITA){
+     ACCENDI_CON_DISSOLVENZA(PERCENTUALE_MASSIMA);
+     SPEGNI_CON_DISSOLVENZA(PERCENTUALE_MASSIMA);
+    }
     
 };
 
@@ -210,6 +560,7 @@ class RELE:USCITA{
  public:
   String STANZA;
   RELE(uint8_t PIN,TIPO_RELE TIPO,String STANZA):USCITA(PIN,TIPO){this->STANZA = STANZA;}
+  RELE(uint8_t PIN,TIPO_RELE TIPO,String STANZA,ENUM_SALVA_STATO SALVA_STATO):USCITA(PIN,TIPO,SALVA_STATO){this->STANZA = STANZA;}
   void ACCESO(){ACCENDI();}
   void SPENTO(){SPEGNI();}
   void INVERTI_STATO(){USCITA::INVERTI_STATO();}
