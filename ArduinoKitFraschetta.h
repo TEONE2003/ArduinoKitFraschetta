@@ -78,13 +78,13 @@ uint_64_t VALORE;
                 return VALORE*604800000000;
             case MESI_COMMERCIALI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*2592000000000;
             case ANNI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*31536000000000;
             case ANNI_COMMERCIALI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*31104000000000;
         }
     }
     uint_64_t MILLISECONDI(){
