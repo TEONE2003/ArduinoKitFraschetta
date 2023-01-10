@@ -210,23 +210,23 @@ uint_64_t VALORE;
     uint_64_t ORE(){
         switch(UNITA){
             case NANOSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=3600000000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MICROSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=3600000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MILLISECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=3600000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case SECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=3600;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MINUTI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=60;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case ORE:
@@ -234,45 +234,45 @@ uint_64_t VALORE;
                 return VALORE;
             case GIORNI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*24;
             case SETTIMANE:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*168;
             case MESI_COMMERCIALI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*720;
             case ANNI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*8760;
             case ANNI_COMMERCIALI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*8640;
         }
     }
     uint_64_t GIORNI(){
         switch(UNITA){
             case NANOSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=86400000000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MICROSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=86400000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MILLISECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=86400000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case SECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=86400;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MINUTI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=1440;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case ORE:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=24;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case GIORNI:
@@ -280,46 +280,46 @@ uint_64_t VALORE;
                 return VALORE;
             case SETTIMANE:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*7;
             case MESI_COMMERCIALI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*30;
             case ANNI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*365;
             case ANNI_COMMERCIALI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*360;
         }
     }
-    uint_64_t SETTIMANE(){\1
+    uint_64_t SETTIMANE(){
         switch(UNITA){
             case NANOSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=60480000000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MICROSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=604800000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MILLISECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=604800000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case SECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=604800;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MINUTI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=10080;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case ORE:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=168;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case GIORNI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=7;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case SETTIMANE:
@@ -327,13 +327,13 @@ uint_64_t VALORE;
                 return VALORE;
             case MESI_COMMERCIALI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*210;
             case ANNI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*2555;
             case ANNI_COMMERCIALI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*2520;
         }
     }
     uint_64_t MESI_COMMERCIALI(){
