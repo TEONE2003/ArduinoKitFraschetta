@@ -339,35 +339,35 @@ uint_64_t VALORE;
     uint_64_t MESI_COMMERCIALI(){
         switch(UNITA){
             case NANOSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=2592000000000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MICROSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=42336000000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MILLISECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=2592000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case SECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=2592000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MINUTI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=43200;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case ORE:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=720;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case GIORNI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=30;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case SETTIMANE:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=4;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MESI_COMMERCIALI:
@@ -375,48 +375,48 @@ uint_64_t VALORE;
                 return VALORE;
             case ANNI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*4380;
             case ANNI_COMMERCIALI:
                 RESTO=0;
-                return VALORE*60000000;
+                return VALORE*4320;
         }
     }
     uint_64_t ANNI(){
         switch(UNITA){
             case NANOSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=3153600000000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MICROSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=3153600000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MILLISECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=31536000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case SECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=31536000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MINUTI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=525600;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case ORE:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=8760;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case GIORNI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=365
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case SETTIMANE:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=48
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MESI_COMMERCIALI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=12;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case ANNI:
@@ -424,51 +424,50 @@ uint_64_t VALORE;
                 return VALORE;
             case ANNI_COMMERCIALI:
                 RESTO=0;
-                return VALORE*1000;
+                return VALORE;
         }
     }
     uint_64_t ANNI_COMMERCIALI(){
         switch(UNITA){
             case NANOSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=31104000000000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MICROSECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=31104000000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MILLISECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=31104000000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case SECONDI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=518400000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MINUTI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=31104000;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case ORE:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=8640;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case GIORNI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=360;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case SETTIMANE:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=48;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case MESI_COMMERCIALI:
-                uint_64_t DIVISORE=1000
+                uint_64_t DIVISORE=12;
                 RESTO=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
             case ANNI:
-                uint_64_t DIVISORE=1000
-                RESTO=VALORE%DIVISORE;
-                return VALORE/DIVISORE;
+                RESTO=0;
+                return VALORE;
             case ANNI_COMMERCIALI:
                 RESTO=0;
                 return VALORE;
