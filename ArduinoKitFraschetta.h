@@ -3,6 +3,7 @@
 #include "EEPROM.h"
 #include "Servo.h"
 #include "Stepper.h"
+#include "DHT.h"
 
 enum UNITA_DI_TEMPO{NANOSECONDI,MICROSECONDI,MILLISECONDI,SECONDI,MINUTI,ORE,GIORNI,SETTIMANE,MESE_COMMERCIALE,ANNI,ANNI_COMMERCIALI};
 struct TEMPO{
@@ -1275,6 +1276,21 @@ class STEPPER_INGRESSO_4_BOBINE:MOTORE_STEPPER_4_BOBINE,public STEPPER_INGRESSO_
      INGRESSO_MOTORIZZATO::INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO = INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO;
      CONTROLLO_STATO_MOVIMENTO();
      }
+};
+
+class DHT_F:DHT{
+/*private:
+    boolean INIZIALIZZATO;*/
+public:
+    DHT_F(){begin();}
+    byte LEGGI_TEMPERATURA(){
+        //if(!INIZIALIZZATO){begin();}
+        return readTemperature();
+    }
+    byte LEGGI_UMIDITA(){
+        //if(!INIZIALIZZATO){begin();}
+        return readHumidity();
+    }
 };
 
 class TASTIERA_A_MATRICE{
