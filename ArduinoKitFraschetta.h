@@ -1282,12 +1282,12 @@ class DHT_F:DHT{
 /*private:
     boolean INIZIALIZZATO;*/
 public:
-    DHT_F(){begin();}
-    byte LEGGI_TEMPERATURA(){
+    DHT_F(uint8_t PIN,uint8_t TIPO):DHT(PIN,TIPO){begin();}
+    float LEGGI_TEMPERATURA(){
         //if(!INIZIALIZZATO){begin();}
         return readTemperature();
     }
-    byte LEGGI_UMIDITA(){
+    float LEGGI_UMIDITA(){
         //if(!INIZIALIZZATO){begin();}
         return readHumidity();
     }
