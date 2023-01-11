@@ -652,7 +652,7 @@ return 0;
 };
 
 enum MODALITA_RESISTENZA{RESISTENZA_ESTERNA,PULLUP,PULLDOWN};
-enum TIPO_DIGITALE{NORMALE,INVERTITA};
+enum TIPO_DIGITALE{LOGICA_NORMALE,LOGICA_INVERSA};
 class ENTRATA{
 protected:
     uint8_t PIN;
@@ -697,10 +697,10 @@ public:
     boolean LETTURA_DIGITALE(){
     boolean L=digitalRead(PIN);
     switch(M_LETTURA_DIGITALE){
-        case NORMALE:
+        case LOGICA_NORMALE:
             return L;
             break;
-        case INVERTITA:
+        case LOGICA_INVERSA:
             return !L;
             break;
         }
@@ -721,10 +721,10 @@ public:
     void IMPOSTA_STATO(uint8_t PERCENTUALE){
      if(PERCENTUALE==100){
         switch(TIPO_D){
-            case NORMALE:
+            case LOGICA_NORMALE:
                 digitalWrite(PIN,1);
                 break;
-            case INVERTITA:
+            case LOGICA_INVERSA:
                 digitalWrite(PIN,0);
                 break;
             }
@@ -732,19 +732,18 @@ public:
     else{analogWrite(PIN,(PERCENTUALE*255)/100);}
     if(SALVA){EEPROM.update(PIN,PERCENTUALE);}
     }
+private:
+    void INIZIALIZZA_PIN(uint8_t PIN){IMPOSTA_PIN(PIN); IMPOSTA_STATO(EEPROM.read(PIN));};
+public:
     void IMPOSTA_STATO_ANALOGICO(uint8_t STATO){IMPOSTA_STATO((STATO*100)/255);}
     USCITA(){}
     USCITA(uint8_t PIN){IMPOSTA_PIN(PIN);}
-    USCITA(uint8_t PIN,MEMORIZZA_STATO SALVA){
-     this->SALVA=SALVA;
-     IMPOSTA_PIN(PIN);
-     IMPOSTA_STATO(EEPROM.read(PIN));
-    }
+    USCITA(uint8_t PIN,TIPO_DIGITALE TIPO_D){this->TIPO_D=TIPO_D; INIZIALIZZA_PIN(PIN);}
+    USCITA(uint8_t PIN,MEMORIZZA_STATO SALVA){this->SALVA=SALVA; this->TIPO_D=LOGICA_NORMALE; INIZIALIZZA_PIN(PIN);}
     USCITA(uint8_t PIN,TIPO_DIGITALE TIPO_D,MEMORIZZA_STATO SALVA){
      this->TIPO_D=TIPO_D;
      this->SALVA=SALVA;
-     IMPOSTA_PIN(PIN);
-     IMPOSTA_STATO(EEPROM.read(PIN));
+     INIZIALIZZA_PIN(PIN);
     }
     void ACCENDI(){IMPOSTA_STATO(100);}
     void SPEGNI(){IMPOSTA_STATO(0);}
@@ -864,11 +863,10 @@ public:
     
 };
 
-enum TIPO_RELE:TIPO_DIGITALE{NORMALE=TIPO_DIGITALE::NORMALE,LOGICA_INVERSA=TIPO_DIGITALE::INVERTITA};
 class RELE:USCITA{
  public:
-  RELE(uint8_t PIN,TIPO_RELE TIPO):USCITA(PIN,TIPO){}
-  RELE(uint8_t PIN,TIPO_RELE TIPO,MEMORIZZA_STATO SALVA_STATO):USCITA(PIN,TIPO,SALVA_STATO){}
+  RELE(uint8_t PIN,TIPO_DIGITALE TIPO):USCITA(PIN,TIPO){}
+  RELE(uint8_t PIN,TIPO_DIGITALE TIPO,MEMORIZZA_STATO SALVA_STATO):USCITA(PIN,TIPO,SALVA_STATO){}
   void ACCESO(){ACCENDI();}
   void SPENTO(){SPEGNI();}
   void INVERTI_STATO(){USCITA::INVERTI_STATO();}
