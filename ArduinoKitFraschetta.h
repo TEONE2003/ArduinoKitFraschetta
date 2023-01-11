@@ -5,497 +5,499 @@
 #include "Stepper.h"
 #include "DHT.h"
 
-enum UNITA_DI_TEMPO{NANOSECONDI,MICROSECONDI,MILLISECONDI,SECONDI,MINUTI,ORE,GIORNI,SETTIMANE,MESE_COMMERCIALE,ANNI,ANNI_COMMERCIALI};
+enum UNITA_DI_TEMPO{NANOSECONDI,MICROSECONDI,MILLISECONDI,SECONDI,MINUTI,ORE,GIORNI,SETTIMANE,MESI_COMMERCIALI,ANNI,ANNI_COMMERCIALI};
 struct TEMPO{
 protected:
  uint64_t REST;
+ uint64_t DIVISORE;
 public:
 UNITA_DI_TEMPO UNITA;
 uint64_t VALORE;
+    TEMPO(uint64_t VALORE,UNITA_DI_TEMPO UNITA){this->UNITA=UNITA; this->VALORE=VALORE;}
     uint64_t NANOSECONDI(){
         switch(UNITA){
-            case NANOSECONDI:
+            case UNITA_DI_TEMPO::NANOSECONDI:
                 REST=0;
                 return VALORE;
-            case MICROSECONDI:
+            case UNITA_DI_TEMPO::MICROSECONDI:
                 REST=0;
                 return VALORE*1000;
-            case MILLISECONDI:
+            case UNITA_DI_TEMPO::MILLISECONDI:
                 REST=0;
                 return VALORE*1000000;
-            case SECONDI:
+            case UNITA_DI_TEMPO::SECONDI:
                 REST=0;
                 return VALORE*1000000000;
-            case MINUTI:
+            case UNITA_DI_TEMPO::MINUTI:
                 REST=0;
                 return VALORE*60000000000;
-            case ORE:
+            case UNITA_DI_TEMPO::ORE:
                 REST=0;
                 return VALORE*3600000000000;
-            case GIORNI:
+            case UNITA_DI_TEMPO::GIORNI:
                 REST=0;
                 return VALORE*8640000000000;
-            case SETTIMANE:
+            case UNITA_DI_TEMPO::SETTIMANE:
                 REST=0;
                 return VALORE*60480000000000;
-            case MESI_COMMERCIALI:
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 REST=0;
                 return VALORE*259200000000000;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE*3153600000000000;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE*3110400000000000;
         }
     }
     uint64_t MICROSECONDI(){
         switch(UNITA){
-            case NANOSECONDI:
-                uint64_t DIVISORE=1000;
+            case UNITA_DI_TEMPO::NANOSECONDI:
+                DIVISORE=1000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MICROSECONDI:
+            case UNITA_DI_TEMPO::MICROSECONDI:
                 REST=0;
                 return VALORE;
-            case MILLISECONDI:
+            case UNITA_DI_TEMPO::MILLISECONDI:
                 REST=0;
                 return VALORE*1000;
-            case SECONDI:
+            case UNITA_DI_TEMPO::SECONDI:
                 REST=0;
                 return VALORE*1000000;
-            case MINUTI:
+            case UNITA_DI_TEMPO::MINUTI:
                 REST=0;
                 return VALORE*60000000;
-            case ORE:
+            case UNITA_DI_TEMPO::ORE:
                 REST=0;
                 return VALORE*3600000000;
-            case GIORNI:
+            case UNITA_DI_TEMPO::GIORNI:
                 REST=0;
                 return VALORE*86400000000;
-            case SETTIMANE:
+            case UNITA_DI_TEMPO::SETTIMANE:
                 REST=0;
                 return VALORE*604800000000;
-            case MESI_COMMERCIALI:
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 REST=0;
                 return VALORE*2592000000000;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE*31536000000000;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE*31104000000000;
         }
     }
     uint64_t MILLISECONDI(){
         switch(UNITA){
-            case NANOSECONDI:
-                uint64_t DIVISORE=1000000;
+            case UNITA_DI_TEMPO::NANOSECONDI:
+                DIVISORE=1000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MICROSECONDI:
-                uint64_t DIVISORE=1000;
+            case UNITA_DI_TEMPO::MICROSECONDI:
+                DIVISORE=1000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MILLISECONDI:
+            case UNITA_DI_TEMPO::MILLISECONDI:
                 REST=0;
                 return VALORE;
-            case SECONDI:
+            case UNITA_DI_TEMPO::SECONDI:
                 REST=0;
                 return VALORE*1000;
-            case MINUTI:
+            case UNITA_DI_TEMPO::MINUTI:
                 REST=0;
                 return VALORE*60000;
-            case ORE:
+            case UNITA_DI_TEMPO::ORE:
                 REST=0;
                 return VALORE*3600000;
-            case GIORNI:
+            case UNITA_DI_TEMPO::GIORNI:
                 REST=0;
                 return VALORE*86400000;
-            case SETTIMANE:
+            case UNITA_DI_TEMPO::SETTIMANE:
                 REST=0;
                 return VALORE*604800000;
-            case MESI_COMMERCIALI:
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 REST=0;
                 return VALORE*2592000000;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE*31536000000;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE*31104000000;
         }
     }
     uint64_t SECONDI(){
         switch(UNITA){
-            case NANOSECONDI:
-                uint64_t DIVISORE=1000000000;
+            case UNITA_DI_TEMPO::NANOSECONDI:
+                DIVISORE=1000000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MICROSECONDI:
-                uint64_t DIVISORE=1000000;
+            case UNITA_DI_TEMPO::MICROSECONDI:
+                DIVISORE=1000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MILLISECONDI:
-                uint64_t DIVISORE=1000;
+            case UNITA_DI_TEMPO::MILLISECONDI:
+                DIVISORE=1000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SECONDI:
+            case UNITA_DI_TEMPO::SECONDI:
                 REST=0;
                 return VALORE;
-            case MINUTI:
+            case UNITA_DI_TEMPO::MINUTI:
                 REST=0;
                 return VALORE*60;
-            case ORE:
+            case UNITA_DI_TEMPO::ORE:
                 REST=0;
                 return VALORE*3600;
-            case GIORNI:
+            case UNITA_DI_TEMPO::GIORNI:
                 REST=0;
                 return VALORE*86400;
-            case SETTIMANE:
+            case UNITA_DI_TEMPO::SETTIMANE:
                 REST=0;
                 return VALORE*604800;
-            case MESI_COMMERCIALI:
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 REST=0;
                 return VALORE*2592000;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE*31536000;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE*31104000;
         }
     }
     uint64_t MINUTI(){
         switch(UNITA){
-            case NANOSECONDI:
-                uint64_t DIVISORE=60000000000;
+            case UNITA_DI_TEMPO::NANOSECONDI:
+                DIVISORE=60000000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MICROSECONDI:
-                uint64_t DIVISORE=60000000;
+            case UNITA_DI_TEMPO::MICROSECONDI:
+                DIVISORE=60000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MILLISECONDI:
-                uint64_t DIVISORE=60000;
+            case UNITA_DI_TEMPO::MILLISECONDI:
+                DIVISORE=60000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SECONDI:
-                uint64_t DIVISORE=60;
+            case UNITA_DI_TEMPO::SECONDI:
+                DIVISORE=60;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MINUTI:
+            case UNITA_DI_TEMPO::MINUTI:
                 REST=0;
                 return VALORE;
-            case ORE:
+            case UNITA_DI_TEMPO::ORE:
                 REST=0;
                 return VALORE*60;
-            case GIORNI:
+            case UNITA_DI_TEMPO::GIORNI:
                 REST=0;
                 return VALORE*1440;
-            case SETTIMANE:
+            case UNITA_DI_TEMPO::SETTIMANE:
                 REST=0;
                 return VALORE*10080;
-            case MESI_COMMERCIALI:
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 REST=0;
                 return VALORE*43200;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE*525600;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE*518400;
         }
     }
     uint64_t ORE(){
         switch(UNITA){
-            case NANOSECONDI:
-                uint64_t DIVISORE=3600000000000;
+            case UNITA_DI_TEMPO::NANOSECONDI:
+                DIVISORE=3600000000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MICROSECONDI:
-                uint64_t DIVISORE=3600000000;
+            case UNITA_DI_TEMPO::MICROSECONDI:
+                DIVISORE=3600000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MILLISECONDI:
-                uint64_t DIVISORE=3600000;
+            case UNITA_DI_TEMPO::MILLISECONDI:
+                DIVISORE=3600000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SECONDI:
-                uint64_t DIVISORE=3600;
+            case UNITA_DI_TEMPO::SECONDI:
+                DIVISORE=3600;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MINUTI:
-                uint64_t DIVISORE=60;
+            case UNITA_DI_TEMPO::MINUTI:
+                DIVISORE=60;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case ORE:
+            case UNITA_DI_TEMPO::ORE:
                 REST=0;
                 return VALORE;
-            case GIORNI:
+            case UNITA_DI_TEMPO::GIORNI:
                 REST=0;
                 return VALORE*24;
-            case SETTIMANE:
+            case UNITA_DI_TEMPO::SETTIMANE:
                 REST=0;
                 return VALORE*168;
-            case MESI_COMMERCIALI:
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 REST=0;
                 return VALORE*720;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE*8760;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE*8640;
         }
     }
     uint64_t GIORNI(){
         switch(UNITA){
-            case NANOSECONDI:
-                uint64_t DIVISORE=86400000000000;
+            case UNITA_DI_TEMPO::NANOSECONDI:
+                DIVISORE=86400000000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MICROSECONDI:
-                uint64_t DIVISORE=86400000000;
+            case UNITA_DI_TEMPO::MICROSECONDI:
+                DIVISORE=86400000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MILLISECONDI:
-                uint64_t DIVISORE=86400000;
+            case UNITA_DI_TEMPO::MILLISECONDI:
+                DIVISORE=86400000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SECONDI:
-                uint64_t DIVISORE=86400;
+            case UNITA_DI_TEMPO::SECONDI:
+                DIVISORE=86400;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MINUTI:
-                uint64_t DIVISORE=1440;
+            case UNITA_DI_TEMPO::MINUTI:
+                DIVISORE=1440;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case ORE:
-                uint64_t DIVISORE=24;
+            case UNITA_DI_TEMPO::ORE:
+                DIVISORE=24;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case GIORNI:
+            case UNITA_DI_TEMPO::GIORNI:
                 REST=0;
                 return VALORE;
-            case SETTIMANE:
+            case UNITA_DI_TEMPO::SETTIMANE:
                 REST=0;
                 return VALORE*7;
-            case MESI_COMMERCIALI:
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 REST=0;
                 return VALORE*30;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE*365;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE*360;
         }
     }
     uint64_t SETTIMANE(){
         switch(UNITA){
-            case NANOSECONDI:
-                uint64_t DIVISORE=60480000000000;
+            case UNITA_DI_TEMPO::NANOSECONDI:
+                DIVISORE=60480000000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MICROSECONDI:
-                uint64_t DIVISORE=604800000000;
+            case UNITA_DI_TEMPO::MICROSECONDI:
+                DIVISORE=604800000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MILLISECONDI:
-                uint64_t DIVISORE=604800000;
+            case UNITA_DI_TEMPO::MILLISECONDI:
+                DIVISORE=604800000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SECONDI:
-                uint64_t DIVISORE=604800;
+            case UNITA_DI_TEMPO::SECONDI:
+                DIVISORE=604800;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MINUTI:
-                uint64_t DIVISORE=10080;
+            case UNITA_DI_TEMPO::MINUTI:
+                DIVISORE=10080;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case ORE:
-                uint64_t DIVISORE=168;
+            case UNITA_DI_TEMPO::ORE:
+                DIVISORE=168;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case GIORNI:
-                uint64_t DIVISORE=7;
+            case UNITA_DI_TEMPO::GIORNI:
+                DIVISORE=7;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SETTIMANE:
+            case UNITA_DI_TEMPO::SETTIMANE:
                 REST=0;
                 return VALORE;
-            case MESI_COMMERCIALI:
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 REST=0;
                 return VALORE*210;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE*2555;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE*2520;
         }
     }
     uint64_t MESI_COMMERCIALI(){
         switch(UNITA){
-            case NANOSECONDI:
-                uint64_t DIVISORE=2592000000000000;
+            case UNITA_DI_TEMPO::NANOSECONDI:
+                DIVISORE=2592000000000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MICROSECONDI:
-                uint64_t DIVISORE=42336000000000;
+            case UNITA_DI_TEMPO::MICROSECONDI:
+                DIVISORE=42336000000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MILLISECONDI:
-                uint64_t DIVISORE=2592000000;
+            case UNITA_DI_TEMPO::MILLISECONDI:
+                DIVISORE=2592000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SECONDI:
-                uint64_t DIVISORE=2592000;
+            case UNITA_DI_TEMPO::SECONDI:
+                DIVISORE=2592000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MINUTI:
-                uint64_t DIVISORE=43200;
+            case UNITA_DI_TEMPO::MINUTI:
+                DIVISORE=43200;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case ORE:
-                uint64_t DIVISORE=720;
+            case UNITA_DI_TEMPO::ORE:
+                DIVISORE=720;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case GIORNI:
-                uint64_t DIVISORE=30;
+            case UNITA_DI_TEMPO::GIORNI:
+                DIVISORE=30;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SETTIMANE:
-                uint64_t DIVISORE=4;
+            case UNITA_DI_TEMPO::SETTIMANE:
+                DIVISORE=4;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MESI_COMMERCIALI:
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 REST=0;
                 return VALORE;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE*4380;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE*4320;
         }
     }
     uint64_t ANNI(){
         switch(UNITA){
-            case NANOSECONDI:
-                uint64_t DIVISORE=3153600000000000;
+            case UNITA_DI_TEMPO::NANOSECONDI:
+                DIVISORE=3153600000000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MICROSECONDI:
-                uint64_t DIVISORE=3153600000000;
+            case UNITA_DI_TEMPO::MICROSECONDI:
+                DIVISORE=3153600000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MILLISECONDI:
-                uint64_t DIVISORE=31536000000;
+            case UNITA_DI_TEMPO::MILLISECONDI:
+                DIVISORE=31536000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SECONDI:
-                uint64_t DIVISORE=31536000;
+            case UNITA_DI_TEMPO::SECONDI:
+                DIVISORE=31536000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MINUTI:
-                uint64_t DIVISORE=525600;
+            case UNITA_DI_TEMPO::MINUTI:
+                DIVISORE=525600;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case ORE:
-                uint64_t DIVISORE=8760;
+            case UNITA_DI_TEMPO::ORE:
+                DIVISORE=8760;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case GIORNI:
-                uint64_t DIVISORE=365
+            case UNITA_DI_TEMPO::GIORNI:
+                DIVISORE=365;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SETTIMANE:
-                uint64_t DIVISORE=48
+            case UNITA_DI_TEMPO::SETTIMANE:
+                DIVISORE=48;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MESI_COMMERCIALI:
-                uint64_t DIVISORE=12;
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
+                DIVISORE=12;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE;
         }
     }
     uint64_t ANNI_COMMERCIALI(){
         switch(UNITA){
-            case NANOSECONDI:
-                uint64_t DIVISORE=31104000000000000;
+            case UNITA_DI_TEMPO::NANOSECONDI:
+                DIVISORE=31104000000000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MICROSECONDI:
-                uint64_t DIVISORE=31104000000000;
+            case UNITA_DI_TEMPO::MICROSECONDI:
+                DIVISORE=31104000000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MILLISECONDI:
-                uint64_t DIVISORE=31104000000;
+            case UNITA_DI_TEMPO::MILLISECONDI:
+                DIVISORE=31104000000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SECONDI:
-                uint64_t DIVISORE=518400000;
+            case UNITA_DI_TEMPO::SECONDI:
+                DIVISORE=518400000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MINUTI:
-                uint64_t DIVISORE=31104000;
+            case UNITA_DI_TEMPO::MINUTI:
+                DIVISORE=31104000;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case ORE:
-                uint64_t DIVISORE=8640;
+            case UNITA_DI_TEMPO::ORE:
+                DIVISORE=8640;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case GIORNI:
-                uint64_t DIVISORE=360;
+            case UNITA_DI_TEMPO::GIORNI:
+                DIVISORE=360;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case SETTIMANE:
-                uint64_t DIVISORE=48;
+            case UNITA_DI_TEMPO::SETTIMANE:
+                DIVISORE=48;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case MESI_COMMERCIALI:
-                uint64_t DIVISORE=12;
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
+                DIVISORE=12;
                 REST=VALORE%DIVISORE;
                 return VALORE/DIVISORE;
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 REST=0;
                 return VALORE;
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 REST=0;
                 return VALORE;
         }
     }
     void CONVERTI_IN(UNITA_DI_TEMPO UNITA){
         switch(UNITA){
-            case NANOSECONDI:
+            case UNITA_DI_TEMPO::NANOSECONDI:
                 VALORE = NANOSECONDI();
-            case MICROSECONDI:
+            case UNITA_DI_TEMPO::MICROSECONDI:
                 VALORE = MICROSECONDI();
-            case MILLISECONDI:
+            case UNITA_DI_TEMPO::MILLISECONDI:
                 VALORE = MILLISECONDI();
-            case SECONDI:
+            case UNITA_DI_TEMPO::SECONDI:
                 VALORE = SECONDI();
-            case MINUTI:
+            case UNITA_DI_TEMPO::MINUTI:
                 VALORE = MINUTI();
-            case ORE:
+            case UNITA_DI_TEMPO::ORE:
                 VALORE = ORE();
-            case GIORNI:
+            case UNITA_DI_TEMPO::GIORNI:
                 VALORE = GIORNI();
-            case SETTIMANE:
+            case UNITA_DI_TEMPO::SETTIMANE:
                 VALORE = SETTIMANE();
-            case MESI_COMMERCIALI:
+            case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 VALORE = MESI_COMMERCIALI();
-            case ANNI:
+            case UNITA_DI_TEMPO::ANNI:
                 VALORE = ANNI();
-            case ANNI_COMMERCIALI:
+            case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 VALORE = ANNI_COMMERCIALI();
         }
         this->UNITA=UNITA;
@@ -503,7 +505,7 @@ uint64_t VALORE;
     uint64_t RESTO(){uint64_t R=REST; REST=0; return R;}
 };
 
-void ASPETTA(uint64_t TEMPO,UNITA_DI_TEMPO UNITA){TEMPO T(TEMPO,UNITA); delayMicroseconds(T.MICROSECONDI());}
+void ASPETTA(uint64_t VALORE,UNITA_DI_TEMPO UNITA){TEMPO T(VALORE,UNITA); delayMicroseconds(T.MICROSECONDI());}
 
 struct ORARIO{
 protected:
