@@ -954,11 +954,11 @@ private:
 String S;
 public:
 BLUETOOTH(uint32_t baud_rate){Serial.begin(baud_rate);}
-String LEGGI_STRINGA(){return S;}
 void RICEVI_STRINGA(){
 if(Serial.available()){S = Serial.readString();}
 else{S="";}
 }
+String LEGGI_STRINGA(){return S;}
 void INVIA_STRINGA(String S){Serial.print(S);}
 void INVIA_STRINGA_ANDANDO_A_CAPO(String S){Serial.println(S);}
 };
