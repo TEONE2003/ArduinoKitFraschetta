@@ -968,8 +968,8 @@ class INGRESSO_MONITORATO{
  public:
    uint16_t FINECORSA_APERTURA;
    uint16_t FINECORSA_CHIUSURA;
-   virtual boolean APERTO();
-   virtual boolean CHIUSO();
+   virtual boolean APERTO()=0;
+   virtual boolean CHIUSO()=0;
 };
 
 class INGRESSO_FISICO:INGRESSO_MONITORATO{
@@ -993,8 +993,8 @@ class STATO_MOVIMENTO{
   void MEMORIZZA_STATO(STATO_DEL_MOVIMENTO STATO){
    EEPROM.update(INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO,STATO);
    }
-  virtual void APRI();
-  virtual void CHIUDI();
+  virtual void APRI()=0;
+  virtual void CHIUDI()=0;
   void CONTROLLO_STATO_MOVIMENTO(){
     STATO_DEL_MOVIMENTO STATO;
     EEPROM.get(INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO,STATO);
@@ -1014,9 +1014,9 @@ public:
     CICLO_TIMER CICLO;
     uint16_t GRADI_AVANTI;
     uint16_t GRADI_INDIETRO;
-    virtual uint16_t POSIZIONE_CORRENTE();
-    virtual void SWIPE_AVANTI();
-    virtual void SWIPE_INDIETRO();
+    virtual uint16_t POSIZIONE_CORRENTE()=0;
+    virtual void SWIPE_AVANTI()=0;
+    virtual void SWIPE_INDIETRO()=0;
     void SWIPING(uint16_t TEMPO_DA_FERMO, UNITA_DI_TEMPO UNITA){
      if(CICLO.INIZIALIZZATO == 0){CICLO = CICLO_TIMER(TEMPO_DA_FERMO,UNITA);}
      if(CICLO.TICK() && CICLO.INIZIALIZZATO){
@@ -1120,9 +1120,9 @@ public:
      EEPROM.get(INDIRIZZO_POSIZIONE_EEPROM,R);
      return R;
     }
-  virtual void PASSO();
-  virtual void SINISTRA();
-  virtual void DESTRA();
+  virtual void PASSO()=0;
+  virtual void SINISTRA()=0;
+  virtual void DESTRA()=0;
   void PASSI(uint16_t PASSI){for(uint16_t P; P<PASSI; P++){PASSO();} MEMORIZZA_PASSI(PASSI);}
 protected:
   uint16_t PASSI_AVANTI;
@@ -1173,7 +1173,7 @@ class MOTORE_STEPPER_4_BOBINE:Stepper,public MOTORE_STEPPER_BASE{
 
 class STEPPER_INGRESSO_BASE:MOTORE_STEPPER_BASE,public INGRESSO_MOTORIZZATO {
    public:
-    virtual uint16_t POSIZIONE_CORRENTE();
+    virtual uint16_t POSIZIONE_CORRENTE()=0;
     void APRI() override {
      MEMORIZZA_STATO(APERTURA);
      PASSI(FINECORSA_APERTURA);
