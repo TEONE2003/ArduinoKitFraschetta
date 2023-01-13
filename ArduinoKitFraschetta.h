@@ -4,6 +4,7 @@
 #include "Servo.h"
 #include "Stepper.h"
 #include "DHT.h"
+#include "SoftwareSerial.h"
 
 enum UNITA_DI_TEMPO{NANOSECONDI,MICROSECONDI,MILLISECONDI,SECONDI,MINUTI,ORE,GIORNI,SETTIMANE,MESI_COMMERCIALI,ANNI,ANNI_COMMERCIALI};
 struct TEMPO{
@@ -949,18 +950,18 @@ void FUNZIONE_CREPUSCOLARE(){
 }
 };
 
-class BLUETOOTH{
+class BLUETOOTH:SoftwareSerial{
 private:
 String S;
 public:
-BLUETOOTH(uint32_t baud_rate){Serial.begin(baud_rate);}
+BLUETOOTH(uint8_t RX,uint8_t TX,uint32_t BAUD):SoftwareSerial(RX,TX){begin(BAUD);}
 void RICEVI_STRINGA(){
-if(Serial.available()){S = Serial.readString();}
+if(available()){S = readString();}
 else{S="";}
 }
 String LEGGI_STRINGA(){return S;}
-void INVIA_STRINGA(String S){Serial.print(S);}
-void INVIA_STRINGA_ANDANDO_A_CAPO(String S){Serial.println(S);}
+void INVIA_STRINGA(String S){print(S);}
+void INVIA_STRINGA_ANDANDO_A_CAPO(String S){println(S);}
 };
 
 class INGRESSO_MONITORATO{
