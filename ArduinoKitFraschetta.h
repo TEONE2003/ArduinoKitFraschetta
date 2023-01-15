@@ -7,6 +7,34 @@
 #include "SoftwareSerial.h"
 #include "stdint.h"
 
+class SERIALE:SoftwareSerial{
+private:
+String S;
+boolean I;
+uint16_t BAUD;
+uint8_t TX;
+uint8_t RX;
+public:
+boolean INIZIALIZZATO(){return I;}
+private:
+void INIZIALIZZA_SE_NON_INZIALIZZATO(){if(!INIZIALIZZATO()){pinMode(RX,INPUT); pinMode(TX,OUTPUT); end(); begin(BAUD); I=1;}}
+public:
+SERIALE(uint8_t RX,uint8_t TX,uint32_t BAUD):SoftwareSerial(RX,TX){this->BAUD=BAUD; this->TX=TX; this->RX=RX;}
+void RICEVI_STRINGA(){
+INIZIALIZZA_SE_NON_INZIALIZZATO();
+if(available()){S = readString();}
+else{S="";}
+}
+String LEGGI_STRINGA(){return S;}
+void INVIA_STRINGA(String S){print(S);}
+void INVIA_STRINGA_ANDANDO_A_CAPO(String S){println(S);}
+};
+
+class BLUETOOTH:public SERIALE{
+public:
+BLUETOOTH(uint8_t RX,uint8_t TX,uint32_t BAUD):SERIALE(RX,TX,BAUD){}
+};
+
 enum UNITA_DI_TEMPO{NANOSECONDI,MICROSECONDI,MILLISECONDI,SECONDI,MINUTI,ORE,GIORNI,SETTIMANE,MESI_COMMERCIALI,ANNI,ANNI_COMMERCIALI};
 struct TEMPO{
 protected:
@@ -15,8 +43,6 @@ protected:
 public:
 UNITA_DI_TEMPO UNITA;
 uint64_t VALORE;
-TEMPO(uint64_t VALORE,UNITA_DI_TEMPO UNITA){this->UNITA=UNITA; this->VALORE=VALORE;}
-TEMPO(){}
     uint64_t NANOSECONDI(){
         switch(UNITA){
             case UNITA_DI_TEMPO::NANOSECONDI:
@@ -482,30 +508,54 @@ TEMPO(){}
         switch(UNITA){
             case UNITA_DI_TEMPO::NANOSECONDI:
                 VALORE = NANOSECONDI();
+                break;
             case UNITA_DI_TEMPO::MICROSECONDI:
                 VALORE = MICROSECONDI();
+                break;
             case UNITA_DI_TEMPO::MILLISECONDI:
                 VALORE = MILLISECONDI();
+                break;
             case UNITA_DI_TEMPO::SECONDI:
                 VALORE = SECONDI();
+                break;
             case UNITA_DI_TEMPO::MINUTI:
                 VALORE = MINUTI();
+                break;
             case UNITA_DI_TEMPO::ORE:
                 VALORE = ORE();
+                break;
             case UNITA_DI_TEMPO::GIORNI:
                 VALORE = GIORNI();
+                break;
             case UNITA_DI_TEMPO::SETTIMANE:
                 VALORE = SETTIMANE();
+                break;
             case UNITA_DI_TEMPO::MESI_COMMERCIALI:
                 VALORE = MESI_COMMERCIALI();
+                break;
             case UNITA_DI_TEMPO::ANNI:
                 VALORE = ANNI();
+                break;
             case UNITA_DI_TEMPO::ANNI_COMMERCIALI:
                 VALORE = ANNI_COMMERCIALI();
+                break;
         }
         this->UNITA=UNITA;
     }
     uint64_t RESTO(){uint64_t R=REST; REST=0; return R;}
+    void operator=(const TEMPO &T){UNITA=T.UNITA; VALORE=T.VALORE;}
+    boolean operator==(const TEMPO &B){if(VALORE == B.VALORE && UNITA == B.UNITA){return 1;} return 0;}
+    TEMPO operator+(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE+B.VALORE,UNITA); return T;}
+    TEMPO operator-(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE-B.VALORE,UNITA); return T;}
+    TEMPO operator*(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE*B.VALORE,UNITA); return T;}
+    TEMPO operator/(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE/B.VALORE,UNITA); return T;}
+    TEMPO operator%(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE%B.VALORE,UNITA); return T;}
+    boolean operator>(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE > B.VALORE){return 1;} return 0;}
+    boolean operator<(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE < B.VALORE){return 1;} return 0;}
+    boolean operator>=(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE >= B.VALORE){return 1;} return 0;}
+    boolean operator<=(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE <= B.VALORE){return 1;} return 0;}
+    TEMPO(uint64_t VALORE,UNITA_DI_TEMPO UNITA){this->UNITA=UNITA; this->VALORE=VALORE;}
+    TEMPO(){}
 };
 
 void ASPETTA(uint64_t VALORE,UNITA_DI_TEMPO UNITA){TEMPO T(VALORE,UNITA); delayMicroseconds(T.MICROSECONDI());}
@@ -597,7 +647,7 @@ OROLOGIO_VIRTUALE(uint64_t SECONDI,uint64_t MINUTI,uint64_t ORA):CRONOMETRO(MICR
 OROLOGIO_VIRTUALE(uint64_t NANOSECONDI,uint64_t MICROSECONDI,uint64_t MILLISECONDI,uint64_t SECONDI,uint64_t MINUTI,uint64_t ORA):CRONOMETRO(MICROSECONDI){
 O=ORARIO(NANOSECONDI,MICROSECONDI,MILLISECONDI,SECONDI,MINUTI,ORA);
 }
-void FUNZIONE(){O = ORARIO(TEMPO_PASSATO());}
+    ORARIO LEGGI_ORARIO(){O = ORARIO(TEMPO_PASSATO()); return O;}
 };
 
 enum TIPO_TIMER{NON_BLOCCANTE,BLOCCANTE};
@@ -605,17 +655,11 @@ class TIMER:CRONOMETRO{
 protected:
   TEMPO PERIODO;
   TIPO_TIMER T_TIMER;
+  boolean ABILITAT;
 public:
-boolean ABILITATO;
-void ABILITA(){
- switch(T_TIMER){
-    case NON_BLOCCANTE:
-        AVVIA();
-        ABILITATO=1;
-        break;
-    }
-}
-void DISABILITA(){STOPPA(); ABILITATO=0;}
+void ABILITA(){if(T_TIMER==NON_BLOCCANTE){AVVIA(); ABILITAT=1;}}
+boolean ABILITATO(){return ABILITAT;}
+void DISABILITA(){STOPPA(); ABILITAT=0;}
 TEMPO TEMPO_PASSATO_FINO_AD_ORA(){return TEMPO_PASSATO();}
 void IMPOSTA_PERIODO_E_UNITA_DI_TEMPO(uint64_t PERIODO,UNITA_DI_TEMPO UNITA){
 IMPOSTA_UNITA_DI_TEMPO(UNITA);
@@ -626,8 +670,7 @@ void IMPOSTA_TIPO_TIMER(TIPO_TIMER TIPO){ T_TIMER=TIPO;}
 boolean STOP(){
     switch(T_TIMER){
         case NON_BLOCCANTE:
-            TEMPO TP = TEMPO_PASSATO();
-            if(TP.MICROSECONDI()>=PERIODO.VALORE){DISABILITA(); return 1;}
+            if(TEMPO_PASSATO()>=PERIODO){DISABILITA(); return 1;}
             return 0;
         case BLOCCANTE:
             ASPETTA(PERIODO.VALORE,PERIODO.UNITA);
@@ -647,7 +690,7 @@ public:
   CICLO_TIMER(uint64_t PERIODO,UNITA_DI_TEMPO UNITA,TIPO_TIMER TIPO):TIMER(PERIODO,UNITA,TIPO){INIZIALIZZATO=1;}
   CICLO_TIMER():TIMER(0,MICROSECONDI){}
 boolean TICK(){
-if(!ABILITATO){ABILITA();}
+if(!ABILITATO()){ABILITA();}
 if(STOP()){ABILITA(); return 1;}
 return 0;
 }
@@ -754,7 +797,7 @@ public:
         IMPOSTA_STATO(PERCENTUALE);
     }
     void IMPOSTA_STATO_IN_RITARDO_CON_TIMER(uint8_t PERCENTUALE,uint64_t RITARDO,UNITA_DI_TEMPO UNITA){
-        if(PERIODO.ABILITATO == 0){PERIODO=TIMER(RITARDO,UNITA);}
+        if(PERIODO.ABILITATO()){PERIODO=TIMER(RITARDO,UNITA);}
         if(PERIODO.STOP()){IMPOSTA_STATO(PERCENTUALE);}
     }
     void ACCENDI_CON_DISSOLVENZA(uint8_t PERCENTUALE_MASSIMA,uint16_t LENTEZZA,UNITA_DI_TEMPO UNITA){
@@ -951,20 +994,6 @@ void FUNZIONE_CREPUSCOLARE(){
 }
 };
 
-class BLUETOOTH:SoftwareSerial{
-private:
-String S;
-public:
-BLUETOOTH(uint8_t RX,uint8_t TX,uint32_t BAUD):SoftwareSerial(RX,TX){begin(BAUD);}
-void RICEVI_STRINGA(){
-if(available()){S = readString();}
-else{S="";}
-}
-String LEGGI_STRINGA(){return S;}
-void INVIA_STRINGA(String S){print(S);}
-void INVIA_STRINGA_ANDANDO_A_CAPO(String S){println(S);}
-};
-
 class INGRESSO_MONITORATO{
  public:
    uint16_t FINECORSA_APERTURA;
@@ -1020,10 +1049,9 @@ public:
     virtual void SWIPE_INDIETRO()=0;
     void SWIPING(uint16_t TEMPO_DA_FERMO, UNITA_DI_TEMPO UNITA){
     if(!CICLO.INIZIALIZZATO){CICLO = CICLO_TIMER(TEMPO_DA_FERMO,UNITA);}
-     if(CICLO.TICK() && CICLO.INIZIALIZZATO){
-     if(POSIZIONE_CORRENTE() == GRADI_INDIETRO){SWIPE_AVANTI();}
-     else if(POSIZIONE_CORRENTE() == GRADI_AVANTI){SWIPE_INDIETRO();}
-     else{SWIPE_AVANTI();}
+    if(CICLO.TICK() && CICLO.INIZIALIZZATO){
+     if(POSIZIONE_CORRENTE()<GRADI_AVANTI){SWIPE_AVANTI();}
+     else if(POSIZIONE_CORRENTE()>GRADI_INDIETRO){SWIPE_INDIETRO();}
      }
     }
     MOTORE_SWIPING(){}
