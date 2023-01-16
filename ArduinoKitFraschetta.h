@@ -41,7 +41,7 @@ protected:
  uint64_t REST;
  uint64_t DIVISORE;
 public:
-UNITA_DI_TEMPO UNITA;
+UNITA_DI_TEMPO UNITA=UNITA_DI_TEMPO::MICROSECONDI;
 uint64_t VALORE;
     uint64_t NANOSECONDI(){
         switch(UNITA){
@@ -625,7 +625,7 @@ protected:
 boolean CRONOMETRO_ATTIVO;
 TEMPO TI = TEMPO(0,MICROSECONDI);
 TEMPO TEMPO_PASS;
-UNITA_DI_TEMPO UNITA_DI_TEMPO_CRONOMETRO;
+UNITA_DI_TEMPO UNITA_DI_TEMPO_CRONOMETRO=MICROSECONDI;
 public:
 void IMPOSTA_UNITA_DI_TEMPO(UNITA_DI_TEMPO UNITA){UNITA_DI_TEMPO_CRONOMETRO = UNITA;}
 CRONOMETRO(UNITA_DI_TEMPO UNITA){IMPOSTA_UNITA_DI_TEMPO(UNITA);}
@@ -654,7 +654,7 @@ enum TIPO_TIMER{NON_BLOCCANTE,BLOCCANTE};
 class TIMER:public CRONOMETRO{
 protected:
   TEMPO PERIODO;
-  TIPO_TIMER T_TIMER;
+  TIPO_TIMER T_TIMER=NON_BLOCCANTE;
   boolean ABILITAT;
   boolean T_INIZIALIZZATO;
 public:
@@ -672,10 +672,9 @@ void IMPOSTA_TIPO_TIMER(TIPO_TIMER TIPO){ T_TIMER=TIPO;}
 boolean STOP(){
     switch(T_TIMER){
         case NON_BLOCCANTE:
-            TEMPO T = TEMPO_PASSATO();
             Serial.end();
             Serial.begin(9600);
-            Serial.println(uint32_t(T.VALORE));
+            Serial.println("ou");
             if(TEMPO_PASSATO()>=PERIODO){DISABILITA(); return 1;}
             return 0;
         case BLOCCANTE:
