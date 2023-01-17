@@ -1092,7 +1092,11 @@ class SERVOMOTORE:Servo,MOTORE_SWIPING{
     uint8_t PIN;
     uint8_t INDIRIZZO_EEPROM_GRADI;
     uint16_t PERIODO_SPOSTAMENTO_SWIPING_IN_MILLISECONDI;
-    void INIZIALIZZA_SE_NON_INZIALIZZATO(){if(!attached()){attach(PIN); write(POSIZIONE_CORRENTE()); delay(1);}}
+    void INIZIALIZZA_SE_NON_INZIALIZZATO(){if(!attached()){attach(PIN); write(uint8_t(POSIZIONE_CORRENTE())); delay(1);
+        Serial.end();
+        Serial.begin(9600);
+        Serial.println("o");
+    }}
     void SCRIVI_POSIZIONE(uint8_t GRADI){
     if(GRADI>180){GRADI=180;}
     INIZIALIZZA_SE_NON_INZIALIZZATO();
