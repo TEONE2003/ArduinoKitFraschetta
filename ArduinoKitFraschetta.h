@@ -10,7 +10,7 @@
 class SERIALE:SoftwareSerial{
 private:
 String S;
-boolean I;
+boolean I,PSERIALE;
 uint16_t BAUD;
 uint8_t TX;
 uint8_t RX;
@@ -28,6 +28,12 @@ else{S="";}
 String LEGGI_STRINGA(){return S;}
 void INVIA_STRINGA(String S){print(S);}
 void INVIA_STRINGA_ANDANDO_A_CAPO(String S){println(S);}
+void PONTE_SERIALE(){
+ INIZIALIZZA_SE_NON_INZIALIZZATO();
+ if(!PSERIALE){Serial.end(); Serial.begin(9600); PSERIALE=1;}
+ if(Serial.available()){write(Serial.read());}
+ if(available()){Serial.write(read());}
+}
 };
 
 class BLUETOOTH:public SERIALE{
