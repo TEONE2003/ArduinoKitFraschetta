@@ -32,7 +32,7 @@ INIZIALIZZA_SE_NON_INZIALIZZATO();
 if(available()){B=read();}
 else{B=0;}
 }
-void RICEVI_CHAR(){
+void RICEVI_CARATTERE(){
 INIZIALIZZA_SE_NON_INZIALIZZATO();
 if(available()){C=read();}
 else{C=0;}
