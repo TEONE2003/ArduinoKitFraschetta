@@ -1081,8 +1081,10 @@ public:
      EEPROM.update(INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO,STATO);
      }
     void CONTROLLO_STATO_MOVIMENTO(){
-      STATO_DEL_MOVIMENTO STATO;
-      EEPROM.get(INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO,STATO);
+      STATO_DEL_MOVIMENTO STATO=EEPROM.read(INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO);
+        Serial.end();
+        Serial.begin(9600);
+        Serial.println(STATO);
         if(STATO){APRI();}
         else{CHIUDI();}
       }
