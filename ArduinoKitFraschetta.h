@@ -7,86 +7,78 @@
 #include "SoftwareSerial.h"
 #include "stdint.h"
 
-class SERIALE:SoftwareSerial{
+class SERIALE_BASE{
 protected:
-String S;
-uint8_t B;
-char C;
-boolean I,PSERIALE;
-uint16_t BAUD;
-uint8_t TX;
-uint8_t RX;
+ String S;
+ uint8_t B;
+ char C;
+ boolean I,PSERIALE;
+ uint16_t BAUD;
+ uint8_t TX;
+ uint8_t RX;
+ virtual void INIZIALIZZA_SE_NON_INZIALIZZATO()=0;
+ virtual boolean DATI_PRESENTI()=0;
+ virtual String STRINGA()=0;
+ virtual uint8_t BYTE()=0;
+ virtual char CARATTERE()=0;
 public:
-boolean INIZIALIZZATO(){return I;}
+ boolean INIZIALIZZATO(){return I;}
+ void RICEVI_STRINGA(){
+  INIZIALIZZA_SE_NON_INZIALIZZATO();
+  if(DATI_PRESENTI()){S=STRINGA();}
+  else{S="";}
+ }
+ void RICEVI_BYTE(){
+  INIZIALIZZA_SE_NON_INZIALIZZATO();
+  if(DATI_PRESENTI()){B=BYTE();}
+  else{B=0;}
+ }
+ void RICEVI_CARATTERE(){
+  INIZIALIZZA_SE_NON_INZIALIZZATO();
+  if(DATI_PRESENTI()){C=CARATTERE();}
+  else{C=0;}
+}
+ String LEGGI_STRINGA(){return S;}
+ uint8_t LEGGI_BYTE(){return B;}
+ char LEGGI_CHAR(){return C;}
+ SERIALE_BASE(uint16_t BAUD){this->BAUD=BAUD;}
+ SERIALE_BASE(uint8_t RX,uint8_t TX,uint16_t BAUD){this->RX=RX; this->TX=TX; this->BAUD=BAUD;}
+};
+
+class SERIALE:SoftwareSerial,public SERIALE_BASE{
 protected:
-void INIZIALIZZA_SE_NON_INZIALIZZATO(){if(!INIZIALIZZATO()){pinMode(RX,INPUT); pinMode(TX,OUTPUT); end(); begin(BAUD); I=1;}}
+ void INIZIALIZZA_SE_NON_INZIALIZZATO()override{if(!INIZIALIZZATO()){pinMode(RX,INPUT); pinMode(TX,OUTPUT); end(); begin(BAUD); I=1;}}
+ boolean DATI_PRESENTI()override{return available()>0;}
+ String STRINGA()override{return readString();}
+ uint8_t BYTE()override{return read();}
+ char CARATTERE()override{return read();}
 public:
-SERIALE(uint8_t RX,uint8_t TX,uint32_t BAUD):SoftwareSerial(RX,TX){this->BAUD=BAUD; this->TX=TX; this->RX=RX;}
-void RICEVI_STRINGA(){
-INIZIALIZZA_SE_NON_INZIALIZZATO();
-if(available()){S=readString();}
-else{S="";}
-}
-void RICEVI_BYTE(){
-INIZIALIZZA_SE_NON_INZIALIZZATO();
-if(available()){B=read();}
-else{B=0;}
-}
-void RICEVI_CARATTERE(){
-INIZIALIZZA_SE_NON_INZIALIZZATO();
-if(available()){C=read();}
-else{C=0;}
-}
-String LEGGI_STRINGA(){return S;}
-uint8_t LEGGI_BYTE(){return B;}
-char LEGGI_CHAR(){return C;}
-template <typename T>
-void INVIA(T t){print(t);}
-template <typename T>
-void INVIA_ANDANDO_A_CAPO(T t){println(t);}
-void PONTE_SERIALE(){
- INIZIALIZZA_SE_NON_INZIALIZZATO();
- if(!PSERIALE){Serial.end(); Serial.begin(9600); PSERIALE=1;}
- if(Serial.available()){write(Serial.read());}
- if(available()){Serial.write(read());}
+ SERIALE(uint8_t RX,uint8_t TX,uint32_t BAUD):SoftwareSerial(RX,TX),SERIALE_BASE(RX,TX,BAUD){}
+ template <typename T>
+ void INVIA(T t){print(t);}
+ template <typename T>
+ void INVIA_ANDANDO_A_CAPO(T t){println(t);}
+ void PONTE_SERIALE(){
+  INIZIALIZZA_SE_NON_INZIALIZZATO();
+  if(!PSERIALE){Serial.end(); Serial.begin(9600); PSERIALE=1;}
+  if(Serial.available()){write(Serial.read());}
+  if(available()){Serial.write(read());}
 }
 };
 
-class DEFAULT_SERIAL{
+class DEFAULT_SERIAL:public SERIALE_BASE{
 protected:
-String S;
-uint8_t B;
-char C;
-boolean I;
-uint16_t BAUD;
+ void INIZIALIZZA_SE_NON_INZIALIZZATO()override{if(!INIZIALIZZATO()){Serial.end(); Serial.begin(BAUD); I=1;}}
+ boolean DATI_PRESENTI()override{return Serial.available()>0;}
+ String STRINGA()override{return Serial.readString();}
+ uint8_t BYTE()override{return Serial.read();}
+ char CARATTERE()override{return Serial.read();}
 public:
-boolean INIZIALIZZATO(){return I;}
-protected:
-void INIZIALIZZA_SE_NON_INZIALIZZATO(){if(!INIZIALIZZATO()){Serial.end(); Serial.begin(BAUD); I=1;}}
-public:
-DEFAULT_SERIAL(uint32_t BAUD){this->BAUD=BAUD;}
-void RICEVI_STRINGA(){
-INIZIALIZZA_SE_NON_INZIALIZZATO();
-if(Serial.available()){S=Serial.readString();}
-else{S="";}
-}
-void RICEVI_BYTE(){
-INIZIALIZZA_SE_NON_INZIALIZZATO();
-if(Serial.available()){B=Serial.read();}
-else{B=0;}
-}
-void RICEVI_CARATTERE(){
-INIZIALIZZA_SE_NON_INZIALIZZATO();
-if(Serial.available()){C=Serial.read();}
-else{C=0;}
-}
-String LEGGI_STRINGA(){return S;}
-uint8_t LEGGI_BYTE(){return B;}
-char LEGGI_CHAR(){return C;}
-template <typename T>
-void INVIA(T t){Serial.print(t);}
-template <typename T>
-void INVIA_ANDANDO_A_CAPO(T t){println(t);}
+ DEFAULT_SERIAL(uint32_t BAUD):SERIALE_BASE(BAUD){}
+ template <typename T>
+ void INVIA(T t){Serial.print(t);}
+ template <typename T>
+ void INVIA_ANDANDO_A_CAPO(T t){Serial.println(t);}
 };
 
 enum RUOLO{SLAVE,MASTER};
@@ -96,48 +88,48 @@ protected:
  virtual String LEGGI_STRINGA()=0;
  virtual void INVIA(String s)=0;
 public:
-    boolean MODALITA_AT_ABILITATA(){
-    INVIA("AT");
-    while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
-    return LEGGI_STRINGA()=="OK";
-    }
-    void AT_RESETTA_IMPOSTAZIONI(){INVIA("AT+RESET");}
-    void AT_IMPOSTA_NOME(String NOME){INVIA("AT+NAME"+NOME);}
-    String AT_NOME(){
-    INVIA("AT+NAME?");
-    while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
-    return LEGGI_STRINGA();
-    }
-    boolean AT_RUOLO(){
-    INVIA("AT+ROLE?");
-    while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
-    return LEGGI_STRINGA().indexOf('1')>0;
-    }
-    void AT_IMPOSTA_RUOLO(RUOLO R){
-     if(R==MASTER){INVIA("AT+ROLE1");}
-     else{INVIA("AT+ROLE0");}
-    }
-    AT_IMPOSTA_BAUD(uint8_t BAUD){INVIA("AT+BAUD"+String(BAUD));}
+ boolean MODALITA_AT_ABILITATA(){
+ INVIA("AT");
+ while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
+ return LEGGI_STRINGA()=="OK";
+ }
+ void AT_RESETTA_IMPOSTAZIONI(){INVIA("AT+RESET");}
+ void AT_IMPOSTA_NOME(String NOME){INVIA("AT+NAME"+NOME);}
+ String AT_NOME(){
+ INVIA("AT+NAME?");
+ while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
+ return LEGGI_STRINGA();
+ }
+ boolean AT_RUOLO(){
+ INVIA("AT+ROLE?");
+ while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
+ return LEGGI_STRINGA().indexOf('1')>0;
+ }
+ void AT_IMPOSTA_RUOLO(RUOLO R){
+  if(R==MASTER){INVIA("AT+ROLE1");}
+  else{INVIA("AT+ROLE0");}
+  }
+  AT_IMPOSTA_BAUD(uint8_t BAUD){INVIA("AT+BAUD"+String(BAUD));}
 };
 
 class BLUETOOTH:public SERIALE,public AT{
 public:
-BLUETOOTH(uint8_t RX,uint8_t TX,uint32_t BAUD):SERIALE(RX,TX,BAUD){}
-void RICEVI_STRINGA()override{SERIALE::RICEVI_STRINGA();}
-String LEGGI_STRINGA()override{return SERIALE::LEGGI_STRINGA();}
-void INVIA(String s)override{SERIALE::INVIA(s);}
-template <typename T>
-void INVIA(T t){SERIALE::INVIA(t);}
+ BLUETOOTH(uint8_t RX,uint8_t TX,uint32_t BAUD):SERIALE(RX,TX,BAUD){}
+ void RICEVI_STRINGA()override{SERIALE::RICEVI_STRINGA();}
+ String LEGGI_STRINGA()override{return SERIALE::LEGGI_STRINGA();}
+ void INVIA(String s)override{SERIALE::INVIA(s);}
+ template <typename T>
+ void INVIA(T t){SERIALE::INVIA(t);}
 };
 
 class DEFAULT_BLUETOOTH:public DEFAULT_SERIAL,public AT{
 public:
-DEFAULT_BLUETOOTH(uint32_t BAUD):DEFAULT_SERIAL(BAUD){}
-void RICEVI_STRINGA()override{DEFAULT_SERIAL::RICEVI_STRINGA();}
-String LEGGI_STRINGA()override{return DEFAULT_SERIAL::LEGGI_STRINGA();}
-void INVIA(String s)override{DEFAULT_SERIAL::INVIA(s);}
-template <typename T>
-void INVIA(T t){DEFAULT_SERIAL::INVIA(t);}
+ DEFAULT_BLUETOOTH(uint32_t BAUD):DEFAULT_SERIAL(BAUD){}
+ void RICEVI_STRINGA()override{DEFAULT_SERIAL::RICEVI_STRINGA();}
+ String LEGGI_STRINGA()override{return DEFAULT_SERIAL::LEGGI_STRINGA();}
+ void INVIA(String s)override{DEFAULT_SERIAL::INVIA(s);}
+ template <typename T>
+ void INVIA(T t){DEFAULT_SERIAL::INVIA(t);}
 };
 
 enum UNITA_DI_TEMPO{NANOSECONDI,MICROSECONDI,MILLISECONDI,SECONDI,MINUTI,ORE,GIORNI,SETTIMANE,MESI_COMMERCIALI,ANNI,ANNI_COMMERCIALI};
@@ -146,9 +138,9 @@ protected:
  uint64_t REST;
  uint64_t DIVISORE;
 public:
-UNITA_DI_TEMPO UNITA=UNITA_DI_TEMPO::MICROSECONDI;
-uint64_t VALORE;
- uint64_t NANOSECONDI(){
+ UNITA_DI_TEMPO UNITA=UNITA_DI_TEMPO::MICROSECONDI;
+ uint64_t VALORE;
+ double NANOSECONDI(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: REST=0; return VALORE;
         case UNITA_DI_TEMPO::MICROSECONDI: REST=0; return VALORE*1000;
@@ -163,7 +155,7 @@ uint64_t VALORE;
         case UNITA_DI_TEMPO::ANNI_COMMERCIALI: REST=0; return VALORE*3110400000000000;
         }
     }
- uint64_t MICROSECONDI(){
+ double MICROSECONDI(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: DIVISORE=1000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
         case UNITA_DI_TEMPO::MICROSECONDI: REST=0; return VALORE;
@@ -178,7 +170,7 @@ uint64_t VALORE;
         case UNITA_DI_TEMPO::ANNI_COMMERCIALI: REST=0; return VALORE*31104000000000;
         }
     }
- uint64_t MILLISECONDI(){
+ double MILLISECONDI(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: DIVISORE=1000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
         case UNITA_DI_TEMPO::MICROSECONDI: DIVISORE=1000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
@@ -193,7 +185,7 @@ uint64_t VALORE;
         case UNITA_DI_TEMPO::ANNI_COMMERCIALI:REST=0; return VALORE*31104000000;
         }
     }
-uint64_t SECONDI(){
+double SECONDI(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: DIVISORE=1000000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
         case UNITA_DI_TEMPO::MICROSECONDI: DIVISORE=1000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
@@ -208,7 +200,7 @@ uint64_t SECONDI(){
         case UNITA_DI_TEMPO::ANNI_COMMERCIALI: REST=0; return VALORE*31104000;
         }
     }
-uint64_t MINUTI(){
+double MINUTI(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: DIVISORE=60000000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
         case UNITA_DI_TEMPO::MICROSECONDI: DIVISORE=60000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
@@ -223,7 +215,7 @@ uint64_t MINUTI(){
         case UNITA_DI_TEMPO::ANNI_COMMERCIALI: REST=0; return VALORE*518400;
         }
     }
-uint64_t ORE(){
+double ORE(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: DIVISORE=3600000000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
         case UNITA_DI_TEMPO::MICROSECONDI: DIVISORE=3600000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
@@ -238,7 +230,7 @@ uint64_t ORE(){
         case UNITA_DI_TEMPO::ANNI_COMMERCIALI: REST=0; return VALORE*8640;
         }
     }
-uint64_t GIORNI(){
+double GIORNI(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: DIVISORE=86400000000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
         case UNITA_DI_TEMPO::MICROSECONDI: DIVISORE=86400000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
@@ -253,7 +245,7 @@ uint64_t GIORNI(){
         case UNITA_DI_TEMPO::ANNI_COMMERCIALI: REST=0; return VALORE*360;
         }
     }
-uint64_t SETTIMANE(){
+double SETTIMANE(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: DIVISORE=60480000000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
         case UNITA_DI_TEMPO::MICROSECONDI: DIVISORE=604800000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
@@ -268,7 +260,7 @@ uint64_t SETTIMANE(){
         case UNITA_DI_TEMPO::ANNI_COMMERCIALI: REST=0; return VALORE*2520;
         }
     }
-uint64_t MESI_COMMERCIALI(){
+double MESI_COMMERCIALI(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: DIVISORE=2592000000000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
         case UNITA_DI_TEMPO::MICROSECONDI: DIVISORE=42336000000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
@@ -283,7 +275,7 @@ uint64_t MESI_COMMERCIALI(){
         case UNITA_DI_TEMPO::ANNI_COMMERCIALI: REST=0; return VALORE*4320;
         }
     }
-uint64_t ANNI(){
+double ANNI(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: DIVISORE=3153600000000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
         case UNITA_DI_TEMPO::MICROSECONDI: DIVISORE=3153600000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
@@ -298,7 +290,7 @@ uint64_t ANNI(){
         case UNITA_DI_TEMPO::ANNI_COMMERCIALI: REST=0; return VALORE;
         }
     }
-uint64_t ANNI_COMMERCIALI(){
+double ANNI_COMMERCIALI(){
     switch(UNITA){
         case UNITA_DI_TEMPO::NANOSECONDI: DIVISORE=31104000000000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
         case UNITA_DI_TEMPO::MICROSECONDI: DIVISORE=31104000000000; REST=VALORE%DIVISORE; return VALORE/DIVISORE;
@@ -329,27 +321,27 @@ void CONVERTI_IN(UNITA_DI_TEMPO UNITA){
         }
         this->UNITA=UNITA;
     }
-    uint64_t RESTO(){uint64_t R=REST; REST=0; return R;}
-    void operator=(const TEMPO &T){UNITA=T.UNITA; VALORE=T.VALORE;}
-    boolean operator==(const TEMPO &B){if(VALORE == B.VALORE && UNITA == B.UNITA){return 1;} return 0;}
-    TEMPO operator+(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE+B.VALORE,UNITA); return T;}
-    TEMPO operator-(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE-B.VALORE,UNITA); return T;}
-    TEMPO operator*(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE*B.VALORE,UNITA); return T;}
-    TEMPO operator/(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE/B.VALORE,UNITA); return T;}
-    TEMPO operator%(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE%B.VALORE,UNITA); return T;}
-    boolean operator>(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE > B.VALORE){return 1;} return 0;}
-    boolean operator<(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE < B.VALORE){return 1;} return 0;}
-    boolean operator>=(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE >= B.VALORE){return 1;} return 0;}
-    boolean operator<=(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE <= B.VALORE){return 1;} return 0;}
-    TEMPO(uint64_t VALORE,UNITA_DI_TEMPO UNITA){this->UNITA=UNITA; this->VALORE=VALORE;}
-    TEMPO(){}
+uint64_t RESTO(){uint64_t R=REST; REST=0; return R;}
+void operator=(const TEMPO &T){UNITA=T.UNITA; VALORE=T.VALORE;}
+boolean operator==(const TEMPO &B){if(VALORE == B.VALORE && UNITA == B.UNITA){return 1;} return 0;}
+TEMPO operator+(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE+B.VALORE,UNITA); return T;}
+TEMPO operator-(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE-B.VALORE,UNITA); return T;}
+TEMPO operator*(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE*B.VALORE,UNITA); return T;}
+TEMPO operator/(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE/B.VALORE,UNITA); return T;}
+TEMPO operator%(const TEMPO &B){B.CONVERTI_IN(UNITA); TEMPO T(VALORE%B.VALORE,UNITA); return T;}
+boolean operator>(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE > B.VALORE){return 1;} return 0;}
+boolean operator<(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE < B.VALORE){return 1;} return 0;}
+boolean operator>=(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE >= B.VALORE){return 1;} return 0;}
+boolean operator<=(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE <= B.VALORE){return 1;} return 0;}
+TEMPO(uint64_t VALORE,UNITA_DI_TEMPO UNITA){this->UNITA=UNITA; this->VALORE=VALORE;}
+TEMPO(){}
 };
 
-void ASPETTA(uint64_t VALORE,UNITA_DI_TEMPO UNITA){TEMPO T(VALORE,UNITA); delayMicroseconds(T.MICROSECONDI());}
+void ASPETTA(double VALORE,UNITA_DI_TEMPO UNITA){TEMPO T(VALORE,UNITA); delayMicroseconds(T.MICROSECONDI());}
 
 struct ORARIO{
 protected:
- uint64_t NANOSEC,MICROSEC,MILLISEC,SEC,O,M;
+ double NANOSEC,MICROSEC,MILLISEC,SEC,O,M;
 public:
 
 void ORE(uint64_t ORE){O = ORE;}
