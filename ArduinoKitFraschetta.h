@@ -8,7 +8,7 @@
 #include "stdint.h"
 
 class SERIALE:SoftwareSerial{
-private:
+protected:
 String S;
 uint8_t B;
 char C;
@@ -18,7 +18,7 @@ uint8_t TX;
 uint8_t RX;
 public:
 boolean INIZIALIZZATO(){return I;}
-private:
+protected:
 void INIZIALIZZA_SE_NON_INZIALIZZATO(){if(!INIZIALIZZATO()){pinMode(RX,INPUT); pinMode(TX,OUTPUT); end(); begin(BAUD); I=1;}}
 public:
 SERIALE(uint8_t RX,uint8_t TX,uint32_t BAUD):SoftwareSerial(RX,TX){this->BAUD=BAUD; this->TX=TX; this->RX=RX;}
