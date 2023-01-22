@@ -81,6 +81,51 @@ public:
  void INVIA_ANDANDO_A_CAPO(T t){Serial.println(t);}
 };
 
+class DEFAULT_SERIAL1:public SERIALE_BASE{
+protected:
+ void INIZIALIZZA_SE_NON_INZIALIZZATO()override{if(!INIZIALIZZATO()){Serial1.end(); Serial1.begin(BAUD); I=1;}}
+ boolean DATI_PRESENTI()override{return Serial1.available()>0;}
+ String STRINGA()override{return Serial1.readString();}
+ uint8_t BYTE()override{return Serial1.read();}
+ char CARATTERE()override{return Serial1.read();}
+public:
+ DEFAULT_SERIAL1(uint32_t BAUD):SERIALE_BASE(BAUD){}
+ template <typename T>
+ void INVIA(T t){Serial1.print(t);}
+ template <typename T>
+ void INVIA_ANDANDO_A_CAPO(T t){Serial1.println(t);}
+};
+
+class DEFAULT_SERIAL2:public SERIALE_BASE{
+protected:
+ void INIZIALIZZA_SE_NON_INZIALIZZATO()override{if(!INIZIALIZZATO()){Serial2.end(); Serial2.begin(BAUD); I=1;}}
+ boolean DATI_PRESENTI()override{return Serial2.available()>0;}
+ String STRINGA()override{return Serial2.readString();}
+ uint8_t BYTE()override{return Serial2.read();}
+ char CARATTERE()override{return Serial2.read();}
+public:
+ DEFAULT_SERIAL2(uint32_t BAUD):SERIALE_BASE(BAUD){}
+ template <typename T>
+ void INVIA(T t){Serial2.print(t);}
+ template <typename T>
+ void INVIA_ANDANDO_A_CAPO(T t){Serial2.println(t);}
+};
+
+class DEFAULT_SERIAL3:public SERIALE_BASE{
+protected:
+ void INIZIALIZZA_SE_NON_INZIALIZZATO()override{if(!INIZIALIZZATO()){Serial3.end(); Serial3.begin(BAUD); I=1;}}
+ boolean DATI_PRESENTI()override{return Serial3.available()>0;}
+ String STRINGA()override{return Serial3.readString();}
+ uint8_t BYTE()override{return Serial3.read();}
+ char CARATTERE()override{return Serial3.read();}
+public:
+ DEFAULT_SERIAL3(uint32_t BAUD):SERIALE_BASE(BAUD){}
+ template <typename T>
+ void INVIA(T t){Serial3.print(t);}
+ template <typename T>
+ void INVIA_ANDANDO_A_CAPO(T t){Serial3.println(t);}
+};
+
 enum RUOLO{SLAVE,MASTER};
 class AT{
 protected:
@@ -130,6 +175,36 @@ public:
  void INVIA(String s)override{DEFAULT_SERIAL::INVIA(s);}
  template <typename T>
  void INVIA(T t){DEFAULT_SERIAL::INVIA(t);}
+};
+
+class DEFAULT1_BLUETOOTH:public DEFAULT_SERIAL1,public AT{
+public:
+ DEFAULT1_BLUETOOTH(uint32_t BAUD):DEFAULT_SERIAL1(BAUD){}
+ void RICEVI_STRINGA()override{DEFAULT_SERIAL1::RICEVI_STRINGA();}
+ String LEGGI_STRINGA()override{return DEFAULT_SERIAL1::LEGGI_STRINGA();}
+ void INVIA(String s)override{DEFAULT_SERIAL1::INVIA(s);}
+ template <typename T>
+ void INVIA(T t){DEFAULT_SERIAL1::INVIA(t);}
+};
+
+class DEFAULT2_BLUETOOTH:public DEFAULT_SERIAL2,public AT{
+public:
+ DEFAULT2_BLUETOOTH(uint32_t BAUD):DEFAULT_SERIAL2(BAUD){}
+ void RICEVI_STRINGA()override{DEFAULT_SERIAL2::RICEVI_STRINGA();}
+ String LEGGI_STRINGA()override{return DEFAULT_SERIAL2::LEGGI_STRINGA();}
+ void INVIA(String s)override{DEFAULT_SERIAL2::INVIA(s);}
+ template <typename T>
+ void INVIA(T t){DEFAULT_SERIAL2::INVIA(t);}
+};
+
+class DEFAULT3_BLUETOOTH:public DEFAULT_SERIAL3,public AT{
+public:
+ DEFAULT3_BLUETOOTH(uint32_t BAUD):DEFAULT_SERIAL3(BAUD){}
+ void RICEVI_STRINGA()override{DEFAULT_SERIAL3::RICEVI_STRINGA();}
+ String LEGGI_STRINGA()override{return DEFAULT_SERIAL3::LEGGI_STRINGA();}
+ void INVIA(String s)override{DEFAULT_SERIAL3::INVIA(s);}
+ template <typename T>
+ void INVIA(T t){DEFAULT_SERIAL3::INVIA(t);}
 };
 
 enum UNITA_DI_TEMPO{NANOSECONDI,MICROSECONDI,MILLISECONDI,SECONDI,MINUTI,ORE,GIORNI,SETTIMANE,MESI_COMMERCIALI,ANNI,ANNI_COMMERCIALI};
