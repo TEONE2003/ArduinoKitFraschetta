@@ -143,12 +143,12 @@ public:
  String AT_NOME(){
  INVIA("AT+NAME?");
  while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
- return LEGGI_STRINGA();
+ return LEGGI_STRINGA().substring(8,LEGGI_STRINGA().length()-8);
  }
  boolean AT_RUOLO(){
  INVIA("AT+ROLE?");
  while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
- return LEGGI_STRINGA().indexOf('1')>0;
+ return LEGGI_STRINGA().indexOf('1')>=0;
  }
  void AT_IMPOSTA_RUOLO(RUOLO R){
   if(R==MASTER){INVIA("AT+ROLE1");}
