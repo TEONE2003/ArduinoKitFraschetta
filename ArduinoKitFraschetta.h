@@ -157,6 +157,7 @@ public:
   else{INVIA("AT+ROLE0");}
   }
   AT_IMPOSTA_BAUD(uint8_t BAUD){INVIA("AT+BAUD"+String(BAUD));}
+  AT_ASSOCIA(uint8_t INDIRIZZO_MAC){INVIA("AT+BIND"+String(BAUD));}
 };
 
 class BLUETOOTH:public SERIALE,public AT{
