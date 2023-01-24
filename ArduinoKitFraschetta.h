@@ -81,7 +81,7 @@ public:
  void INVIA_ANDANDO_A_CAPO(T t){Serial.println(t);}
 };
 
-#ifdef _AVR_ATmega2560_
+#ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
 class DEFAULT_SERIAL1:public SERIALE_BASE{
 protected:
  void INIZIALIZZA_SE_NON_INZIALIZZATO()override{if(!INIZIALIZZATO()){Serial1.end(); Serial1.begin(BAUD); I=1;}}
@@ -180,7 +180,7 @@ public:
  void INVIA(T t){DEFAULT_SERIAL::INVIA(t);}
 };
 
-#ifdef _AVR_ATmega2560_
+#ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
 class DEFAULT1_BLUETOOTH:public DEFAULT_SERIAL1,public AT{
 public:
  DEFAULT1_BLUETOOTH(uint32_t BAUD):DEFAULT_SERIAL1(BAUD){}
@@ -560,7 +560,7 @@ return 0;
 }
 };
 
-enum MODALITA_RESISTENZA:boolean{RESISTENZA_ESTERNA=1,PULLUP,PULLDOWN=0};
+enum MODALITA_RESISTENZA{RESISTENZA_ESTERNA,PULLUP,PULLDOWN};
 enum TIPO_DIGITALE:boolean{LOGICA_NORMALE=1,LOGICA_INVERSA=0};
 class ENTRATA{
 protected:
