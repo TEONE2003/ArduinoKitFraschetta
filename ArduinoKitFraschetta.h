@@ -41,8 +41,8 @@ public:
  String LEGGI_STRINGA(){return S;}
  uint8_t LEGGI_BYTE(){return B;}
  char LEGGI_CHAR(){return C;}
- SERIALE_BASE(uint16_t BAUD){this->BAUD=BAUD;}
- SERIALE_BASE(uint8_t RX,uint8_t TX,uint16_t BAUD){this->RX=RX; this->TX=TX; this->BAUD=BAUD;}
+ SERIALE_BASE(const uint16_t BAUD){this->BAUD=BAUD;}
+ SERIALE_BASE(const uint8_t RX,const uint8_t TX,const uint16_t BAUD){this->RX=RX; this->TX=TX; this->BAUD=BAUD;}
 };
 
 class SERIALE:SoftwareSerial,public SERIALE_BASE{
@@ -53,7 +53,7 @@ protected:
  uint8_t BYTE()override{return read();}
  char CARATTERE()override{return read();}
 public:
- SERIALE(uint8_t RX,uint8_t TX,uint32_t BAUD):SoftwareSerial(RX,TX),SERIALE_BASE(RX,TX,BAUD){}
+ SERIALE(const uint8_t RX,const uint8_t TX,const uint32_t BAUD):SoftwareSerial(RX,TX),SERIALE_BASE(RX,TX,BAUD){}
  template <typename T>
  void INVIA(T t){print(t);}
  template <typename T>
@@ -74,7 +74,7 @@ protected:
  uint8_t BYTE()override{return Serial.read();}
  char CARATTERE()override{return Serial.read();}
 public:
- DEFAULT_SERIAL(uint32_t BAUD):SERIALE_BASE(BAUD){}
+ DEFAULT_SERIAL(const uint32_t BAUD):SERIALE_BASE(BAUD){}
  template <typename T>
  void INVIA(T t){Serial.print(t);}
  template <typename T>
@@ -90,7 +90,7 @@ protected:
  uint8_t BYTE()override{return Serial1.read();}
  char CARATTERE()override{return Serial1.read();}
 public:
- DEFAULT_SERIAL1(uint32_t BAUD):SERIALE_BASE(BAUD){}
+ DEFAULT_SERIAL1(const uint32_t BAUD):SERIALE_BASE(BAUD){}
  template <typename T>
  void INVIA(T t){Serial1.print(t);}
  template <typename T>
@@ -751,6 +751,7 @@ class LED_RGB{
 
 class RELE:USCITA{
  public:
+  RELE(){}
   RELE(uint8_t PIN,TIPO_DIGITALE TIPO):USCITA(PIN,TIPO){}
   RELE(uint8_t PIN,TIPO_DIGITALE TIPO,MEMORIZZA_STATO SALVA_STATO):USCITA(PIN,TIPO,SALVA_STATO){}
   void ACCENDI(){USCITA::ACCENDI();}
@@ -765,7 +766,7 @@ class TERMOSTATO:RELE,CICLO_TIMER{
   TIPO_TERMOSTATO TIPO_T;
  public:
   uint8_t SOGLIA_TEMPERATURA=20;
- TERMOSTATO(){}
+ TERMOSTATO():RELE(){}
  TERMOSTATO(uint8_t PIN_R,TIPO_DIGITALE TIPORELE,TIPO_TERMOSTATO TIPO_T):RELE(PIN_R,TIPORELE),
  CICLO_TIMER(10,SECONDI){this->TIPO_T=TIPO_T;}
  void FUNZIONE_TERMOSTATO(uint8_t TEMPERATURA_ATTUALE){
