@@ -41,7 +41,7 @@ public:
  String LEGGI_STRINGA(){return S;}
  uint8_t LEGGI_BYTE(){return B;}
  char LEGGI_CHAR(){return C;}
- SERIALE_BASE(uint16_t BAUD){this->BAUD=BAUD;}
+ SERIALE_BASE(const uint16_t &BAUD){this->BAUD=BAUD;}
 };
 
 class SERIALE:SoftwareSerial,public SERIALE_BASE{
@@ -52,7 +52,7 @@ protected:
  uint8_t BYTE()override{return read();}
  char CARATTERE()override{return read();}
 public:
- SERIALE(uint8_t RX,uint8_t TX,uint32_t BAUD):SoftwareSerial(RX,TX),SERIALE_BASE(BAUD){}
+ SERIALE(const uint8_t &RX,const uint8_t &TX,const uint32_t &BAUD):SoftwareSerial(RX,TX),SERIALE_BASE(BAUD){}
  template <typename T>
  void INVIA(T t){print(t);}
  template <typename T>
@@ -73,7 +73,7 @@ protected:
  uint8_t BYTE()override{return Serial.read();}
  char CARATTERE()override{return Serial.read();}
 public:
- DEFAULT_SERIAL(const uint32_t BAUD):SERIALE_BASE(BAUD){}
+ DEFAULT_SERIAL(const uint32_t &BAUD):SERIALE_BASE(BAUD){}
  template <typename T>
  void INVIA(T t){Serial.print(t);}
  template <typename T>
@@ -89,7 +89,7 @@ protected:
  uint8_t BYTE()override{return Serial1.read();}
  char CARATTERE()override{return Serial1.read();}
 public:
- DEFAULT_SERIAL1(const uint32_t BAUD):SERIALE_BASE(BAUD){}
+ DEFAULT_SERIAL1(const uint32_t &BAUD):SERIALE_BASE(BAUD){}
  template <typename T>
  void INVIA(T t){Serial1.print(t);}
  template <typename T>
@@ -104,7 +104,7 @@ protected:
  uint8_t BYTE()override{return Serial2.read();}
  char CARATTERE()override{return Serial2.read();}
 public:
- DEFAULT_SERIAL2(uint32_t BAUD):SERIALE_BASE(BAUD){}
+ DEFAULT_SERIAL2(const uint32_t &BAUD):SERIALE_BASE(BAUD){}
  template <typename T>
  void INVIA(T t){Serial2.print(t);}
  template <typename T>
@@ -119,7 +119,7 @@ protected:
  uint8_t BYTE()override{return Serial3.read();}
  char CARATTERE()override{return Serial3.read();}
 public:
- DEFAULT_SERIAL3(uint32_t BAUD):SERIALE_BASE(BAUD){}
+ DEFAULT_SERIAL3(const uint32_t &BAUD):SERIALE_BASE(BAUD){}
  template <typename T>
  void INVIA(T t){Serial3.print(t);}
  template <typename T>
