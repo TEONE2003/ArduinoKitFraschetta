@@ -41,19 +41,18 @@ public:
  String LEGGI_STRINGA(){return S;}
  uint8_t LEGGI_BYTE(){return B;}
  char LEGGI_CHAR(){return C;}
- SERIALE_BASE(const uint16_t BAUD){this->BAUD=BAUD;}
- SERIALE_BASE(const uint8_t RX,const uint8_t TX,const uint16_t BAUD){this->RX=RX; this->TX=TX; this->BAUD=BAUD;}
+ SERIALE_BASE(uint16_t BAUD){this->BAUD=BAUD;}
 };
 
 class SERIALE:SoftwareSerial,public SERIALE_BASE{
 protected:
- void INIZIALIZZA_SE_NON_INZIALIZZATO()override{if(!INIZIALIZZATO()){pinMode(RX,INPUT); pinMode(TX,OUTPUT); end(); begin(BAUD); I=1;}}
+ void INIZIALIZZA_SE_NON_INZIALIZZATO()override{if(!INIZIALIZZATO()){end(); begin(BAUD); I=1;}}
  boolean DATI_PRESENTI()override{return available()>0;}
  String STRINGA()override{return readString();}
  uint8_t BYTE()override{return read();}
  char CARATTERE()override{return read();}
 public:
- SERIALE(const uint8_t RX,const uint8_t TX,const uint32_t BAUD):SoftwareSerial(RX,TX),SERIALE_BASE(RX,TX,BAUD){}
+ SERIALE(uint8_t RX,uint8_t TX,uint32_t BAUD):SoftwareSerial(RX,TX),SERIALE_BASE(BAUD){}
  template <typename T>
  void INVIA(T t){print(t);}
  template <typename T>
