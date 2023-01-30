@@ -981,6 +981,54 @@ class SERVO_INGRESSO:SERVOMOTORE,INGRESSO_MOTORIZZATO{
    this->RITARDO_MOVIMENTO_IN_MILLISECONDI = RITARDO_MOVIMENTO_IN_MILLISECONDI;}
 };
 
+class DUN{ //DIVIDI UNISCI NUMERI
+    static uint8_t DIVIDI_IN_DUE_UINT16_T(uint16_t N){
+        uint8_t A[2];
+        for(uint8_t c; c<=8; c++){bitSet(A[0],bitRead(N,c));}
+        for(uint8_t c=9; c<=15; c++){bitSet(A[1],bitRead(N,c));}
+        return A;
+    }
+    static uint8_t UINISCI_UINT16_T(uint16_t B1,uint16_t B2){
+        uint8_t N;
+        for(uint8_t c; c<=8; c++){bitSet(N,bitRead(N,c));}
+        for(uint8_t c=9; c<=15; c++){bitSet(A[1],bitRead(N,c));}
+        return A;
+    }
+};
+
+class SLNE{ //SCRIVI LEGGI NUMERI EEPROM
+public:
+ static void SCRIVI_UINT16_T(uint16_t N,uint16_t CELLA1,uint16_t CELLA2){
+  uint8_t A[]=DUN.DIVIDI_IN_DUE_UINT16_T(N);
+  EEPROM.update(CELLA1,A[0]);
+  EEPROM.update(CELLA2,A[1]);
+ }
+ static uint16_t LEGGI_UINT16_T(uint16_t CELLA1,uint16_t CELLA2){
+  return DUN.UNISCI_UINT16_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2));
+ }
+
+ static void SCRIVI_UINT32_T(uint16_t N,uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3){
+  uint8_t A[]=DUN.DIVIDI_IN_TRE_UINT16_T(N);
+  EEPROM.update(CELLA1,A[0]);
+  EEPROM.update(CELLA2,A[1]);
+  EEPROM.update(CELLA3,A[2]);
+ }
+ static uint32_t LEGGI_UINT32_T(uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3){
+  return DUN.UNISCI_UINT32_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2),EEPROM.read(CELLA3));
+ }
+
+ static void SCRIVI_UINT64_T(uint16_t N,uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3,uint16_t CELLA4){
+  uint8_t A[]=DUN.DIVIDI_IN_QUATTRO_UINT64_T(N);
+  EEPROM.update(CELLA1,A[0]);
+  EEPROM.update(CELLA2,A[1]);
+  EEPROM.update(CELLA3,A[2]);
+  EEPROM.update(CELLA4,A[3]);
+ }
+ static uint64_t LEGGI_UINT64_T(uint16_t CELLA1,uint16_t CELLA2){
+  return DUN.UNISCI_UINT64_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2),EEPROM.read(CELLA3),EEPROM.read(CELLA4));
+ }
+};
+
 class MOTORE_STEPPER_BASE:MOTORE_SWIPING{
 protected:
  uint16_t PASSI_MASSIMI,INDIRIZZO_POSIZIONE_EEPROM,PASSI_AVANTI,PASSI_INDIETRO;
@@ -1033,8 +1081,8 @@ protected:
   digitalWrite(PIN_CONTROLLO_PASSO,LOW);
  }
 public:
- void PASSO_A_SINISTRA()override{digitalWrite(PIN_VERSO,STATO_PIN_VERSO_DESTRA); PASSO(); MEMORIZZA_PASSI(POSIZIONE_CORRENTE()+1);}
- void PASSO_A_DESTRA()override{digitalWrite(PIN_VERSO,!STATO_PIN_VERSO_DESTRA); PASSO(); MEMORIZZA_PASSI(POSIZIONE_CORRENTE()-1);}
+ void PASSO_A_SINISTRA()override{digitalWrite(PIN_VERSO,STATO_PIN_VERSO_DESTRA); PASSO(); MEMORIZZA_PASSI(POSIZIONE_CORRENTE()-1);}
+ void PASSO_A_DESTRA()override{digitalWrite(PIN_VERSO,!STATO_PIN_VERSO_DESTRA); PASSO(); MEMORIZZA_PASSI(POSIZIONE_CORRENTE()+1);}
  MOTORE_STEPPER(uint8_t PIN_CONTROLLO_PASSO,uint8_t PIN_VERSO, boolean STATO_PIN_VERSO_DESTRA, uint16_t PASSI_MASSIMI,uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI):
   MOTORE_STEPPER_BASE(PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_CONTROLLO_PASSO){
    this->PIN_CONTROLLO_PASSO=PIN_CONTROLLO_PASSO;
