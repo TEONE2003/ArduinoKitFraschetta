@@ -981,50 +981,62 @@ class SERVO_INGRESSO:SERVOMOTORE,INGRESSO_MOTORIZZATO{
    this->RITARDO_MOVIMENTO_IN_MILLISECONDI = RITARDO_MOVIMENTO_IN_MILLISECONDI;}
 };
 
+class LSBDN{//LEGGI SCRIVI BYTE DEI NUMERI
+    template <typename N>
+    uint8_t LEGGI_BYTE1(N NUM){
+     static_assert(std::is_integral<N>::value, "Il tipo deve essere un numero intero");
+     
+    }
+    uint8_t SCRIVI_BYTE1(N NUM){
+     static_assert(std::is_integral<N>::value, "Il tipo deve essere un numero intero");
+     
+    }
+};
+
 class DUN{ //DIVIDI UNISCI NUMERI
     static uint8_t DIVIDI_IN_DUE_UINT16_T(uint16_t N){
         uint8_t A[2];
-        for(uint8_t c; c<=7; c++){bitWrite(A[0],c,bitRead(N,c));}
-        for(uint8_t c=8; c<=15; c++){bitWrite(A[1],c,bitRead(N,c));}
+        for(uint8_t p; p<=7; p++){bitWrite(A[0],p,bitRead(N,p));}
+        for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
         return A;
     }
     static uint16_t UINISCI_UINT16_T(uint8_t B1,uint8_t B2){
-        uint8_t N;
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B1,c));}
-        for(uint8_t c=8; c<=15; c++){bitWrite(N,c,bitRead(B2,c));}
-        return A;
+        uint16_t N;
+        for(uint8_t p; c<=7; p++){bitWrite(N,p,bitRead(B1,p));}
+        for(uint8_t p=8,b; p<=15; p++,b++){bitWrite(N,p,bitRead(B2,b));}
+        return N;
     }
     static uint8_t DIVIDI_IN_QUATTRO_UINT32_T(uint32_t N){
         uint8_t A[4];
-        for(uint8_t c; c<=7; c++){bitWrite(A[0],c,bitRead(N,c));}
-        for(uint8_t c=8; c<=15; c++){bitWrite(A[1],c,bitRead(N,c));}
-        for(uint8_t c=16; c<=22; c++){bitWrite(A[2],c,bitRead(N,c));}
-        for(uint8_t c=23; c<=31; c++){bitWrite(A[2],c,bitRead(N,c));}
+        for(uint8_t p; p<=7; p++){bitWrite(A[0],p,bitRead(N,p));}
+        for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        for(uint8_t p=16,b; p<=23; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        for(uint8_t p=24,b; p<=31; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
         return A;
     }
-    static uint16_t UINISCI_UINT32_T(uint8_t B1,uint8_t B2,uint8_t B3,uint8_t B4){
-        uint8_t N;
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B1,c));}
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B2,c));}
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B3,c));}
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B4,c));}
-        return A;
+    static uint32_t UINISCI_UINT32_T(uint8_t B1,uint8_t B2,uint8_t B3,uint8_t B4){
+        uint32_t N;
+        for(uint8_t p; c<=7; p++){bitWrite(N,p,bitRead(B1,p));}
+        for(uint8_t p=8,b; p<=15; p++,b++){bitWrite(N,p,bitRead(B2,b));}
+        for(uint8_t p=8,b; p<=15; p++,b++){bitWrite(N,p,bitRead(B2,b));}
+        for(uint8_t p=8,b; p<=15; p++,b++){bitWrite(N,p,bitRead(B2,b));}
+        return N;
     }
     static uint8_t DIVIDI_IN_OTTO_UINT64_T(uint64_t N){
         uint8_t A[4];
-        for(uint8_t c; c<=7; c++){bitWrite(A[0],c,bitRead(N,c));}
-        for(uint8_t c=8; c<=15; c++){bitWrite(A[1],c,bitRead(N,c));}
-        for(uint8_t c=16; c<=22; c++){bitWrite(A[2],c,bitRead(N,c));}
-        for(uint8_t c=23; c<=31; c++){bitWrite(A[2],c,bitRead(N,c));}
-        for(uint8_t c; c<=7; c++){bitWrite(A[0],c,bitRead(N,c));}
-        for(uint8_t c=8; c<=15; c++){bitWrite(A[1],c,bitRead(N,c));}
-        for(uint8_t c=16; c<=22; c++){bitWrite(A[2],c,bitRead(N,c));}
-        for(uint8_t c=23; c<=31; c++){bitWrite(A[2],c,bitRead(N,c));}
+        for(uint8_t p; p<=7; p++){bitWrite(A[0],p,bitRead(N,p));}
+        for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        for(uint8_t p=16,b; p<=23; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        for(uint8_t p=24,b; p<=31; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        for(uint8_t p=32,b; p<=39; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        for(uint8_t p=40,b; p<=47; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        for(uint8_t p=48,b; p<=55; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        for(uint8_t p=56,b; p<=63; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
         return A;
     }
-    static uint16_t UINISCI_UINT64_T(uint8_t B1,uint8_t B2,uint8_t B3,uint8_t B4){
-        uint8_t N;
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B1,c));}
+    static uint64_t UINISCI_UINT64_T(uint8_t B1,uint8_t B2,uint8_t B3,uint8_t B4){
+        uint64_t N;
+        for(uint8_t p; c<=7; p++){bitWrite(N,p,bitRead(B1,p));}
         for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B2,c));}
         for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B3,c));}
         for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B4,c));}
@@ -1032,7 +1044,7 @@ class DUN{ //DIVIDI UNISCI NUMERI
         for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B6,c));}
         for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B7,c));}
         for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B8,c));}
-        return A;
+        return N;
     }
 };
 
@@ -1045,9 +1057,8 @@ public:
          EEPROM.update(CELLA1,A[0]); EEPROM.update(CELLA2,A[1]);
         }
         uint16_t VALORE(){return DUN.UNISCI_UINT16_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2));}
-        EEPROM_UINT16_T(uint16_t VALORE,uint16_t CELLA1,uint16_t CELLA2){
+        EEPROM_UINT16_T(uint16_t CELLA1,uint16_t CELLA2){
          this->CELLA1=CELLA1; this->CELLA2=CELLA2;
-         IMPOSTA_VALORE(VALORE);
         }
         EEPROM_UINT16_T(){}
     }
@@ -1060,10 +1071,9 @@ public:
          EEPROM.update(CELLA3,A[2]); EEPROM.update(CELLA4,A[3]);
         }
         uint32_t VALORE(){return DUN.UNISCI_UINT32_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2),EEPROM.read(CELL3),EEPROM.read(CELLA4));}
-        EEPROM_UINT32_T(uint16_t VALORE,uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3,uint16_t CELLA4){
+        EEPROM_UINT32_T(uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3,uint16_t CELLA4){
          this->CELLA1=CELLA1; this->CELLA2=CELLA2;
          this->CELLA3=CELLA3; this->CELLA4=CELLA4;
-         IMPOSTA_VALORE(VALORE);
         }
         EEPROM_UINT32_T(){}
     }
@@ -1074,19 +1084,18 @@ public:
          uint8_t A[]=DUN.DIVIDI_IN_QUATTRO_UINT64_T(N);
          EEPROM.update(CELLA1,A[0]); EEPROM.update(CELLA2,A[1]);
          EEPROM.update(CELLA3,A[2]); EEPROM.update(CELLA4,A[3]);
-         EEPROM.update(CELLA1,A[4]); EEPROM.update(CELLA2,A[5]);
-         EEPROM.update(CELLA3,A[6]); EEPROM.update(CELLA4,A[7]);
+         EEPROM.update(CELLA5,A[4]); EEPROM.update(CELLA6,A[5]);
+         EEPROM.update(CELLA7,A[6]); EEPROM.update(CELLA8,A[7]);
         }
         void VALORE(){
          return DUN.UNISCI_UINT64_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2),EEPROM.read(CELL3),EEPROM.read(CELLA4),
          EEPROM.read(CELLA5),EEPROM.read(CELLA6),EEPROM.read(CELL7),EEPROM.read(CELLA8));
         }
-        EEPROM_UINT64_T(uint16_t VALORE,uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3,uint16_t CELLA4,uint16_t CELLA5,uint16_t CELLA6,uint16_t CELLA7,uint16_t CELLA8){
+        EEPROM_UINT64_T(uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3,uint16_t CELLA4,uint16_t CELLA5,uint16_t CELLA6,uint16_t CELLA7,uint16_t CELLA8){
          this->CELLA1=CELLA1; this->CELLA2=CELLA2;
          this->CELLA3=CELLA3; this->CELLA4=CELLA4;
          this->CELLA5=CELLA5; this->CELLA6=CELLA6;
          this->CELLA7=CELLA7; this->CELLA8=CELLA8;
-         IMPOSTA_VALORE(VALORE);
         }
         EEPROM_UINT64_T(){}
     }
@@ -1094,27 +1103,24 @@ public:
 
 class MOTORE_STEPPER_BASE:MOTORE_SWIPING{
 protected:
- uint16_t PASSI_MASSIMI,INDIRIZZO_POSIZIONE_EEPROM,PASSI_AVANTI,PASSI_INDIETRO;
+ uint16_t PASSI_MASSIMI,PASSI_AVANTI,PASSI_INDIETRO;
+ NE.EEPROM_UINT16_T MP;
 public:
  uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI;
- uint16_t POSIZIONE_CORRENTE()override{
-  uint16_t R;
-  EEPROM.get(INDIRIZZO_POSIZIONE_EEPROM,R);
-  return R;
- }
+ uint16_t POSIZIONE_CORRENTE()override{return MP.VALORE();}
  void MEMORIZZA_PASSI(uint16_t PASSI){
   if(PASSI<PASSI_MASSIMI){
-    EEPROM.put(INDIRIZZO_POSIZIONE_EEPROM,PASSI);
+   MP.IMPOSTA_VALORE(PASSI);
   }
   else{
-    EEPROM.put(INDIRIZZO_POSIZIONE_EEPROM,0);
+   MP.IMPOSTA_VALORE(0);
   }
  // USANDO PUT SI USA ANCHE L'INDIRIZZO SUCCESSIVO
  }
- MOTORE_STEPPER_BASE(uint16_t PASSI_MASSIMI,uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI,uint16_t INDIRIZZO_POSIZIONE_EEPROM){
+ MOTORE_STEPPER_BASE(uint16_t PASSI_MASSIMI,uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI,uint16_t INDIRIZZO_EEPROM_CELLA1_POSIZIONE,uint16_t INDIRIZZO_EEPROM_CELLA2_POSIZIONE){
   this->PASSI_MASSIMI=PASSI_MASSIMI;
-  this->INDIRIZZO_POSIZIONE_EEPROM = INDIRIZZO_POSIZIONE_EEPROM;
   this->PERIODO_SPOSTAMENTO_IN_MILLISECONDI=PERIODO_SPOSTAMENTO_IN_MILLISECONDI;
+  MP = NE.EEPROM_UINT16_T(INDIRIZZO_EEPROM_CELLA1_POSIZIONE,INDIRIZZO_EEPROM_CELLA2_POSIZIONE);
  }
  virtual void PASSO_A_DESTRA()=0;
  virtual void PASSO_A_SINISTRA()=0;
@@ -1147,7 +1153,7 @@ public:
  void PASSO_A_SINISTRA()override{digitalWrite(PIN_VERSO,STATO_PIN_VERSO_DESTRA); PASSO(); MEMORIZZA_PASSI(POSIZIONE_CORRENTE()-1);}
  void PASSO_A_DESTRA()override{digitalWrite(PIN_VERSO,!STATO_PIN_VERSO_DESTRA); PASSO(); MEMORIZZA_PASSI(POSIZIONE_CORRENTE()+1);}
  MOTORE_STEPPER(uint8_t PIN_CONTROLLO_PASSO,uint8_t PIN_VERSO, boolean STATO_PIN_VERSO_DESTRA, uint16_t PASSI_MASSIMI,uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI):
-  MOTORE_STEPPER_BASE(PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_CONTROLLO_PASSO){
+  MOTORE_STEPPER_BASE(PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_CONTROLLO_PASSO,PIN_VERSO){
    this->PIN_CONTROLLO_PASSO=PIN_CONTROLLO_PASSO;
    this->PIN_VERSO=PIN_VERSO;
    pinMode(PIN_CONTROLLO_PASSO,OUTPUT);
@@ -1168,7 +1174,7 @@ public:
     MEMORIZZA_PASSI(POSIZIONE_CORRENTE()-1);
   }
   MOTORE_STEPPER_BIPOLARE(uint8_t PIN_1,uint8_t PIN_2,uint8_t PIN_3,uint8_t PIN_4,uint16_t PASSI_MASSIMI,uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI):
-  MOTORE_STEPPER_BASE(PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_1){
+  MOTORE_STEPPER_BASE(PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_1,PIN_2){
    this->PIN_1=PIN_1; this->PIN_2=PIN_2; this->PIN_3=PIN_3; this->PIN_4=PIN_4;
    pinMode(PIN_1,OUTPUT); pinMode(PIN_2,OUTPUT); pinMode(PIN_3,OUTPUT); pinMode(PIN_4,OUTPUT);
   }
