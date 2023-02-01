@@ -982,28 +982,43 @@ class SERVO_INGRESSO:SERVOMOTORE,INGRESSO_MOTORIZZATO{
 };
 
 class LSBDN{//LEGGI SCRIVI BYTE DEI NUMERI
+ private:
+    void CONTROLLO_DATO(){static_assert(std::is_integral<N>::value, "Il tipo deve essere un numero intero");}
+    void CONTROLLO_NUM_BYTE(){static_assert(NUM_BYTE>=8,"il numero del byte deve essere compreso tra 0 e 7");}
+ public:
     template <typename N>
-    uint8_t LEGGI_BYTE1(N NUM){
-     static_assert(std::is_integral<N>::value, "Il tipo deve essere un numero intero");
-     
+    uint8_t LEGGI_BYTE(uint8_t NUM_BYTE,N &NUM){
+     CONTROLLO_DATO(); CONTROLLO_NUM_BYTE();
+     uint8_t B;
+     if(NUM_BYTE == 0){
+      for(uint8_t p; p<=7; p++){bitWrite(B,p,bitRead(NUM,p));}
+     }
+     else if(NUM_BYTE == 1){
+      for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+     }
+     return B;
     }
-    uint8_t SCRIVI_BYTE1(N NUM){
-     static_assert(std::is_integral<N>::value, "Il tipo deve essere un numero intero");
-     
+    template <typename N>
+    void SCRIVI_BYTE(uint8_t NUM_BYTE,N &NUM,uint8_t &B){
+     CONTROLLO_DATO(); CONTROLLO_NUM_BYTE();
+     if(NUM_BYTE == 0){
+      for(uint8_t p; p<=7; p++){bitWrite(NUM,p,bitRead(B,p));}
+     }
+     else if(NUM_BYTE == 1){
+      for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(NUM,p,bitRead(B,p));}
+     }
     }
 };
 
 class DUN{ //DIVIDI UNISCI NUMERI
-    static uint8_t DIVIDI_IN_DUE_UINT16_T(uint16_t N){
+    static uint8_t DIVIDI_IN_DUE_UINT16_T(uint16_t &N){
         uint8_t A[2];
-        for(uint8_t p; p<=7; p++){bitWrite(A[0],p,bitRead(N,p));}
-        for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        A[0]=LSBDN.LEGGI_BYTE(0,N); A[1]=LSBDN.LEGGI_BYTE(1,N);
         return A;
     }
-    static uint16_t UINISCI_UINT16_T(uint8_t B1,uint8_t B2){
+    static uint16_t UINISCI_UINT16_T(uint8_t &B0,uint8_t &B1){
         uint16_t N;
-        for(uint8_t p; c<=7; p++){bitWrite(N,p,bitRead(B1,p));}
-        for(uint8_t p=8,b; p<=15; p++,b++){bitWrite(N,p,bitRead(B2,b));}
+        LSBDN.SCRIVI_BYTE(0,N,B0); LSBDN.SCRIVI_BYTE(1,N,B1);
         return N;
     }
     static uint8_t DIVIDI_IN_QUATTRO_UINT32_T(uint32_t N){
