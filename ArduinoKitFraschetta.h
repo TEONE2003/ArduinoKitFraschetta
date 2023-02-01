@@ -1036,7 +1036,7 @@ class DUN{ //DIVIDI UNISCI NUMERI
     }
 };
 
-class SLNE{ //SCRIVI LEGGI NUMERI EEPROM
+class NE{ //NUMERI EEPROM
 public:
     static struct EEPROM_UINT16_T(){
         uint16_t CELLA1,CELLA2;
@@ -1044,36 +1044,52 @@ public:
          uint8_t A[]=DUN.DIVIDI_IN_DUE_UINT16_T(N);
          EEPROM.update(CELLA1,A[0]); EEPROM.update(CELLA2,A[1]);
         }
-        void VALORE(){return DUN.UNISCI_UINT16_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2));}
+        uint16_t VALORE(){return DUN.UNISCI_UINT16_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2));}
         EEPROM_UINT16_T(uint16_t VALORE,uint16_t CELLA1,uint16_t CELLA2){
          this->CELLA1=CELLA1; this->CELLA2=CELLA2;
          IMPOSTA_VALORE(VALORE);
         }
-        EEPROM_UINT16_T(uint16_t CELLA1,uint16_t CELLA2){
-         this->CELLA1=CELLA1; this->CELLA2=CELLA2;
-        }
         EEPROM_UINT16_T(){}
     }
-
- static void SCRIVI_UINT32_T(uint16_t N,uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3,uint16_t CELLA4){
-  uint8_t A[]=DUN.DIVIDI_IN_QUATTRO_UINT32_T(N);
-  EEPROM.update(CELLA1,A[0]); EEPROM.update(CELLA2,A[1]);
-  EEPROM.update(CELLA3,A[2]); EEPROM.update(CELLA4,A[3]);
- }
- static uint32_t LEGGI_UINT32_T(uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3){
-  return DUN.UNISCI_UINT32_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2),EEPROM.read(CELLA3));
- }
-
- static void SCRIVI_UINT64_T(uint16_t N,uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3,uint16_t CELLA4,uint16_t CELLA5,uint16_t CELLA6,uint16_t CELLA7,uint16_t CELLA8){
-  uint8_t A[]=DUN.DIVIDI_IN_OTTO_UINT64_T(N);
-   EEPROM.update(CELLA1,A[0]); EEPROM.update(CELLA5,A[1]);
-   EEPROM.update(CELLA2,A[2]); EEPROM.update(CELLA6,A[3]);
-   EEPROM.update(CELLA3,A[4]); EEPROM.update(CELLA7,A[5]);
-   EEPROM.update(CELLA4,A[6]); EEPROM.update(CELLA8,A[7]);
- }
- static uint64_t LEGGI_UINT64_T(uint16_t CELLA1,uint16_t CELLA2){
-  return DUN.UNISCI_UINT64_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2),EEPROM.read(CELLA3),EEPROM.read(CELLA4),EEPROM.read(CELLA5),EEPROM.read(CELLA6),EEPROM.read(CELLA7),EEPROM.read(CELLA8));
- }
+    
+    static struct EEPROM_UINT32_T(){
+        uint16_t CELLA1,CELLA2,CELLA3,CELLA4;
+        void IMPOSTA_VALORE(uint32_t N){
+         uint8_t A[]=DUN.DIVIDI_IN_QUATTRO_UINT32_T(N);
+         EEPROM.update(CELLA1,A[0]); EEPROM.update(CELLA2,A[1]);
+         EEPROM.update(CELLA3,A[2]); EEPROM.update(CELLA4,A[3]);
+        }
+        uint32_t VALORE(){return DUN.UNISCI_UINT32_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2),EEPROM.read(CELL3),EEPROM.read(CELLA4));}
+        EEPROM_UINT32_T(uint16_t VALORE,uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3,uint16_t CELLA4){
+         this->CELLA1=CELLA1; this->CELLA2=CELLA2;
+         this->CELLA3=CELLA3; this->CELLA4=CELLA4;
+         IMPOSTA_VALORE(VALORE);
+        }
+        EEPROM_UINT32_T(){}
+    }
+    
+    static struct EEPROM_UINT64_T(){
+        uint16_t CELLA1,CELLA2,CELLA3,CELLA4,CELLA5,CELLA6,CELLA7,CELLA8;
+        void IMPOSTA_VALORE(uint64_t N){
+         uint8_t A[]=DUN.DIVIDI_IN_QUATTRO_UINT64_T(N);
+         EEPROM.update(CELLA1,A[0]); EEPROM.update(CELLA2,A[1]);
+         EEPROM.update(CELLA3,A[2]); EEPROM.update(CELLA4,A[3]);
+         EEPROM.update(CELLA1,A[4]); EEPROM.update(CELLA2,A[5]);
+         EEPROM.update(CELLA3,A[6]); EEPROM.update(CELLA4,A[7]);
+        }
+        void VALORE(){
+         return DUN.UNISCI_UINT64_T(EEPROM.read(CELLA1),EEPROM.read(CELLA2),EEPROM.read(CELL3),EEPROM.read(CELLA4),
+         EEPROM.read(CELLA5),EEPROM.read(CELLA6),EEPROM.read(CELL7),EEPROM.read(CELLA8));
+        }
+        EEPROM_UINT64_T(uint16_t VALORE,uint16_t CELLA1,uint16_t CELLA2,uint16_t CELLA3,uint16_t CELLA4,uint16_t CELLA5,uint16_t CELLA6,uint16_t CELLA7,uint16_t CELLA8){
+         this->CELLA1=CELLA1; this->CELLA2=CELLA2;
+         this->CELLA3=CELLA3; this->CELLA4=CELLA4;
+         this->CELLA5=CELLA5; this->CELLA6=CELLA6;
+         this->CELLA7=CELLA7; this->CELLA8=CELLA8;
+         IMPOSTA_VALORE(VALORE);
+        }
+        EEPROM_UINT64_T(){}
+    }
 };
 
 class MOTORE_STEPPER_BASE:MOTORE_SWIPING{
