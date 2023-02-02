@@ -996,6 +996,24 @@ class LSBDN{//LEGGI SCRIVI BYTE DEI NUMERI
      else if(NUM_BYTE == 1){
       for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
      }
+     else if(NUM_BYTE == 2){
+      for(uint8_t p=16,b; p<=23; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+     }
+     else if(NUM_BYTE == 3){
+      for(uint8_t p=24,b; p<=31; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+     }
+     else if(NUM_BYTE == 4){
+      for(uint8_t p=32,b; p<=39; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+     }
+     else if(NUM_BYTE == 5){
+      for(uint8_t p=40,b; p<=47; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+     }
+     else if(NUM_BYTE == 6){
+      for(uint8_t p=48,b; p<=55; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+     }
+     else if(NUM_BYTE == 7){
+      for(uint8_t p=56,b; p<=63; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+     }
      return B;
     }
     template <typename N>
@@ -1006,6 +1024,24 @@ class LSBDN{//LEGGI SCRIVI BYTE DEI NUMERI
      }
      else if(NUM_BYTE == 1){
       for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(NUM,p,bitRead(B,p));}
+     }
+     else if(NUM_BYTE == 2){
+      for(uint8_t p=16,b; p<=23; b++,p++){bitWrite(NUM,p,bitRead(B,p));}
+     }
+     else if(NUM_BYTE == 3){
+      for(uint8_t p=24,b; p<=31; b++,p++){bitWrite(NUM,p,bitRead(B,p));}
+     }
+     else if(NUM_BYTE == 4){
+      for(uint8_t p=32,b; p<=39; b++,p++){bitWrite(NUM,p,bitRead(B,p));}
+     }
+     else if(NUM_BYTE == 5){
+      for(uint8_t p=40,b; p<=47; b++,p++){bitWrite(NUM,p,bitRead(B,p));}
+     }
+     else if(NUM_BYTE == 6){
+      for(uint8_t p=48,b; p<=55; b++,p++){bitWrite(NUM,p,bitRead(B,p));}
+     }
+     else if(NUM_BYTE == 7){
+      for(uint8_t p=56,b; p<=63; b++,p++){bitWrite(NUM,p,bitRead(B,p));}
      }
     }
 };
@@ -1023,42 +1059,30 @@ class DUN{ //DIVIDI UNISCI NUMERI
     }
     static uint8_t DIVIDI_IN_QUATTRO_UINT32_T(uint32_t N){
         uint8_t A[4];
-        for(uint8_t p; p<=7; p++){bitWrite(A[0],p,bitRead(N,p));}
-        for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
-        for(uint8_t p=16,b; p<=23; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
-        for(uint8_t p=24,b; p<=31; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        A[0]=LSBDN.LEGGI_BYTE(0,N); A[1]=LSBDN.LEGGI_BYTE(1,N);
+        A[2]=LSBDN.LEGGI_BYTE(2,N); A[3]=LSBDN.LEGGI_BYTE(3,N);
         return A;
     }
     static uint32_t UINISCI_UINT32_T(uint8_t B1,uint8_t B2,uint8_t B3,uint8_t B4){
         uint32_t N;
-        for(uint8_t p; c<=7; p++){bitWrite(N,p,bitRead(B1,p));}
-        for(uint8_t p=8,b; p<=15; p++,b++){bitWrite(N,p,bitRead(B2,b));}
-        for(uint8_t p=8,b; p<=15; p++,b++){bitWrite(N,p,bitRead(B2,b));}
-        for(uint8_t p=8,b; p<=15; p++,b++){bitWrite(N,p,bitRead(B2,b));}
+        LSBDN.SCRIVI_BYTE(0,N,B0); LSBDN.SCRIVI_BYTE(1,N,B1);
+        LSBDN.SCRIVI_BYTE(2,N,B2); LSBDN.SCRIVI_BYTE(3,N,B3);
         return N;
     }
     static uint8_t DIVIDI_IN_OTTO_UINT64_T(uint64_t N){
         uint8_t A[4];
-        for(uint8_t p; p<=7; p++){bitWrite(A[0],p,bitRead(N,p));}
-        for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
-        for(uint8_t p=16,b; p<=23; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
-        for(uint8_t p=24,b; p<=31; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
-        for(uint8_t p=32,b; p<=39; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
-        for(uint8_t p=40,b; p<=47; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
-        for(uint8_t p=48,b; p<=55; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
-        for(uint8_t p=56,b; p<=63; b++,p++){bitWrite(A[1],b,bitRead(N,p));}
+        A[0]=LSBDN.LEGGI_BYTE(0,N); A[1]=LSBDN.LEGGI_BYTE(1,N);
+        A[2]=LSBDN.LEGGI_BYTE(2,N); A[3]=LSBDN.LEGGI_BYTE(3,N);
+        A[4]=LSBDN.LEGGI_BYTE(4,N); A[5]=LSBDN.LEGGI_BYTE(5,N);
+        A[6]=LSBDN.LEGGI_BYTE(6,N); A[7]=LSBDN.LEGGI_BYTE(7,N);
         return A;
     }
     static uint64_t UINISCI_UINT64_T(uint8_t B1,uint8_t B2,uint8_t B3,uint8_t B4){
         uint64_t N;
-        for(uint8_t p; c<=7; p++){bitWrite(N,p,bitRead(B1,p));}
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B2,c));}
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B3,c));}
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B4,c));}
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B5,c));}
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B6,c));}
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B7,c));}
-        for(uint8_t c; c<=7; c++){bitWrite(N,c,bitRead(B8,c));}
+        LSBDN.SCRIVI_BYTE(0,N,B0); LSBDN.SCRIVI_BYTE(1,N,B1);
+        LSBDN.SCRIVI_BYTE(2,N,B2); LSBDN.SCRIVI_BYTE(3,N,B3);
+        LSBDN.SCRIVI_BYTE(4,N,B4); LSBDN.SCRIVI_BYTE(5,N,B5);
+        LSBDN.SCRIVI_BYTE(6,N,B6); LSBDN.SCRIVI_BYTE(7,N,B7);
         return N;
     }
 };
