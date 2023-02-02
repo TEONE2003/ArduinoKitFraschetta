@@ -1203,17 +1203,23 @@ public:
 class MOTORE_STEPPER_BIPOLARE:public MOTORE_STEPPER_BASE{
 protected:
  uint8_t PIN_A,PIN_B,PIN_C,PIN_D;
- void STEP_DESTRA(){
-  digitalWrite(PIN_A,);
-  digitalWrite(PIN_B,);
-  digitalWrite(PIN_C,);
-  digitalWrite(PIN_D,);
+ void STOP(){
+  digitalWrite(PIN_A,0); digitalWrite(PIN_B,0);
+  digitalWrite(PIN_C,0); digitalWrite(PIN_D,0);
  }
- void STEP_DESTRA(){
-  digitalWrite(PIN_A,);
-  digitalWrite(PIN_B,);
-  digitalWrite(PIN_C,);
-  digitalWrite(PIN_D,);
+ void STEP_DESTRA(uint8_t N_STEP){
+  digitalWrite(PIN_A,N_STEP==1);
+  digitalWrite(PIN_B,N_STEP==1);
+  digitalWrite(PIN_C,N_STEP==2);
+  digitalWrite(PIN_D,N_STEP==3);
+  delayMicroseconds(500);
+ }
+ void STEP_SINISTRA(uint8_t N_STEP){
+  digitalWrite(PIN_A,N_STEP==1);
+  digitalWrite(PIN_B,N_STEP==1 || N_STEP==2);
+  digitalWrite(PIN_C,N_STEP==2 || N_STEP==3);
+  digitalWrite(PIN_D,|| N_STEP==4);
+  delayMicroseconds(500);
  }
 public:
  void PASSO_A_DESTRA()override{
@@ -1222,6 +1228,8 @@ public:
   STEP_DESTRA(3);
   STEP_DESTRA(4);
   MEMORIZZA_PASSI(POSIZIONE_CORRENTE()+1);
+  delay(PERIODO_SPOSTAMENTO_IN_MILLISECONDI);
+  STOP();
  }
  void PASSO_A_SINISTRA()override{
   STEP_SINISTRA(1);
@@ -1229,6 +1237,8 @@ public:
   STEP_SINISTRA(3);
   STEP_SINISTRA(4);
   MEMORIZZA_PASSI(POSIZIONE_CORRENTE()-1);
+  delay(PERIODO_SPOSTAMENTO_IN_MILLISECONDI);
+  STOP();
  }
   MOTORE_STEPPER_BIPOLARE(uint8_t PIN_A,uint8_t PIN_B,uint8_t PIN_C,uint8_t PIN_D,uint16_t PASSI_MASSIMI,uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI):
   MOTORE_STEPPER_BASE(PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_A,PIN_B){
