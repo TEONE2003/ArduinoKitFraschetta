@@ -982,7 +982,7 @@ class SERVO_INGRESSO:SERVOMOTORE,INGRESSO_MOTORIZZATO{
 };
 
 class LSBDN{//LEGGI SCRIVI BYTE DEI NUMERI
- private:
+ protected:
     void CONTROLLO_DATO(){static_assert(std::is_integral<N>::value, "Il tipo deve essere un numero intero");}
     void CONTROLLO_NUM_BYTE(){static_assert(NUM_BYTE>=8,"il numero del byte deve essere compreso tra 0 e 7");}
  public:
@@ -1154,7 +1154,6 @@ public:
   else{
    MP.IMPOSTA_VALORE(0);
   }
- // USANDO PUT SI USA ANCHE L'INDIRIZZO SUCCESSIVO
  }
  MOTORE_STEPPER_BASE(uint16_t PASSI_MASSIMI,uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI,uint16_t INDIRIZZO_EEPROM_CELLA1_POSIZIONE,uint16_t INDIRIZZO_EEPROM_CELLA2_POSIZIONE){
   this->PASSI_MASSIMI=PASSI_MASSIMI;
@@ -1209,17 +1208,17 @@ protected:
  }
  void STEP_DESTRA(uint8_t N_STEP){
   digitalWrite(PIN_A,N_STEP==1);
-  digitalWrite(PIN_B,N_STEP==1);
-  digitalWrite(PIN_C,N_STEP==2);
-  digitalWrite(PIN_D,N_STEP==3);
-  delayMicroseconds(500);
+  digitalWrite(PIN_B,N_STEP==2);
+  digitalWrite(PIN_C,N_STEP==3);
+  digitalWrite(PIN_D,N_STEP==4);
+  delay(1);
  }
  void STEP_SINISTRA(uint8_t N_STEP){
   digitalWrite(PIN_A,N_STEP==1);
-  digitalWrite(PIN_B,N_STEP==1 || N_STEP==2);
-  digitalWrite(PIN_C,N_STEP==2 || N_STEP==3);
-  digitalWrite(PIN_D,|| N_STEP==4);
-  delayMicroseconds(500);
+  digitalWrite(PIN_B,N_STEP==4);
+  digitalWrite(PIN_C,N_STEP==3);
+  digitalWrite(PIN_D,N_STEP==2);
+  delay(1);
  }
 public:
  void PASSO_A_DESTRA()override{
