@@ -1204,14 +1204,14 @@ protected:
   digitalWrite(PIN_B,N_STEP==2);
   digitalWrite(PIN_C,N_STEP==3);
   digitalWrite(PIN_D,N_STEP==4);
-  delay(1);
+  delay(PERIODO_SPOSTAMENTO_IN_MILLISECONDI);
  }
  void STEP_SINISTRA(uint8_t N_STEP){
   digitalWrite(PIN_A,N_STEP==1);
   digitalWrite(PIN_B,N_STEP==4);
   digitalWrite(PIN_C,N_STEP==3);
   digitalWrite(PIN_D,N_STEP==2);
-  delay(1);
+  delay(PERIODO_SPOSTAMENTO_IN_MILLISECONDI);
  }
 public:
  void PASSO_A_DESTRA()override{
@@ -1220,7 +1220,6 @@ public:
   STEP_DESTRA(3);
   STEP_DESTRA(4);
   MEMORIZZA_PASSI(POSIZIONE_CORRENTE()+1);
-  delay(PERIODO_SPOSTAMENTO_IN_MILLISECONDI);
   STOP();
  }
  void PASSO_A_SINISTRA()override{
