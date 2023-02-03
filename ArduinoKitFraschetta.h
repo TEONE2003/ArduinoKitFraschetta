@@ -53,9 +53,9 @@ protected:
 public:
  SERIALE(const uint8_t &RX,const uint8_t &TX,const uint32_t &BAUD):SoftwareSerial(RX,TX),SERIALE_BASE(BAUD){}
  template <typename T>
- void INVIA(T t){print(t);}
+ void INVIA(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); print(t);}
  template <typename T>
- void INVIA_ANDANDO_A_CAPO(T t){println(t);}
+ void INVIA_ANDANDO_A_CAPO(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); println(t);}
  void PONTE_SERIALE(){
   INIZIALIZZA_SE_NON_INZIALIZZATO();
   if(!PSERIALE){Serial.end(); Serial.begin(9600); PSERIALE=1;}
@@ -74,9 +74,9 @@ protected:
 public:
  DEFAULT_SERIAL(const uint32_t &BAUD):SERIALE_BASE(BAUD){}
  template <typename T>
- void INVIA(T t){Serial.print(t);}
+ void INVIA(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); Serial.print(t);}
  template <typename T>
- void INVIA_ANDANDO_A_CAPO(T t){Serial.println(t);}
+ void INVIA_ANDANDO_A_CAPO(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); Serial.println(t);}
 };
 
 #ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
@@ -90,9 +90,9 @@ protected:
 public:
  DEFAULT_SERIAL1(const uint32_t &BAUD):SERIALE_BASE(BAUD){}
  template <typename T>
- void INVIA(T t){Serial1.print(t);}
+ void INVIA(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); Serial1.print(t);}
  template <typename T>
- void INVIA_ANDANDO_A_CAPO(T t){Serial1.println(t);}
+ void INVIA_ANDANDO_A_CAPO(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); Serial1.println(t);}
 };
 
 class DEFAULT_SERIAL2:public SERIALE_BASE{
@@ -105,9 +105,9 @@ protected:
 public:
  DEFAULT_SERIAL2(const uint32_t &BAUD):SERIALE_BASE(BAUD){}
  template <typename T>
- void INVIA(T t){Serial2.print(t);}
+ void INVIA(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); Serial2.print(t);}
  template <typename T>
- void INVIA_ANDANDO_A_CAPO(T t){Serial2.println(t);}
+ void INVIA_ANDANDO_A_CAPO(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); Serial2.println(t);}
 };
 
 class DEFAULT_SERIAL3:public SERIALE_BASE{
@@ -120,9 +120,9 @@ protected:
 public:
  DEFAULT_SERIAL3(const uint32_t &BAUD):SERIALE_BASE(BAUD){}
  template <typename T>
- void INVIA(T t){Serial3.print(t);}
+ void INVIA(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); Serial3.print(t);}
  template <typename T>
- void INVIA_ANDANDO_A_CAPO(T t){Serial3.println(t);}
+ void INVIA_ANDANDO_A_CAPO(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); Serial3.println(t);}
 };
 #endif
 
@@ -642,7 +642,7 @@ public:
   if(PERIODO.STOP()){IMPOSTA_STATO(PERCENTUALE);}
  }
  void ACCENDI_CON_DISSOLVENZA(uint8_t PERCENTUALE_MASSIMA,uint16_t LENTEZZA,UNITA_DI_TEMPO UNITA){
-  for(uint8_t P;P<PERCENTUALE_MASSIMA;P++){
+  for(uint8_t P=0;P<PERCENTUALE_MASSIMA;P++){
    ASPETTA(LENTEZZA,UNITA); IMPOSTA_STATO(P);
   }
  }
@@ -729,14 +729,14 @@ class LED_RGB{
   }
   void ACCENDI_CON_DISSOLVENZA(uint8_t PERCENTUALE_MASSIMA,uint16_t LENTEZZA,UNITA_DI_TEMPO UNITA){
    VALORI_RGB COLORE_CAMBIATO = this->COLORE;
-   for(uint8_t P;P<PERCENTUALE_MASSIMA;P++){
+   for(uint8_t P=0;P<PERCENTUALE_MASSIMA;P++){
     COLORE_CAMBIATO.IMPOSTA_LUMINOSITA(100+P);
     IMPOSTA_COLORE(COLORE_CAMBIATO);
    }
   }
   void SPEGNI_CON_DISSOLVENZA(uint8_t PERCENTUALE_MASSIMA,uint16_t LENTEZZA,UNITA_DI_TEMPO UNITA){
    VALORI_RGB COLORE_CAMBIATO = this->COLORE;
-   for(uint8_t P;P>0;P--){
+   for(uint8_t P=0;P>0;P--){
     COLORE_CAMBIATO.IMPOSTA_LUMINOSITA(100-P);
     IMPOSTA_COLORE(COLORE_CAMBIATO);
    }
@@ -986,56 +986,56 @@ namespace LSBDN{//LEGGI SCRIVI BYTE DEI NUMERI
     uint8_t LEGGI_BYTE(uint8_t NUM_BYTE,N &NUM){
      uint8_t B;
      if(NUM_BYTE == 0){
-      for(uint8_t p; p<=7; p++){bitWrite(B,p,bitRead(NUM,p));}
+      for(uint8_t p=0; p<=7; p++){bitWrite(B,p,bitRead(NUM,p));}
      }
      else if(NUM_BYTE == 1){
-      for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+      for(uint8_t p=8,b=0; p<=15; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
      }
      else if(NUM_BYTE == 2){
-      for(uint8_t p=16,b; p<=23; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+      for(uint8_t p=16,b=0; p<=23; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
      }
      else if(NUM_BYTE == 3){
-      for(uint8_t p=24,b; p<=31; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+      for(uint8_t p=24,b=0; p<=31; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
      }
      else if(NUM_BYTE == 4){
-      for(uint8_t p=32,b; p<=39; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+      for(uint8_t p=32,b=0; p<=39; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
      }
      else if(NUM_BYTE == 5){
-      for(uint8_t p=40,b; p<=47; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+      for(uint8_t p=40,b=0; p<=47; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
      }
      else if(NUM_BYTE == 6){
-      for(uint8_t p=48,b; p<=55; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+      for(uint8_t p=48,b=0; p<=55; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
      }
      else if(NUM_BYTE == 7){
-      for(uint8_t p=56,b; p<=63; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
+      for(uint8_t p=56,b=0; p<=63; b++,p++){bitWrite(B,b,bitRead(NUM,p));}
      }
      return B;
     }
     template <typename N>
-    void SCRIVI_BYTE(uint8_t NUM_BYTE,N &NUM,uint8_t &B){
+    void SCRIVI_BYTE(uint8_t NUM_BYTE,N &NUM,const uint8_t &B){
      if(NUM_BYTE == 0){
-      for(uint8_t p; p<=7; p++){bitWrite(NUM,p,bitRead(B,p));}
+      for(uint8_t p=0; p<=7; p++){bitWrite(NUM,p,bitRead(B,p));}
      }
      else if(NUM_BYTE == 1){
-      for(uint8_t p=8,b; p<=15; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
+      for(uint8_t p=8,b=0; p<=15; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
      }
      else if(NUM_BYTE == 2){
-      for(uint8_t p=16,b; p<=23; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
+      for(uint8_t p=16,b=0; p<=23; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
      }
      else if(NUM_BYTE == 3){
-      for(uint8_t p=24,b; p<=31; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
+      for(uint8_t p=24,b=0; p<=31; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
      }
      else if(NUM_BYTE == 4){
-      for(uint8_t p=32,b; p<=39; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
+      for(uint8_t p=32,b=0; p<=39; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
      }
      else if(NUM_BYTE == 5){
-      for(uint8_t p=40,b; p<=47; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
+      for(uint8_t p=40,b=0; p<=47; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
      }
      else if(NUM_BYTE == 6){
-      for(uint8_t p=48,b; p<=55; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
+      for(uint8_t p=48,b=0; p<=55; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
      }
      else if(NUM_BYTE == 7){
-      for(uint8_t p=56,b; p<=63; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
+      for(uint8_t p=56,b=0; p<=63; b++,p++){bitWrite(NUM,p,bitRead(B,b));}
      }
     }
 };
