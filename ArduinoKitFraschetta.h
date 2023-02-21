@@ -185,8 +185,6 @@ public:
  void RICEVI_STRINGA()override{DEFAULT_SERIAL1::RICEVI_STRINGA();}
  String LEGGI_STRINGA()override{return DEFAULT_SERIAL1::LEGGI_STRINGA();}
  void INVIA(String s)override{DEFAULT_SERIAL1::INVIA(s);}
- template <typename T>
- void INVIA(T t){DEFAULT_SERIAL1::INVIA(t);}
 };
 
 class DEFAULT2_BLUETOOTH:public DEFAULT_SERIAL2,public AT{
@@ -195,8 +193,6 @@ public:
  void RICEVI_STRINGA()override{DEFAULT_SERIAL2::RICEVI_STRINGA();}
  String LEGGI_STRINGA()override{return DEFAULT_SERIAL2::LEGGI_STRINGA();}
  void INVIA(String s)override{DEFAULT_SERIAL2::INVIA(s);}
- template <typename T>
- void INVIA(T t){DEFAULT_SERIAL2::INVIA(t);}
 };
 
 class DEFAULT3_BLUETOOTH:public DEFAULT_SERIAL3,public AT{
@@ -205,8 +201,6 @@ public:
  void RICEVI_STRINGA()override{DEFAULT_SERIAL3::RICEVI_STRINGA();}
  String LEGGI_STRINGA()override{return DEFAULT_SERIAL3::LEGGI_STRINGA();}
  void INVIA(String s)override{DEFAULT_SERIAL3::INVIA(s);}
- template <typename T>
- void INVIA(T t){DEFAULT_SERIAL3::INVIA(t);}
 };
 #endif
 
