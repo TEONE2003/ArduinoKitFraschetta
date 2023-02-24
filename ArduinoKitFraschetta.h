@@ -210,7 +210,7 @@ protected:
  uint64_t REST;
  uint64_t DIVISORE;
 public:
- UNITA_DI_TEMPO UNITA=UNITA_DI_TEMPO::MICROSECONDI;
+ UNITA_DI_TEMPO UNITA;
  uint64_t VALORE;
  double NANOSECONDI(){
   switch(UNITA){
@@ -394,9 +394,7 @@ switch(UNITA){
 }
  return TEMPO(VAL,UNITA);
 }
-
 void CONVERTI_IN(UNITA_DI_TEMPO UNITA){this->VALORE=CONVERTITO_IN(UNITA).VALORE; this->UNITA=UNITA; }
-
  uint64_t RESTO(){uint64_t R=REST; REST=0; return R;}
  void operator=(const TEMPO &T){UNITA=T.UNITA; VALORE=T.VALORE;}
  boolean operator==(const TEMPO &B){if(VALORE == B.VALORE && UNITA == B.UNITA){return 1;} return 0;}
@@ -409,11 +407,10 @@ void CONVERTI_IN(UNITA_DI_TEMPO UNITA){this->VALORE=CONVERTITO_IN(UNITA).VALORE;
  boolean operator<(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE < B.VALORE){return 1;} return 0;}
  boolean operator>=(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE >= B.VALORE){return 1;} return 0;}
  boolean operator<=(const TEMPO &B){B.CONVERTI_IN(UNITA); if(VALORE <= B.VALORE){return 1;} return 0;}
- TEMPO(uint64_t VALORE,UNITA_DI_TEMPO UNITA){this->UNITA=UNITA; this->VALORE=VALORE;}
- TEMPO(){}
+ TEMPO(uint64_t VALORE=0,UNITA_DI_TEMPO UNITA=MILLISECONDI){this->UNITA=UNITA; this->VALORE=VALORE; REST=0; DIVISORE=0;}
 };
 
-void ASPETTA(double VALORE,UNITA_DI_TEMPO UNITA){TEMPO T(VALORE,UNITA); delayMicroseconds(T.MICROSECONDI());}
+void ASPETTA(uint64_t VALORE,UNITA_DI_TEMPO UNITA){TEMPO T(VALORE,UNITA); delayMicroseconds(T.MICROSECONDI());}
 void ASPETTA(TEMPO T){delayMicroseconds(T.MICROSECONDI());}
 
 struct ORARIO{
