@@ -1,0 +1,14 @@
+#ifndef ReleFraschetta_h
+#define ReleFraschetta_h
+#include <OutputFraschetta.h>
+class RELE:USCITA{
+ public:
+  RELE(){}
+  RELE(uint8_t PIN,TIPO_DIGITALE TIPO):USCITA(PIN,TIPO){}
+  RELE(uint8_t PIN,TIPO_DIGITALE TIPO,MEMORIZZA_STATO SALVA_STATO):USCITA(PIN,TIPO,SALVA_STATO){}
+  void ACCENDI(){USCITA::ACCENDI();}
+  void SPEGNI(){USCITA::SPEGNI();}
+  void INVERTI_STATO(){USCITA::INVERTI_STATO();}
+  void LAMPEGGIO(uint16_t PERIODO,UNITA_DI_TEMPO UNITA){USCITA::LAMPEGGIO(PERIODO,UNITA);}
+};
+#endif
