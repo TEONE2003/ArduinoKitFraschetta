@@ -1,5 +1,7 @@
-#ifndef ServoMotorFraschetta_h
-#define ServoMotorFraschetta_h
+#ifndef ReleFraschetta_h
+#define ReleFraschetta_h
+#include <Servo.h>
+#include <MotorSwipingFraschetta.h>
 class SERVOMOTORE:Servo,MOTORE_SWIPING{
  protected:
   uint8_t PIN;
@@ -46,5 +48,4 @@ public:
   QUINDI VERRA ESEGUITO LA PRIMA VOLTA CHE SI USA IL SERVOMOTORE*/
  }
 };
-
 #endif

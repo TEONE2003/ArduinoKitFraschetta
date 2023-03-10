@@ -1,5 +1,6 @@
 #ifndef VirtualStopwatchFraschetta_h
 #define VirtualStopwatchFraschetta_h
+#include <TimeFraschetta.h>
 class CronometroVirtualeF{
 protected:
 boolean CRONOMETRO_ATTIVO;
