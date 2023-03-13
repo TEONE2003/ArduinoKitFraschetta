@@ -2,27 +2,27 @@
 #define ButtonFraschetta_h
 #include <InputFraschetta.h>
 #include <VirtualCycleFraschetta.h>
-class PULSANTE:ENTRATA,CicloVirtualeF{
+class ButtonF:InputF,VirtualCycleF{
  protected:
-  boolean STATO_PRECEDENTE;
+  boolean PreviousStatus;
  public:
-  PULSANTE(){}
-  PULSANTE(uint8_t PIN,uint64_t RITARDO,UNITA_DI_TEMPO UNITA):ENTRATA(PIN),CicloVirtualeF(RITARDO,UNITA){}
-  PULSANTE(uint8_t PIN,uint64_t RITARDO,UNITA_DI_TEMPO UNITA,MODALITA_RESISTENZA M_RESISTENZA):ENTRATA(PIN,M_RESISTENZA),CicloVirtualeF(RITARDO,UNITA){}
-  PULSANTE(uint8_t PIN,uint64_t RITARDO,UNITA_DI_TEMPO UNITA,TIPO_DIGITALE M_LETTURA_DIGITALE):ENTRATA(PIN,M_LETTURA_DIGITALE),CicloVirtualeF(RITARDO,UNITA){}
-  PULSANTE(uint8_t PIN,uint64_t RITARDO,UNITA_DI_TEMPO UNITA,MODALITA_RESISTENZA M_RESISTENZA,
-  TIPO_DIGITALE M_LETTURA_DIGITALE):ENTRATA(PIN,M_RESISTENZA,M_LETTURA_DIGITALE),CicloVirtualeF(RITARDO,UNITA){}
-  boolean CLICCATO(){
-   if(TICK()){
-    if(STATO_PRECEDENTE && LETTURA_DIGITALE()){
-     STATO_PRECEDENTE=0; return 1;
+  ButtonF(){}
+  ButtonF(uint8_t Pin,uint64_t Delay,UnitOfTime Unit):InputF(Pin),CicloVirtualeF(Delay,Unit){}
+  ButtonF(uint8_t Pin,uint64_t Delay,UnitOfTime Unit,ResistanceMode ResistanceM):InputF(Pin,ResistanceM),CicloVirtualeF(Delay,Unit){}
+  ButtonF(uint8_t Pin,uint64_t Delay,UnitOfTime Unit,DigitalType DigitalReadingM):InputF(Pin,DigitalReadingM),CicloVirtualeF(Delay,Unit){}
+  ButtonF(uint8_t Pin,uint64_t Delay,UnitOfTime Unit,ResistanceMode ResistanceM,
+  DigitalType DigitalReadingM):InputF(Pin,ResistanceM,DigitalReadingM),CicloVirtualeF(Delay,Unit){}
+  boolean Clicked(){
+   if(Tick()){
+    if(PreviousStatus && DigitalReading()){
+     PreviousStatus=0; return 1;
     }
    }
-   if(LETTURA_DIGITALE() && STATO_PRECEDENTE==0){STATO_PRECEDENTE=1;}
+   if(DigitalReading() && PreviousStatus==0){PreviousStatus=1;}
    return 0;
   }
-  void RESISTENZA_ESTERNA(){ENTRATA::RESISTENZA_ESTERNA();}
-  void PULLUP(){ENTRATA::PULLUP();}
-  void PULLDOWN(){ENTRATA::PULLDOWN();}
+  void ExternalResistance(){InputF::ExternalResistance();}
+  void PullUp(){InputF::PullUp();}
+  void PullDown(){InputF::PullDown();}
 };
 #endif
