@@ -1,81 +1,83 @@
 #ifndef BluetoothFraschetta_h
 #define BluetoothFraschetta_h
 #include <SerialFraschetta.h>
-enum RUOLO{SLAVE,MASTER};
-class AT{
+enum Role{Slave,Master};
+class At{
 protected:
- virtual void RICEVI_STRINGA()=0;
- virtual String LEGGI_STRINGA()=0;
- virtual void INVIA(String s)=0;
+ virtual void ReceiveString()=0;
+ virtual String ReadString()=0;
+ virtual void Send(String s)=0;
 public:
- boolean MODALITA_AT_ABILITATA(){
- INVIA("AT");
- while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
- return LEGGI_STRINGA()=="OK";
+ boolean ModeAt(){
+ Send("At");
+ while(ReadString()==""){ReceiveString();}
+ return ReadString()=="OK";
  }
- void AT_RESETTA_IMPOSTAZIONI(){INVIA("AT+RESET");}
- void AT_IMPOSTA_NOME(String NOME){INVIA("AT+NAME"+NOME);}
- String AT_NOME(){
- INVIA("AT+NAME?");
- while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
- return LEGGI_STRINGA().substring(8,LEGGI_STRINGA().length()-8);
+ void AtResetSettings(){Send("At+RESET");}
+ void AtSetName(String Name){Send("At+NAME"+Name);}
+ String AtName(){
+ Send("At+NAME?");
+ while(ReadString()==""){ReceiveString();}
+ return ReadString().substring(8,ReadString().length()-8);
  }
- boolean AT_RUOLO(){
- INVIA("AT+ROLE?");
- while(LEGGI_STRINGA()==""){RICEVI_STRINGA();}
- return LEGGI_STRINGA().indexOf('1')>=0;
+ boolean AtRole(){
+ Send("At+ROLE?");
+ while(ReadString()==""){ReceiveString();}
+ return ReadString().indexOf('1')>=0;
  }
- void AT_IMPOSTA_RUOLO(RUOLO R){
-  if(R==MASTER){INVIA("AT+ROLE1");}
-  else{INVIA("AT+ROLE0");}
+ void AtSetRole(Role R){
+  if(R==Master){Send("At+ROLE1");}
+  else{Send("At+ROLE0");}
   }
-  AT_IMPOSTA_BAUD(uint8_t BAUD){INVIA("AT+BAUD"+String(BAUD));}
-  AT_ASSOCIA(uint8_t INDIRIZZO_MAC){INVIA("AT+BIND"+String(INDIRIZZO_MAC));}
+  AtSetBaud(uint8_t Baud){Send("At+BAUD"+String(Baud));}
+  AtAssociate(uint8_t MacAddress){Send("At+BIND"+String(MacAddress));}
 };
 
-class BLUETOOTH:public SERIALE,public AT{
+class BluetoothF:public SerialF,public At{
 public:
- BLUETOOTH(uint8_t RX=2,uint8_t TX=3,uint32_t BAUD):SERIALE(RX,TX,BAUD){}
- void RICEVI_STRINGA()override{SERIALE::RICEVI_STRINGA();}
- String LEGGI_STRINGA()override{return SERIALE::LEGGI_STRINGA();}
- void INVIA(String s)override{SERIALE::INVIA(s);}
+ BluetoothF(uint8_t Rx=2,uint8_t Tx=3,uint32_t Baud):SerialF( Rx,Tx,Baud){}
+ void ReceiveString()override{SerialF::ReceiveString();}
+ String ReadString()override{return SerialF::ReadString();}
+ void Send(String s)override{SerialF::Send(s);}
  template <typename T>
- void INVIA(T t){SERIALE::INVIA(t);}
+ void Send(T t){SerialF::Send(t);}
 };
 
-class DEFAULT_BLUETOOTH:public DEFAULT_SERIAL,public AT{
+class DefaultBluetoothF:public DefaultSerial,public At{
 public:
- DEFAULT_BLUETOOTH(uint32_t BAUD=9600):DEFAULT_SERIAL(BAUD){}
- void RICEVI_STRINGA()override{DEFAULT_SERIAL::RICEVI_STRINGA();}
- String LEGGI_STRINGA()override{return DEFAULT_SERIAL::LEGGI_STRINGA();}
- void INVIA(String s)override{DEFAULT_SERIAL::INVIA(s);}
- template <typename T>
- void INVIA(T t){DEFAULT_SERIAL::INVIA(t);}
+ DefaultBluetoothF(uint32_t Baud=9600):DefaultSerial(Baud){}
+ void ReceiveString()override{DefaultSerial::ReceiveString();}
+ String ReadString()override{return DefaultSerial::ReadString();}
+ void Send(String s)override{DefaultSerial::Send(s);}
+ templAte <typename T>
+ void Send(T t){DefaultSerial::Send(t);}
 };
 
-#ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
-class DEFAULT1_BLUETOOTH:public DEFAULT_SERIAL1,public AT{
+#ifdef __AVR_Atmega2560__ || __AVR_Atmega1280__
+class Default1BluetoothF:public DefaultSerial1,public At{
 public:
- DEFAULT1_BLUETOOTH(uint32_t BAUD=9600):DEFAULT_SERIAL1(BAUD){}
- void RICEVI_STRINGA()override{DEFAULT_SERIAL1::RICEVI_STRINGA();}
- String LEGGI_STRINGA()override{return DEFAULT_SERIAL1::LEGGI_STRINGA();}
- void INVIA(String s)override{DEFAULT_SERIAL1::INVIA(s);}
+ Default1BluetoothF(uint32_t Baud=9600):DefaultSerial1(Baud){}
+ void ReceiveString()override{DefaultSerial1::ReceiveString();}
+ String ReadString()override{return DefaultSerial1::ReadString();}
+ void Send(String s)override{DefaultSerial1::Send(s);}
 };
 
-class DEFAULT2_BLUETOOTH:public DEFAULT_SERIAL2,public AT{
+class Default2BluetoothF:public DefaultSerial2,public At{
 public:
- DEFAULT2_BLUETOOTH(uint32_t BAUD=9600):DEFAULT_SERIAL2(BAUD){}
- void RICEVI_STRINGA()override{DEFAULT_SERIAL2::RICEVI_STRINGA();}
- String LEGGI_STRINGA()override{return DEFAULT_SERIAL2::LEGGI_STRINGA();}
- void INVIA(String s)override{DEFAULT_SERIAL2::INVIA(s);}
+ Default2BluetoothF(uint32_t Baud=9600):DefaultSerial2(Baud){}
+ void ReceiveString()override{DefaultSerial2::ReceiveString();}
+ String ReadString()override{return DefaultSerial2::ReadString();}
+ void Send(String s)override{DefaultSerial2::Send(s);}
 };
 
-class DEFAULT3_BLUETOOTH:public DEFAULT_SERIAL3,public AT{
+class Default3BluetoothF:public DefaultSerial3,public At{
 public:
- DEFAULT3_BLUETOOTH(uint32_t BAUD=9600):DEFAULT_SERIAL3(BAUD){}
- void RICEVI_STRINGA()override{DEFAULT_SERIAL3::RICEVI_STRINGA();}
- String LEGGI_STRINGA()override{return DEFAULT_SERIAL3::LEGGI_STRINGA();}
- void INVIA(String s)override{DEFAULT_SERIAL3::INVIA(s);}
+ Default3BluetoothF(uint32_t Baud=9600):DefaultSerial3(Baud){}
+ void ReceiveString()override{DefaultSerial3::ReceiveString();}
+ String ReadString()override{return DefaultSerial3::ReadString();}
+ void Send(String s)override{DefaultSerial3::Send(s);}
 };
+#endif
+#endif
 #endif
 #endif
