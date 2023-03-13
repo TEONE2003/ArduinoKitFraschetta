@@ -2,22 +2,22 @@
 #define BasicEntranceStepperFraschetta_h
 #include <BasicStepperMotorFraschetta.h>
 #include <MotorizedEntranceFraschetta.h>
-class STEPPER_INGRESSO_BASE:MOTORE_STEPPER_BASE,public INGRESSO_MOTORIZZATO{
+class BasicEntranceStepperF:BasicStepperMotorF,public MotorizedEntranceF{
  public:
-  virtual uint16_t POSIZIONE()=0;
-  void APRI() override {
-   MEMORIZZA_STATO(APERTURA);
-   MOTORE_STEPPER_BASE::POSIZIONE(FINECORSA_APERTURA);
+  virtual uint16_t Position()=0;
+  void Open() override {
+   MemorizeStatus(Opening);
+   BasicStepperMotorF::Position(OpeningLimitSwitch);
   }
-  void CHIUDI() override {
-   MEMORIZZA_STATO(CHIUSURA);
-   MOTORE_STEPPER_BASE::POSIZIONE(FINECORSA_CHIUSURA);
+  void Close() override {
+   MemorizeStatus(Closing);
+   BasicStepperMotorF::Position(ClosingLimitSwitch);
   }
-  boolean APERTO() override {return POSIZIONE()==FINECORSA_APERTURA;}
-  boolean CHIUSO() override {return POSIZIONE()==FINECORSA_CHIUSURA;}
-  STEPPER_INGRESSO_BASE(uint16_t PASSI_MASSIMI,uint16_t PASSI_APERTURA,uint16_t PASSI_CHIUSURA,
-  uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI,uint16_t INDIRIZZO_EEPROM_CELLA1_POSIZIONE,uint16_t INDIRIZZO_EEPROM_CELLA2_POSIZIONE,uint16_t INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO):
-   MOTORE_STEPPER_BASE(PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,INDIRIZZO_EEPROM_CELLA1_POSIZIONE,INDIRIZZO_EEPROM_CELLA2_POSIZIONE),
-   INGRESSO_MOTORIZZATO(PASSI_APERTURA,PASSI_CHIUSURA,INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO){}
+  boolean Open() override {return Position()==OpeningLimitSwitch;}
+  boolean Closed() override {return Position()==ClosingLimitSwitch;}
+  BasicEntranceStepperF(uint16_t MaximumSteps,uint16_t OpeningSteps,uint16_t ClosingSteps,
+  uint16_t ShiftPeriodInMilliseconds,uint16_t EepromAddressCell1Position,uint16_t EepromAddressCell2Position,uint16_t AddressMotionStatusPosition):
+   BasicStepperMotorF(MaximumSteps,ShiftPeriodInMilliseconds,EepromAddressCell1Position,EepromAddressCell1Position),
+   MotorizedEntranceF(OpeningSteps,ClosingSteps,AddressMotionStatusPosition){}
 };
 #endif
