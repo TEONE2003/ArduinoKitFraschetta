@@ -1,49 +1,49 @@
 #ifndef BipolarStepperMotorFraschetta_h
 #define BipolarStepperMotorFraschetta_h
 #include <BasicStepperMotorFraschetta.h>
-class MOTORE_STEPPER_BIPOLARE:public MOTORE_STEPPER_BASE{
+class BipolarStepperMotorF:public BasicStepperMotorF{
 protected:
- uint8_t PIN_A,PIN_B,PIN_C,PIN_D;
- void STOP(){
-  digitalWrite(PIN_A,0); digitalWrite(PIN_B,0);
-  digitalWrite(PIN_C,0); digitalWrite(PIN_D,0);
+ uint8_t PinA,PinB,PinC,PinD;
+ void Stop(){
+  digitalWrite(PinA,0); digitalWrite(PinB,0);
+  digitalWrite(PinC,0); digitalWrite(PinD,0);
  }
- void STEP_DESTRA(uint8_t N_STEP){
-  digitalWrite(PIN_A,N_STEP==1);
-  digitalWrite(PIN_B,N_STEP==2);
-  digitalWrite(PIN_C,N_STEP==3);
-  digitalWrite(PIN_D,N_STEP==4);
+ void RightStep(uint8_t Step){
+  digitalWrite(PinA,Step==1);
+  digitalWrite(PinB,Step==2);
+  digitalWrite(PinC,Step==3);
+  digitalWrite(PinD,Step==4);
   delay(4);
  }
- void STEP_SINISTRA(uint8_t N_STEP){
-  digitalWrite(PIN_A,N_STEP==1);
-  digitalWrite(PIN_B,N_STEP==4);
-  digitalWrite(PIN_C,N_STEP==3);
-  digitalWrite(PIN_D,N_STEP==2);
+ void LeftStep(uint8_t Step){
+  digitalWrite(PinA,Step==1);
+  digitalWrite(PinB,Step==4);
+  digitalWrite(PinC,Step==3);
+  digitalWrite(PinD,Step==2);
   delay(4);
  }
 public:
- void PASSO_A_DESTRA()override{
-  STEP_DESTRA(1);
-  STEP_DESTRA(2);
-  STEP_DESTRA(3);
-  STEP_DESTRA(4);
-  MEMORIZZA_PASSI(POSIZIONE()+1);
-  STOP();
+ void RightStep()override{
+  RightStep(1);
+  RightStep(2);
+  RightStep(3);
+  RightStep(4);
+  MemorizeSteps(Position()+1);
+  Stop();
  }
- void PASSO_A_SINISTRA()override{
-  STEP_SINISTRA(1);
-  STEP_SINISTRA(2);
-  STEP_SINISTRA(3);
-  STEP_SINISTRA(4);
-  MEMORIZZA_PASSI(POSIZIONE()-1);
-  delay(PERIODO_SPOSTAMENTO_IN_MILLISECONDI);
-  STOP();
+ void LeftStep()override{
+  LeftStep(1);
+  LeftStep(2);
+  LeftStep(3);
+  LeftStep(4);
+  MemorizeSteps(Position()-1);
+  delay(ShiftPeriodInMilliseconds);
+  Stop();
  }
-  MOTORE_STEPPER_BIPOLARE(uint8_t PIN_A,uint8_t PIN_B,uint8_t PIN_C,uint8_t PIN_D,uint16_t PASSI_MASSIMI,uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI):
-  MOTORE_STEPPER_BASE(PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_A,PIN_B){
-   this->PIN_A=PIN_A; this->PIN_B=PIN_B; this->PIN_C=PIN_C; this->PIN_D=PIN_D;
-   pinMode(PIN_A,OUTPUT); pinMode(PIN_B,OUTPUT); pinMode(PIN_C,OUTPUT); pinMode(PIN_D,OUTPUT);
+  BipolarStepperMotorF(uint8_t PinA,uint8_t PinB,uint8_t PinC,uint8_t PinD,uint16_t MaximumSteps,uint16_t ShiftPeriodInMilliseconds):
+  BasicStepperMotorF(MaximumSteps,ShiftPeriodInMilliseconds,PinA,PinB){
+   this->PinA=PinA; this->PinB=PinB; this->PinC=PinC; this->PinD=PinD;
+   pinMode(PinA,OUTPUT); pinMode(PinB,OUTPUT); pinMode(PinC,OUTPUT); pinMode(PinD,OUTPUT);
   }
 };
 #endif

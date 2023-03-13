@@ -17,7 +17,7 @@ public:
    MP.Value(0);
   }
  }
- BasicStepperMotorF(uint16_t MaximumSteps,uint16_t shiftPeriodInMilliseconds,uint16_t INDIRIZZO_EEPROM_CELLA1_Position,uint16_t INDIRIZZO_EEPROM_CELLA2_Position){
+ BasicStepperMotorF(uint16_t MaximumSteps,uint16_t shiftPeriodInMilliseconds,uint16_t EepromAddressCell1Position,uint16_t EepromAddressCell2Position){
   this->MaximumSteps=MaximumSteps;
   this->shiftPeriodInMilliseconds=shiftPeriodInMilliseconds;
   MP = EEPROMNumF::eeprom_uint16_t(EepromAddressCell1Position,EepromAddressCell2Position);

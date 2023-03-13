@@ -2,13 +2,13 @@
 #define BipolarEntranceStepperFraschetta_h
 #include <BipolarStepperMotorFraschetta.h>
 #include <BasicEntranceStepperFraschetta.h>
-class STEPPER_INGRESSO_BIPOLARE:public MOTORE_STEPPER_BIPOLARE,public STEPPER_INGRESSO_BASE{
+class BipolarEntranceStepperF:public BipolarStepperMotorF,public BasicEntranceStepperF{
  public:
-  void CONTROLLO_STATO_MOVIMENTO(){STEPPER_INGRESSO_BASE::CONTROLLO_STATO_MOVIMENTO();}
-   uint16_t POSIZIONE() override {return MOTORE_STEPPER_BIPOLARE::POSIZIONE();}
-    STEPPER_INGRESSO_BIPOLARE(uint16_t PASSI_MASSIMI,uint8_t PIN_A,uint8_t PIN_B,uint8_t PIN_C,uint8_t PIN_D,
-   uint16_t PASSI_APERTURA,uint16_t PASSI_CHIUSURA,uint8_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI):
-    MOTORE_STEPPER_BIPOLARE(PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_A,PIN_B,PIN_C,PIN_D),
-   STEPPER_INGRESSO_BASE(PASSI_MASSIMI,PASSI_APERTURA,PASSI_CHIUSURA,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_A,PIN_B,PIN_C){}
+  void CheckStatusMotion(){BasicEntranceStepperF::CheckStatusMotion();}
+   uint16_t Position() override {return BipolarStepperMotorF::Position();}
+    BipolarEntranceStepperF(uint16_t MaximumSteps,uint8_t PinA,uint8_t PinB,uint8_t PinC,uint8_t PinD,
+   uint16_t OpeningSteps,uint16_t ClosingSteps,uint8_t shiftPeriodInMilliseconds):
+    BipolarStepperMotorF(MaximumSteps,shiftPeriodInMilliseconds,PinA,PinB,PinC,PinD),
+   BasicEntranceStepperF(MaximumSteps,OpeningSteps,ClosingSteps,shiftPeriodInMilliseconds,PinA,PinB,PinC){}
 };
 #endif
