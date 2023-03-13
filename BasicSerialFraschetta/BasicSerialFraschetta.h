@@ -1,39 +1,39 @@
 #ifndef BasicSerialFraschetta_h
 #define BasicSerialFraschetta_h
-class SERIALE_BASE{
+class BasicSerialF{
 protected:
  String S;
  uint8_t B;
  char C;
- boolean I,PSERIALE;
- uint16_t BAUD;
- uint8_t TX;
- uint8_t RX;
- virtual void INIZIALIZZA_SE_NON_INZIALIZZATO()=0;
- virtual boolean DATI_PRESENTI()=0;
- virtual String STRINGA()=0;
- virtual uint8_t BYTE()=0;
- virtual char CARATTERE()=0;
+ boolean I,SerialBridge;
+ uint16_t Baud;
+ uint8_t Tx;
+ uint8_t Rx;
+ virtual void InitializeIfNotInitialized()=0;
+ virtual boolean DataPresent()=0;
+ virtual String String()=0;
+ virtual uint8_t Byte()=0;
+ virtual char Char()=0;
 public:
- boolean INIZIALIZZATO(){return I;}
- void RICEVI_STRINGA(){
-  INIZIALIZZA_SE_NON_INZIALIZZATO();
-  if(DATI_PRESENTI()){S=STRINGA();}
+ boolean Initialized(){return I;}
+ void ReceiveString(){
+  InitializeIfNotInitialized();
+  if(DataPresent()){S=String();}
   else{S="";}
  }
- void RICEVI_BYTE(){
-  INIZIALIZZA_SE_NON_INZIALIZZATO();
-  if(DATI_PRESENTI()){B=BYTE();}
+ void ReceiveByte(){
+  InitializeIfNotInitialized();
+  if(DataPresent()){B=Byte();}
   else{B=0;}
  }
- void RICEVI_CARATTERE(){
-  INIZIALIZZA_SE_NON_INZIALIZZATO();
-  if(DATI_PRESENTI()){C=CARATTERE();}
+ void ReceiveChar(){
+  InitializeIfNotInitialized();
+  if(DataPresent()){C=Char();}
   else{C=0;}
 }
- String LEGGI_STRINGA(){return S;}
- uint8_t LEGGI_BYTE(){return B;}
- char LEGGI_CHAR(){return C;}
- SERIALE_BASE(const uint16_t &BAUD=9600){this->BAUD=BAUD;}
+ String ReadString(){return S;}
+ uint8_t ReadByte(){return B;}
+ char ReadChar(){return C;}
+ BasicSerialF(uint16_t Baud=9600){this->Baud=Baud;}
 };
 #endif
