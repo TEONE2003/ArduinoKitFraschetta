@@ -1,41 +1,42 @@
 #ifndef BasicStepperMotorFraschetta_h
 #define BasicStepperMotorFraschetta_h
 #include <MotorSwipingFraschetta.h>
-class MOTORE_STEPPER_BASE:MOTORE_SWIPING{
+#include <EEPROMNumFraschetta.h>
+class BasicStepperMotorF:MotorSwipingF{
 protected:
- uint16_t PASSI_MASSIMI,POSIZIONE_AVANTI,POSIZIONE_INDIETRO;
- NE::EEPROM_UINT16_T MP;
+ uint16_t MaximumSteps,ForwardPosition,BackPosition;
+ EEPROMNumF::eeprom_uint16_t MP;
 public:
- uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI;
- uint16_t POSIZIONE()override{return MP.VALORE();}
- void MEMORIZZA_PASSI(uint16_t PASSI){
-  if(PASSI<PASSI_MASSIMI){
-   MP.VALORE(PASSI);
+ uint16_t shiftPeriodInMilliseconds;
+ uint16_t Position()override{return MP.Value();}
+ void MemorizeSteps(uint16_t Steps){
+  if(Steps<MaximumSteps){
+   MP.Value(Steps);
   }
   else{
-   MP.VALORE(0);
+   MP.Value(0);
   }
  }
- MOTORE_STEPPER_BASE(uint16_t PASSI_MASSIMI,uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI,uint16_t INDIRIZZO_EEPROM_CELLA1_POSIZIONE,uint16_t INDIRIZZO_EEPROM_CELLA2_POSIZIONE){
-  this->PASSI_MASSIMI=PASSI_MASSIMI;
-  this->PERIODO_SPOSTAMENTO_IN_MILLISECONDI=PERIODO_SPOSTAMENTO_IN_MILLISECONDI;
-  MP = NE::EEPROM_UINT16_T(INDIRIZZO_EEPROM_CELLA1_POSIZIONE,INDIRIZZO_EEPROM_CELLA2_POSIZIONE);
+ BasicStepperMotorF(uint16_t MaximumSteps,uint16_t shiftPeriodInMilliseconds,uint16_t INDIRIZZO_EEPROM_CELLA1_Position,uint16_t INDIRIZZO_EEPROM_CELLA2_Position){
+  this->MaximumSteps=MaximumSteps;
+  this->shiftPeriodInMilliseconds=shiftPeriodInMilliseconds;
+  MP = EEPROMNumF::eeprom_uint16_t(EepromAddressCell1Position,EepromAddressCell2Position);
  }
- virtual void PASSO_A_DESTRA()=0;
- virtual void PASSO_A_SINISTRA()=0;
- void PASSI_A_DESTRA(uint16_t PASSI){
-  for(uint16_t P=POSIZIONE(); P<=PASSI; P++){PASSO_A_DESTRA(); delay(PERIODO_SPOSTAMENTO_IN_MILLISECONDI);}
+ virtual void RightStep()=0;
+ virtual void LeftStep()=0;
+ void RightSteps(uint16_t Steps){
+  for(uint16_t P=Position(); P<=Steps; P++){RightStep(); delay(shiftPeriodInMilliseconds);}
  }
- void PASSI_A_SINISTRA(uint16_t PASSI){
-  for(uint16_t P=POSIZIONE(); P>=PASSI; P--){PASSO_A_SINISTRA(); delay(PERIODO_SPOSTAMENTO_IN_MILLISECONDI);}
+ void LeftSteps(uint16_t Steps){
+  for(uint16_t P=Position(); P>=Steps; P--){LeftStep(); delay(shiftPeriodInMilliseconds);}
  }
- void POSIZIONE(uint16_t POSIZIONE){PASSI_A_DESTRA(POSIZIONE); PASSI_A_SINISTRA(POSIZIONE);}
- void SWIPE_AVANTI() override {POSIZIONE(POSIZIONE_AVANTI);}
- void SWIPE_INDIETRO() override {POSIZIONE(POSIZIONE_INDIETRO);}
- void SWIPING(uint16_t POSIZIONE_AVANTI,uint16_t POSIZIONE_INDIETRO,uint16_t TEMPO_DA_FERMO, UNITA_DI_TEMPO UNITA){
-  this->POSIZIONE_AVANTI = POSIZIONE_AVANTI;
-  this->POSIZIONE_INDIETRO = POSIZIONE_INDIETRO;
-  MOTORE_SWIPING::SWIPING(TEMPO_DA_FERMO,UNITA);
+ void Position(uint16_t Position){RightSteps(Position); LeftSteps(Position);}
+ void SwipeForward() override {Position(PositionForward);}
+ void SwipeBack() override {Position(BackPosition);}
+ void Swiping(uint16_t PositionForward,uint16_t BackPosition,uint16_t SwipeBack, UnitOfTime Unit){
+  this->PositionForward = PositionForward;
+  this->BackPosition = BackPosition;
+  MotorSwiping::Swiping(SwipeBack,Unit);
  }
 };
 #endif
