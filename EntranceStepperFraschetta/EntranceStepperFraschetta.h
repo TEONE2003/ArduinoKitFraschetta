@@ -2,14 +2,14 @@
 #define EntranceStepperFraschetta_h
 #include <StepperMotorFraschetta.h>
 #include <BasicEntranceStepperFraschetta.h>
-class STEPPER_INGRESSO:MOTORE_STEPPER,public STEPPER_INGRESSO_BASE{
+class EntranceStepperF:StepperMotorF,public BasicEntranceStepperF{
  public:
-  uint16_t POSIZIONE(){return MOTORE_STEPPER::POSIZIONE();}
-  STEPPER_INGRESSO(uint8_t PIN_CONTROLLO_PASSO,uint8_t PIN_VERSO, boolean STATO_PIN_VERSO_DESTRA,uint16_t PASSI_MASSIMI,
-  uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI,uint16_t PASSI_APERTURA,uint16_t PASSI_CHIUSURA,uint16_t INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO):
-  STEPPER_INGRESSO_BASE(PASSI_MASSIMI,PASSI_APERTURA,PASSI_CHIUSURA,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_CONTROLLO_PASSO,PIN_VERSO,INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO),
-  MOTORE_STEPPER(PIN_CONTROLLO_PASSO,PIN_VERSO,STATO_PIN_VERSO_DESTRA,PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI){
-   CONTROLLO_STATO_MOVIMENTO();
+  uint16_t Position(){return StepperMotorF::Position();}
+  EntranceStepperF(uint8_t PinCheckStep,uint8_t PinVerse, boolean StatusPinToRight,uint16_t MaximumSteps,
+  uint16_t ShiftPeriodInMilliseconds,uint16_t OpeningSteps,uint16_t ClosingSteps,uint16_t AddressMotionStatusPosition):
+  BasicEntranceStepperF(MaximumSteps,OpeningSteps,ClosingSteps,ShiftPeriodInMilliseconds,PinCheckStep,PinVerse,AddressMotionStatusPosition),
+  StepperMotorF(PinCheckStep,PinVerse,StatusPinToRight,MaximumSteps,ShiftPeriodInMilliseconds){
+   CheckStatusMotion();
   }
 };
 #endif

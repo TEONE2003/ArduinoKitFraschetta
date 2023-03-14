@@ -1,15 +1,15 @@
 #ifndef DhtFraschetta_h
 #define DhtFraschetta_h
 #include <DHT.h>
-class DHT_F:DHT{
+class Dht_F:DHT{
  protected:
-  boolean INIZIALIZZATO;
-  void INIZIALIZZA_SE_NON_INZIALIZZATO(){if(!INIZIALIZZATO){begin();}}
+  boolean Initialized;
+  void InitializesIfNotInitialized(){if(!Initialized){begin();}}
  public:
-  DHT_F(uint8_t PIN,uint8_t TIPO):DHT(PIN,TIPO){}
-  float LEGGI_TEMPERATURA(){
-   INIZIALIZZA_SE_NON_INZIALIZZATO(); return readTemperature();}
-  float LEGGI_UMIDITA(){
-   INIZIALIZZA_SE_NON_INZIALIZZATO(); return readHumidity();}
+  Dht_F(uint8_t Pin,uint8_t Type):DHT(Pin,Type){}
+  float ReadTemperature(){
+   InitializesIfNotInitialized(); return readTemperature();}
+  float ReadHumidity(){
+   InitializesIfNotInitialized(); return readHumidity();}
 };
 #endif
