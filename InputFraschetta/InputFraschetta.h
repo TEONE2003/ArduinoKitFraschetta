@@ -30,7 +30,7 @@ class EntranceF{
    else{return !L;}
   }
   uint16_t AnalogRead(){return analogRead(Pin);}
-  EntranceF(uint8_t Pin,ResistanceMode ResistanceM=ExternalResistance,DigitalType DigitalReadM=NormalLogic){
+  EntranceF(uint8_t Pin=0,ResistanceMode ResistanceM=ExternalResistance,DigitalType DigitalReadM=NormalLogic){
    SetResistanceMode(ResistanceM);
    SetDigitalReadMode(DigitalReadM);
    SetPin(Pin);

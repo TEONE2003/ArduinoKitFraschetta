@@ -1,10 +1,7 @@
 #ifndef LedFraschetta_h
 #define LedFraschetta_h
 #include <OutputFraschetta.h>
-class LED:public USCITA {
- public:
-  LED(){}
-  LED(uint8_t PIN):USCITA(PIN){}
-  LED(uint8_t PIN,MEMORIZZA_STATO SALVA):USCITA(PIN,SALVA){}
+class LedF:public OutputF {
+ public: LedF(uint8_t Pin=0,MemorizeStatus Save=DoNotSaveStatus):OutputF(Pin,Save){}
 };
 #endif
