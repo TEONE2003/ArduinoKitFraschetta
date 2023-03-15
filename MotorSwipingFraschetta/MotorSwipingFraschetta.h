@@ -1,26 +1,29 @@
 #ifndef MotorSwipingFraschetta_h
 #define MotorSwipingFraschetta_h
 #include <VirtualCycleFraschetta.h>
-class MOTORE_SWIPING{
+class MotorSwipingF{
  public:
-  CicloVirtualeF C;
-  uint16_t POSIZIONE_AVANTI,POSIZIONE_INDIETRO;
-  virtual uint16_t POSIZIONE()=0;
-  virtual void SWIPE_AVANTI()=0;
-  virtual void SWIPE_INDIETRO()=0;
-  void SWIPING(uint16_t TEMPO_DA_FERMO, UNITA_DI_TEMPO UNITA){
-   if(!C.INIZIALIZZATO()){C = CicloVirtualeF(TEMPO_DA_FERMO,UNITA);}
-    if(C.TICK()){
-     if(POSIZIONE_AVANTI>POSIZIONE_INDIETRO){
-      if(POSIZIONE()<POSIZIONE_AVANTI){SWIPE_AVANTI();}
-      else if(POSIZIONE()>POSIZIONE_INDIETRO){SWIPE_INDIETRO();}
+  VirtualCycleF C;
+  uint16_t ForwardPosition,BackPosition;
+  virtual uint16_t Position()=0;
+  virtual void ForwardSwipe()=0;
+  virtual void BackSwipe()=0;
+  void Swiping(uint16_t IdleTime, TimeOfUnit Unit){
+   if(!C.Initialized()){C = VirtualCycleF(IdleTime,Unit);}
+    if(C.Tick()){
+     if(ForwardPosition>BackPosition){
+      if(Position()<ForwardPosition){ForwardSwipe();}
+      else if(Position()>BackPosition){BackSwipe();}
      }
      else{
-      if(POSIZIONE()>POSIZIONE_AVANTI){SWIPE_AVANTI();}
-      else if(POSIZIONE()<POSIZIONE_INDIETRO){SWIPE_INDIETRO();}
+      if(Position()>ForwardPosition){ForwardSwipe();}
+      else if(Position()<BackPosition){BackSwipe();}
      }
      }
     }
-    MOTORE_SWIPING(){}
+    MotorSwipingF(uint16_t ForwardPosition=0,uint16_t BackPosition=0){
+     this->ForwardPosition=ForwardPosition;
+     this->BackPosition=BackPosition;
+    }
 };
 #endif
