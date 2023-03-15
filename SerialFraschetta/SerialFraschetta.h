@@ -2,22 +2,22 @@
 #define SerialFraschetta_h
 #include <BasicSerialFraschetta.h>
 #include <SoftwareSerial.h>
-class SERIALE:SoftwareSerial,public SERIALE_BASE{
+class SerialF:SoftwareSerial,public BasicSerialF{
 protected:
- void INIZIALIZZA_SE_NON_INZIALIZZATO()override{if(!INIZIALIZZATO()){end(); begin(BAUD); I=1;}}
- boolean DATI_PRESENTI()override{return available()>0;}
- String STRINGA()override{return readString();}
- uint8_t BYTE()override{return read();}
- char CARATTERE()override{return read();}
+ void InitializeIfNotInitialized()override{if(!Initialized()){end(); begin(Baud); I=1;}}
+ boolean DataPresent()override{return available()>0;}
+ String String()override{return readString();}
+ uint8_t Byte()override{return read();}
+ char Char()override{return read();}
 public:
- SERIALE(const uint8_t &RX=2,const uint8_t &TX=3,const uint32_t &BAUD=9600):SoftwareSerial(RX,TX),SERIALE_BASE(BAUD){}
+ SerialF(uint8_t RX=2,uint8_t TX=3,uint32_t Baud=9600):SoftwareSerial(RX,TX),BasicSerialF(Baud){}
  template <typename T>
- void INVIA(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); print(t);}
+ void Send(T t){InitializeIfNotInitialized(); print(t);}
  template <typename T>
- void INVIA_ANDANDO_A_CAPO(T t){INIZIALIZZA_SE_NON_INZIALIZZATO(); println(t);}
- void PONTE_SERIALE(){
-  INIZIALIZZA_SE_NON_INZIALIZZATO();
-  if(!PSERIALE){Serial.end(); Serial.begin(9600); PSERIALE=1;}
+ void SendLN(T t){InitializeIfNotInitialized(); println(t);}
+ void SerialBridge(){
+  InitializeIfNotInitialized();
+  if(!SerialBridge){Serial.end(); Serial.begin(9600); SerialBridge=1;}
   if(Serial.available()){write(Serial.read());}
   if(available()){Serial.write(read());}
 }
