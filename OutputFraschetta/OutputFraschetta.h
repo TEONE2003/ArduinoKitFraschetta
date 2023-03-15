@@ -1,5 +1,8 @@
 #ifndef OutputFraschetta_h
 #define OutputFraschetta_h
+#include <DigitalTypeFraschetta.h>
+#include <VirtualCycleFraschetta.h>
+#include <TimerFraschetta.h>
 enum MemorizeState:boolean{DoNotSaveState=0,SaveStatus=1};
 class OutputF{
 protected:

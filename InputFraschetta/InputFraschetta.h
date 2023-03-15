@@ -1,7 +1,7 @@
 #ifndef InputFraschetta_h
 #define InputFraschetta_h
+#include <DigitalTypeFraschetta.h>
 enum ResistanceMode{ExternalResistance,PullUp,PullDown};
-enum DigitalType:boolean{NormalLogic=1,ReverseLogic=0};
 class EntranceF{
  protected:
   uint8_t Pin;
