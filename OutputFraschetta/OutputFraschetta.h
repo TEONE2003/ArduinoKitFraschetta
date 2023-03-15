@@ -1,69 +1,65 @@
 #ifndef OutputFraschetta_h
 #define OutputFraschetta_h
-enum MEMORIZZA_STATO:boolean{NON_SALVARE_STATO=0,SALVA_STATO=1};
-class USCITA{
+enum MemorizeState:boolean{DoNotSaveState=0,SaveStatus=1};
+class OutputF{
 protected:
- uint8_t PIN;
- CicloVirtualeF LAMP;
- TimerF PERIODO;
- TIPO_DIGITALE TIPO_D=LOGICA_NORMALE;
- MEMORIZZA_STATO SALVA=NON_SALVARE_STATO;
- void IMPOSTA_PIN(uint8_t &PIN){
-  this->PIN=PIN; pinMode(PIN,OUTPUT);
-  if(TIPO_D){digitalWrite(PIN,0);}
-  else{digitalWrite(PIN,1);}
+ uint8_t Pin;
+ VirtualCycleF Bli;
+ TimerF Period;
+ DigitalType TypeD;
+ MemorizeState Save;
+ void SetPin(uint8_t &Pin){
+  this->Pin=Pin; pinMode(Pin,OUTPUT);
+  if(TypeD){digitalWrite(Pin,0);}
+  else{digitalWrite(Pin,1);}
  }
 public:
- void IMPOSTA_STATO(uint8_t PERCENTUALE){
- if(PERCENTUALE==100){digitalWrite(PIN,TIPO_D);}
- else if(PERCENTUALE==0){digitalWrite(PIN,!TIPO_D);}
- else{analogWrite(PIN,(PERCENTUALE*255)/100);}
- if(SALVA){EEPROM.update(PIN,PERCENTUALE);}
+ void SetStatus(uint8_t Percentage){
+ if(Percentage==100){digitalWrite(Pin,TypeD);}
+ else if(Percentage==0){digitalWrite(Pin,!TypeD);}
+ else{analogWrite(Pin,(Percentage*255)/100);}
+ if(Save){EEPROM.update(Pin,Percentage);}
  }
 protected:
- void INIZIALIZZA_PIN(uint8_t &PIN){IMPOSTA_PIN(PIN); IMPOSTA_STATO(EEPROM.read(PIN));};
+ void InitializePin(uint8_t &Pin){SetPin(Pin); SetStatus(EEPROM.read(Pin));};
 public:
- void IMPOSTA_STATO_ANALOGICO(uint8_t STATO){IMPOSTA_STATO((STATO*100)/255);}
- USCITA(){}
- USCITA(uint8_t PIN){IMPOSTA_PIN(PIN);}
- USCITA(uint8_t PIN,TIPO_DIGITALE TIPO_D){this->TIPO_D=TIPO_D; INIZIALIZZA_PIN(PIN);}
- USCITA(uint8_t PIN,MEMORIZZA_STATO SALVA){this->SALVA=SALVA; INIZIALIZZA_PIN(PIN);}
- USCITA(uint8_t PIN,TIPO_DIGITALE TIPO_D,MEMORIZZA_STATO SALVA){
- this->TIPO_D=TIPO_D;
- this->SALVA=SALVA;
- INIZIALIZZA_PIN(PIN);
+ void SetAnalogStatus(uint8_t Status){SetStatus((Status*100)/255);}
+ OutputF(uint8_t Pin=0,DigitalType TypeD=NormalLogic,MemorizeState Save=DoNotSaveState){
+ this->TypeD=TypeD;
+ this->Save=Save;
+ InitializePin(Pin);
  }
- void ACCENDI(){IMPOSTA_STATO(100);}
- void SPEGNI(){IMPOSTA_STATO(0);}
- void IMPOSTA_STATO_IN_RITARDO(uint8_t PERCENTUALE,uint64_t RITARDO,UNITA_DI_TEMPO UNITA){
-  ASPETTA(RITARDO,UNITA); IMPOSTA_STATO(PERCENTUALE);
+ void TurnOn(){SetStatus(100);}
+ void TurnOff(){SetStatus(0);}
+ void SetStatusWithDelay(uint8_t Percentage,uint64_t Delay,UnitOfTime Unit){
+  Wait(Delay,Unit); SetStatus(Percentage);
  }
- void IMPOSTA_STATO_IN_RITARDO_CON_TIMER(uint8_t PERCENTUALE,uint64_t RITARDO,UNITA_DI_TEMPO UNITA){
-  if(PERIODO.ABILITATO()){PERIODO=TimerF(RITARDO,UNITA);}
-  if(PERIODO.STOP()){IMPOSTA_STATO(PERCENTUALE);}
+ void SetStatusWithDelayWithTimer(uint8_t Percentage,uint64_t Delay,UnitOfTime Unit){
+  if(Period.Enabled()){Period=TimerF(Delay,Unit);}
+  if(Period.Stop()){SetStatus(Percentage);}
  }
- void ACCENDI_CON_DISSOLVENZA(uint8_t PERCENTUALE_MASSIMA,uint16_t LENTEZZA,UNITA_DI_TEMPO UNITA){
-  for(uint8_t P=0;P<PERCENTUALE_MASSIMA;P++){
-   ASPETTA(LENTEZZA,UNITA); IMPOSTA_STATO(P);
+ void TurnOnWithFade(uint8_t MaximumPercentage,uint16_t Time,UnitOfTime Unit){
+  for(uint8_t P=0;P<MaximumPercentage;P++){
+   Wait(Time,Unit); SetStatus(P);
   }
  }
- void SPEGNI_CON_DISSOLVENZA(uint8_t PERCENTUALE_MASSIMA,uint16_t LENTEZZA,UNITA_DI_TEMPO UNITA){
-  for(uint8_t P=PERCENTUALE_MASSIMA;P>0;P--){
-   ASPETTA(LENTEZZA,UNITA); IMPOSTA_STATO(P);
+ void TurnOffWithFade(uint8_t MaximumPercentage,uint16_t Time,UnitOfTime Unit){
+  for(uint8_t P=MaximumPercentage;P>0;P--){
+   Wait(Time,Unit); SetStatus(P);
   }
  }
- void INVERTI_STATO(){
-  uint8_t S=EEPROM.read(PIN);
-  if(S==100){IMPOSTA_STATO(0);}
-  if(S==0){IMPOSTA_STATO(100);}
+ void InvertStatus(){
+  uint8_t S=EEPROM.read(Pin);
+  if(S==100){SetStatus(0);}
+  if(S==0){SetStatus(100);}
  }
- void LAMPEGGIO(uint16_t PERIODO,UNITA_DI_TEMPO UNITA){
-  if(!LAMP.INIZIALIZZATO()){LAMP = CicloVirtualeF(PERIODO,UNITA);}
-  if(LAMP.TICK()){INVERTI_STATO();}
+ void Blink(uint16_t Period,UnitOfTime Unit){
+  if(!Bli.Inizialized()){Bli = VirtualCycleF(Period,Unit);}
+  if(Bli.Tick()){InvertStatus();}
  }
- void PULSAZIONE(uint8_t PERCENTUALE_MASSIMA,uint16_t PERIODO,UNITA_DI_TEMPO UNITA){
-  ACCENDI_CON_DISSOLVENZA(PERCENTUALE_MASSIMA,PERIODO,UNITA);
-  SPEGNI_CON_DISSOLVENZA(PERCENTUALE_MASSIMA,PERIODO,UNITA);
+ void FadingLoop(uint8_t MaximumPercentage,uint16_t Period,UnitOfTime Unit){
+  TurnOnWithFade(MaximumPercentage,Period,Unit);
+  TurnOffWithFade(MaximumPercentage,Period,Unit);
  }
 };
 #endif

@@ -2,11 +2,11 @@
 #define PhotocellDuskToDawnFraschetta_h
 #include <ReleFraschetta.h>
 #include <PhotoresistorFraschetta.h>
-class CREPUSCOLARE:RELE,FOTORESISTORE{
+class PhotocellDuskToDawnF:ReleF,Photoresistor{
 public:
- CREPUSCOLARE(uint8_t PIN_FOTORESISTORE,uint16_t SOGLIA_ACCENSIONE,uint16_t SOGLIA_SPEGNIMENTO,uint64_t RITARDO,UNITA_DI_TEMPO UNITA,
- uint8_t PIN_RELE,TIPO_DIGITALE TIPORELE):FOTORESISTORE(PIN_FOTORESISTORE,SOGLIA_ACCENSIONE,SOGLIA_SPEGNIMENTO,RITARDO,UNITA),
- RELE(PIN_RELE,TIPORELE){}
- void FUNZIONE_CREPUSCOLARE(){if(CONTROLLO()){ACCENDI();} else{SPEGNI();}}
+ PhotocellDuskToDawnF(uint8_t PinPhotoresistor,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,TimeOfUnit Unit,
+ uint8_t PinRele,Digitaltype ReleType):Photoresistor(PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit),
+ ReleF(PinRele,ReleType){}
+ void FunctionPhotocellDuskToDawn(){if(Control()){TurnOn();} else{TurnOff();}}
 };
 #endif
