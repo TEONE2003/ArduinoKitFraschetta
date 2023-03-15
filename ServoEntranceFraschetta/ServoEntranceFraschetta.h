@@ -2,23 +2,23 @@
 #define ServoEntranceFraschetta_h
 #include <ServomotorFraschetta.h>
 #include <MotorizedEntranceFraschetta.h>
-class SERVO_INGRESSO:SERVOMOTORE,INGRESSO_MOTORIZZATO{
+class ServoEntranceF:ServomotorF,MotorizedEntranceF{
  protected:
-  uint16_t RITARDO_MOVIMENTO_IN_MILLISECONDI;
+  uint16_t MovementDelayInMilliseconds;
  public:
-  void CONTROLLO_STATO_MOVIMENTO(){INGRESSO_MOTORIZZATO::CONTROLLO_STATO_MOVIMENTO();}
-    void APRI() override {
-    MEMORIZZA_STATO(APERTURA);
-    IMPOSTA_POSIZIONE(FINECORSA_APERTURA,RITARDO_MOVIMENTO_IN_MILLISECONDI);
+  void MovementStatusCheck(){MotorizedEntranceF::MovementStatusCheck();}
+    void Open() override {
+    MemorizeStatus(Opening);
+    SetPosition(OpeningLimitSwitch,MovementDelayInMilliseconds);
    }
-   void CHIUDI() override {
-    MEMORIZZA_STATO(CHIUSURA);
-    IMPOSTA_POSIZIONE(FINECORSA_CHIUSURA,RITARDO_MOVIMENTO_IN_MILLISECONDI);
+   void Close() override {
+    MemorizeStatus(Closing);
+    SetPosition(ClosingLimitSwitch,MovementDelayInMilliseconds);
    }
-    boolean APERTO() override {return POSIZIONE()==FINECORSA_APERTURA;}
-    boolean CHIUSO() override {return POSIZIONE()==FINECORSA_CHIUSURA;}
-   SERVO_INGRESSO(uint8_t PIN,uint16_t POSIZIONE_APERTURA,uint16_t POSIZIONE_CHIUSURA,uint16_t INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO,
-   uint16_t RITARDO_MOVIMENTO_IN_MILLISECONDI):SERVOMOTORE(PIN),INGRESSO_MOTORIZZATO(POSIZIONE_APERTURA,POSIZIONE_CHIUSURA,INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO){
-   this->RITARDO_MOVIMENTO_IN_MILLISECONDI = RITARDO_MOVIMENTO_IN_MILLISECONDI;}
+    boolean Opened() override {return Position()==OpeningLimitSwitch;}
+    boolean Closed() override {return Position()==ClosingLimitSwitch;}
+   ServoEntranceF(uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition,uint16_t AddressMotionStatusPosition,
+   uint16_t MovementDelayInMilliseconds):ServomotorF(Pin),MotorizedEntranceF(OpeningPosition,ClosingPosition,AddressMotionStatusPosition){
+   this->MovementDelayInMilliseconds = MovementDelayInMilliseconds;}
 };
 #endif
