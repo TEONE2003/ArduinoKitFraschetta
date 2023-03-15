@@ -1,48 +1,39 @@
 #ifndef InputFraschetta_h
 #define InputFraschetta_h
-enum MODALITA_RESISTENZA{RESISTENZA_ESTERNA,PULLUP,PULLDOWN};
-enum TIPO_DIGITALE:boolean{LOGICA_NORMALE=1,LOGICA_INVERSA=0};
-class ENTRATA{
+enum ResistanceMode{ExternalResistance,PullUp,PullDown};
+enum DigitalType:boolean{NormalLogic=1,ReverseLogic=0};
+class EntranceF{
  protected:
-  uint8_t PIN;
-  TIPO_DIGITALE M_LETTURA_DIGITALE=LOGICA_NORMALE;
-  MODALITA_RESISTENZA M_RESISTENZA=MODALITA_RESISTENZA::RESISTENZA_ESTERNA;
+  uint8_t Pin;
+  DigitalType DigitalReadM=NormalLogic;
+  ResistanceMode ResistanceM=ResistanceMode::ExternalResistance;
  public:
-  void RESISTENZA_ESTERNA(){M_RESISTENZA=MODALITA_RESISTENZA::RESISTENZA_ESTERNA; pinMode(PIN,INPUT);}
-  void PULLUP(){M_RESISTENZA=MODALITA_RESISTENZA::PULLUP; pinMode(PIN,INPUT_PULLUP);}
-  void PULLDOWN(){M_RESISTENZA=MODALITA_RESISTENZA::PULLDOWN; digitalWrite(PIN,0);}
+  void ExternalResistance(){ResistanceM=ResistanceMode::ExternalResistance; PinMode(Pin,INPUT);}
+  void PullUp(){ResistanceM=ResistanceMode::PullUp; PinMode(Pin,INPUT_PULLUP);}
+  void PullDown(){ResistanceM=ResistanceMode::PullDown; digitalWrite(Pin,0);}
  protected:
-  void IMPOSTA_PIN(const uint8_t &PIN){this->PIN=PIN; RESISTENZA_ESTERNA();}
-  void IMPOSTA_MODALITA_RESISTENZA(const MODALITA_RESISTENZA &M_RESISTENZA){
-   switch(M_RESISTENZA){
-    case MODALITA_RESISTENZA::RESISTENZA_ESTERNA: RESISTENZA_ESTERNA(); break;
-    case MODALITA_RESISTENZA::PULLUP: PULLUP(); break;
-    case MODALITA_RESISTENZA::PULLDOWN: PULLDOWN(); break;
+  void SetPin(const uint8_t &Pin){this->Pin=Pin; ExternalResistance();}
+  void SetResistanceMode(const ResistanceMode &ResistanceM){
+   switch(ResistanceM){
+    case ResistanceMode::ExternalResistance: ExternalResistance(); break;
+    case ResistanceMode::PullUp: PullUp(); break;
+    case ResistanceMode::PullDown: PullDown(); break;
    }
   }
-  void IMPOSTA_MODALITA_LETTURA_DIGITALE(TIPO_DIGITALE &M_LETTURA_DIGITALE){
-   this->M_LETTURA_DIGITALE=M_LETTURA_DIGITALE;
+  void SetDigitalReadMode(DigitalType &DigitalReadM){
+   this->DigitalReadM=DigitalReadM;
   }
  public:
-  ENTRATA(){}
-  ENTRATA(uint8_t PIN){IMPOSTA_PIN(PIN);}
-  ENTRATA(uint8_t PIN,MODALITA_RESISTENZA M_RESISTENZA){
-   IMPOSTA_MODALITA_RESISTENZA(M_RESISTENZA); IMPOSTA_PIN(PIN);
-  }
-  ENTRATA(uint8_t PIN,TIPO_DIGITALE M_LETTURA_DIGITALE){
-   IMPOSTA_MODALITA_LETTURA_DIGITALE(M_LETTURA_DIGITALE); IMPOSTA_PIN(PIN);
-  }
-  ENTRATA(uint8_t PIN,MODALITA_RESISTENZA M_RESISTENZA,TIPO_DIGITALE M_LETTURA_DIGITALE){
-   IMPOSTA_MODALITA_RESISTENZA(M_RESISTENZA);
-   IMPOSTA_MODALITA_LETTURA_DIGITALE(M_LETTURA_DIGITALE);
-   IMPOSTA_PIN(PIN);
-  }
-  boolean LETTURA_DIGITALE(){
-   boolean L=digitalRead(PIN);
-   if(M_LETTURA_DIGITALE){return L;}
+  boolean DigitalRead(){
+   boolean L=digitalRead(Pin);
+   if(DigitalReadM){return L;}
    else{return !L;}
   }
-  uint16_t LETTURA_ANALOGICA(){return analogRead(PIN);}
+  uint16_t AnalogRead(){return analogRead(Pin);}
+  EntranceF(uint8_t Pin,ResistanceMode ResistanceM=ExternalResistance,DigitalType DigitalReadM=NormalLogic){
+   SetResistanceMode(ResistanceM);
+   SetDigitalReadMode(DigitalReadM);
+   SetPin(Pin);
+  }
 };
-
 #endif
