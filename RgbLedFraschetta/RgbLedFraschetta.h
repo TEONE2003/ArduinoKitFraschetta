@@ -26,7 +26,7 @@ class RgbLedF{
   }
   void Blink(uint16_t Period,UnitOfTime Unit){
    Green.TurnOff(); Red.TurnOff(); Blue.TurnOff();
-   ASPETTA(Period,Unit);
+  Wait(Period,Unit);
    SetColor(Color);
   }
   void TurnOnWithFader(uint8_t MaximumPercentage,uint16_t Slow,UnitOfTime Unit){
