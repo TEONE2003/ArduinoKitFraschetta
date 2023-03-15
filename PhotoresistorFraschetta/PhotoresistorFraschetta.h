@@ -2,23 +2,23 @@
 #define PhotoresistorFraschetta_h
 #include <InputFraschetta.h>
 #include <VirtualCycleFraschetta.h>
-class FOTORESISTORE:ENTRATA,CicloVirtualeF{
+class Photoresistor:InputF,VirtualCycleF{
 protected:
- uint16_t SOGLIA_ACCENSIONE,SOGLIA_SPEGNIMENTO;
- boolean ULTIMO_CONTROLLO_ESEGUITO;
+ uint16_t TurnOnThreshold,TurnOffThreshold;
+ boolean LastCheckExecuted;
 public:
- FOTORESISTORE(uint8_t PIN,uint16_t SOGLIA_ACCENSIONE,uint16_t SOGLIA_SPEGNIMENTO,uint64_t RITARDO,UNITA_DI_TEMPO UNITA):ENTRATA(PIN),CicloVirtualeF(RITARDO,UNITA){
-  this->SOGLIA_ACCENSIONE = SOGLIA_ACCENSIONE;
-  this->SOGLIA_SPEGNIMENTO = SOGLIA_SPEGNIMENTO;
+ Photoresistor(uint8_t Pin,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit):InputF(Pin),VirtualCycleF(Delay,Unit){
+  this->TurnOnThreshold = TurnOnThreshold;
+  this->TurnOffThreshold = TurnOffThreshold;
  }
- uint16_t LEGGI_FOTORESISTORE(){return LETTURA_ANALOGICA();}
- boolean CONTROLLO(){
- if(TICK()){
-  if(LEGGI_FOTORESISTORE()>=SOGLIA_ACCENSIONE){ULTIMO_CONTROLLO_ESEGUITO=1; return 1;}
-  if(LEGGI_FOTORESISTORE()<=SOGLIA_ACCENSIONE && LEGGI_FOTORESISTORE()>=SOGLIA_SPEGNIMENTO){ return ULTIMO_CONTROLLO_ESEGUITO;}
-  ULTIMO_CONTROLLO_ESEGUITO=0; return 0;
+ uint16_t ReadPhotoresistor(){return AnalogRead();}
+ boolean Check(){
+ if(Tick()){
+  if(ReadPhotoresistor()>=TurnOnThreshold){LastCheckExecuted=1; return 1;}
+  if(ReadPhotoresistor()<=TurnOnThreshold && ReadPhotoresistor()>=TurnOffThreshold){ return LastCheckExecuted;}
+  LastCheckExecuted=0; return 0;
  }
- return ULTIMO_CONTROLLO_ESEGUITO;
+ return LastCheckExecuted;
  }
 };
 #endif
