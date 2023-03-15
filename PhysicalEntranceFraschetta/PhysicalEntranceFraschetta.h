@@ -1,21 +1,19 @@
 #ifndef PhysicalEntranceFraschetta_h
 #define PhysicalEntranceFraschetta_h
 #include <ButtonFraschetta.h>
-class INGRESSO_FISICO{
+class PhysicalEntranceF{
  protected:
-  PULSANTE PULSANTE_FINECORSA_APERTURA;
-  PULSANTE PULSANTE_FINECORSA_CHIUSURA;
+  Button ButtonOpeningLimitSwitch;
+  Button ButtonClosingLimitSwitch;
  public:
-  INGRESSO_FISICO(uint8_t PIN_FINECORSA_APERTURA,uint8_t PIN_FINECORSA_CHIUSURA,uint64_t RITARDO_FINECORSA1,UNITA_DI_TEMPO UNITA_FINECORSA1,
-  uint64_t RITARDO_FINECORSA2,UNITA_DI_TEMPO UNITA_FINECORSA2){
-  PULSANTE_FINECORSA_APERTURA = PULSANTE(PIN_FINECORSA_APERTURA,RITARDO_FINECORSA1,UNITA_FINECORSA1);
-  PULSANTE_FINECORSA_CHIUSURA = PULSANTE(PIN_FINECORSA_CHIUSURA,RITARDO_FINECORSA2,UNITA_FINECORSA2);
+  PhysicalEntranceF(uint8_t PinOpeningLimitSwitch,uint8_t PinClosingLimitSwitch,uint64_t DelayLimitSwitch1,UnitOfTime UnitLimitSwitch1,
+  uint64_t DelayLimitSwitch2,UnitOfTime UnitLimitSwitch2){
+  ButtonOpeningLimitSwitch = Button(PinOpeningLimitSwitch,DelayLimitSwitch1,UnitLimitSwitch1);
+  ButtonClosingLimitSwitch = Button(PinClosingLimitSwitch,DelayLimitSwitch2,UnitLimitSwitch2);
   }
-  INGRESSO_FISICO(uint8_t PIN_FINECORSA_APERTURA,uint8_t PIN_FINECORSA_CHIUSURA,uint64_t RITARDO_FINECORSA,UNITA_DI_TEMPO UNITA_FINECORSA){
-  PULSANTE_FINECORSA_APERTURA = PULSANTE(PIN_FINECORSA_APERTURA,RITARDO_FINECORSA,UNITA_FINECORSA);
-  PULSANTE_FINECORSA_CHIUSURA = PULSANTE(PIN_FINECORSA_CHIUSURA,RITARDO_FINECORSA,UNITA_FINECORSA);
-  }
-  boolean APERTO(){return PULSANTE_FINECORSA_APERTURA.CLICCATO();}
-  boolean CHIUSO(){return PULSANTE_FINECORSA_CHIUSURA.CLICCATO();}
+  PhysicalEntranceF(uint8_t PinOpeningLimitSwitch,uint8_t PinClosingLimitSwitch,uint64_t DelayLimitSwitch,UnitOfTime UnitLimitSwitch):
+  PhysicalEntranceF(PinOpeningLimitSwitch,PinClosingLimitSwitch,DelayLimitSwitch,UnitLimitSwitch,DelayLimitSwitch,UnitLimitSwitch){}
+  boolean Opened(){return ButtonOpeningLimitSwitch.Clicked();}
+  boolean Closed(){return ButtonClosingLimitSwitch.Clicked();}
 };
 #endif
