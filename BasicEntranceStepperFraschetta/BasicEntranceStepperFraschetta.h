@@ -5,7 +5,7 @@
 class BasicEntranceStepperF:BasicStepperMotorF,public MotorizedEntranceF{
  public:
   virtual uint16_t Position()=0;
-  void Open() override {
+  void Opened override {
    MemorizeStatus(Opening);
    BasicStepperMotorF::Position(OpeningLimitSwitch);
   }
@@ -13,7 +13,7 @@ class BasicEntranceStepperF:BasicStepperMotorF,public MotorizedEntranceF{
    MemorizeStatus(Closing);
    BasicStepperMotorF::Position(ClosingLimitSwitch);
   }
-  boolean Open() override {return Position()==OpeningLimitSwitch;}
+  boolean Opened() override {return Position()==OpeningLimitSwitch;}
   boolean Closed() override {return Position()==ClosingLimitSwitch;}
   BasicEntranceStepperF(uint16_t MaximumSteps,uint16_t OpeningSteps,uint16_t ClosingSteps,
   uint16_t ShiftPeriodInMilliseconds,uint16_t EepromAddressCell1Position,uint16_t EepromAddressCell2Position,uint16_t AddressMotionStatusPosition):

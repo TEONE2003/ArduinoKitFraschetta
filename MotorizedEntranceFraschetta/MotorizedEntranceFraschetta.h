@@ -1,25 +1,25 @@
 #ifndef MotorizedEntranceFraschetta_h
 #define MotorizedEntranceFraschetta_h
-enum STATO_DEL_MOVIMENTO:uint8_t{CHIUSURA=0,APERTURA=1};
-class INGRESSO_MOTORIZZATO{
+enum StatusOfMovement:uint8_t{Closing=0,Opening=1};
+class MotorizedEntranceF{
  protected:
-  uint16_t FINECORSA_APERTURA,FINECORSA_CHIUSURA,INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO;
+  uint16_t OpeningLimitSwitch,ClosingLimitSwitch,AddressMotionStatusPosition;
  public:
-  virtual void APRI()=0;
-  virtual void CHIUDI()=0;
-  virtual boolean APERTO()=0;
-  virtual boolean CHIUSO()=0;
-  void MEMORIZZA_STATO(STATO_DEL_MOVIMENTO STATO){
-   EEPROM.update(INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO,STATO);
+  virtual void Open()=0;
+  virtual void Close()=0;
+  virtual boolean Opened()=0;
+  virtual boolean Closed()=0;
+  void MemorizeStaus(StatusOfMovement Staus){
+   EEPROM.update(AddressMotionStatusPosition,Staus);
   }
-  void CONTROLLO_STATO_MOVIMENTO(){
-   if(EEPROM.read(INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO)){APRI();}
-   else{CHIUDI();}
+  void CheckStausMotion(){
+   if(EEPROM.read(AddressMotionStatusPosition)){Open();}
+   else{Close();}
   }
-  INGRESSO_MOTORIZZATO(uint16_t FINECORSA_APERTURA,uint16_t FINECORSA_CHIUSURA,uint16_t INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO){
-   this->INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO=INDIRIZZO_POSIZIONE_STATO_DEL_MOVIMENTO;
-   this->FINECORSA_APERTURA = FINECORSA_APERTURA;
-   this->FINECORSA_CHIUSURA = FINECORSA_CHIUSURA;
+  MotorizedEntranceF(uint16_t OpeningLimitSwitch,uint16_t ClosingLimitSwitch,uint16_t AddressMotionStatusPosition){
+   this->AddressMotionStatusPosition=AddressMotionStatusPosition;
+   this->OpeningLimitSwitch = OpeningLimitSwitch;
+   this->ClosingLimitSwitch = ClosingLimitSwitch;
   }
 };
 #endif
