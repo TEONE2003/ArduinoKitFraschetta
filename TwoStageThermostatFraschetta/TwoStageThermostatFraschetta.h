@@ -1,26 +1,24 @@
 #ifndef TwoStageThermostatFraschetta_h
 #define TwoStageThermostatFraschetta_h
 #include <ThermostatFraschetta.h>
-class TwoStageThermostat{
+class TwoStageThermostatF{
  protected:
-    Thermostat TERM_RISC,TERM_RAFF;
+    ThermostatF ThermostatHeating,ThermostatCooling;
  public:
-  TwoStageThermostat(uint8_t PIN_RISCALDAMENTO,uint8_t PIN_RAFFREDDAMENTO,TIPO_DIGITALE TIPORELE){
-   TERM_RISC = TERMOSTATO(PIN_RISCALDAMENTO,TIPORELE,RISCALDAMENTO);
-   TERM_RAFF = TERMOSTATO(PIN_RAFFREDDAMENTO,TIPORELE,RAFFREDDAMENTO);
+  TwoStageThermostatF(uint8_t HeatingPin=0,DigitalType HeatingRelayType=NormalLogic,uint8_t CoolingPin=0,DigitalType CoolingRelayType=NormalLogic){
+   ThermostatHeating = ThermostatF(HeatingPin,HeatingRelayType,Heating);
+   ThermostatCooling = ThermostatF(CoolingPin,CoolingRelayType,Cooling);
   }
-  TwoStageThermostat(uint8_t PIN_RISCALDAMENTO,uint8_t PIN_RAFFREDDAMENTO,TIPO_DIGITALE TIPORELE_RISCALDAMENTO,TIPO_DIGITALE TIPORELE_RAFFREDDAMENTO){
-   TERM_RISC = TERMOSTATO(PIN_RISCALDAMENTO,TIPORELE_RISCALDAMENTO,RISCALDAMENTO);
-   TERM_RAFF = TERMOSTATO(PIN_RAFFREDDAMENTO,TIPORELE_RAFFREDDAMENTO,RAFFREDDAMENTO);
+  TwoStageThermostatF(uint8_t HeatingPin,uint8_t CoolingPin,DigitalType RelayType):
+  TwoStageThermostatF(HeatingPin,RelayType,CoolingPin,RelayType){}
+  void ThermostatFunction(uint8_t CurrentTemperature){
+   ThermostatHeating.ThermostatFunction(CurrentTemperature);
+   ThermostatCooling.ThermostatFunction(CurrentTemperature);
   }
-  void FUNZIONE_TERMOSTATO(uint8_t TEMPERATURA_ATTUALE){
-   TERM_RISC.FUNZIONE_TERMOSTATO(TEMPERATURA_ATTUALE);
-   TERM_RAFF.FUNZIONE_TERMOSTATO(TEMPERATURA_ATTUALE);
+  void SetTemperatureThreshold(uint8_t Temperature){
+   ThermostatHeating.TemperatureThreshold = Temperature;
+   ThermostatHeating.TemperatureThreshold = Temperature;
   }
-  void IMPOSTA_SOGLIA_TEMPERATURA(uint8_t TEMPERATURA){
-   TERM_RISC.SOGLIA_TEMPERATURA = TEMPERATURA;
-   TERM_RISC.SOGLIA_TEMPERATURA = TEMPERATURA;
-  }
-  uint8_t SOGLIA_TEMPERATURA(){return TERM_RISC.SOGLIA_TEMPERATURA;}
+  uint8_t TemperatureThreshold(){return ThermostatHeating.TemperatureThreshold;}
 };
 #endif
