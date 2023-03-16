@@ -1,51 +1,51 @@
-#ifndef ReleFraschetta_h
-#define ReleFraschetta_h
+#ifndef ServomotorFraschetta_h
+#define ServomotorFraschetta_h
 #include <Servo.h>
 #include <MotorSwipingFraschetta.h>
-class SERVOMOTORE:Servo,MOTORE_SWIPING{
+class ServomotorF:Servo,MotorSwipingF{
  protected:
-  uint8_t PIN;
-  uint16_t POSIZIONE()override{return EEPROM.read(PIN);}
-  void INIZIALIZZA_SE_NON_INZIALIZZATO(){if(!attached()){attach(PIN); write(uint8_t(POSIZIONE())); delay(2);}}
-  void SCRIVI_POSIZIONE(uint8_t GRADI){
-   if(GRADI>180){GRADI=180;}
-   INIZIALIZZA_SE_NON_INZIALIZZATO();
-   write(GRADI);
-   EEPROM.update(PIN,GRADI);
+  uint8_t Pin;
+  uint16_t Position()override{return EEPROM.read(Pin);}
+  void InitializeIfNotInitialized(){if(!attached()){attach(Pin); write(uint8_t(Position())); delay(2);}}
+  void WritePosition(uint8_t Degrees){
+   if(Degrees>180){Degrees=180;}
+   InitializeIfNotInitialized();
+   write(Degrees);
+   EEPROM.update(Pin,Degrees);
   }
-  void AUMENTA_POSIZIONE(const uint8_t &GRADI,const uint16_t &PERIODO_IN_MILLISECONDI){
-    for(uint16_t P=POSIZIONE();P<=GRADI;P++){
-    SCRIVI_POSIZIONE(P);
-    delay(PERIODO_IN_MILLISECONDI);
+  void IncreasePosition(uint8_t Degrees,uint16_t PeriodInMilliseconds){
+    for(uint16_t P=Position();P<=Degrees;P++){
+    WritePosition(P);
+    delay(PeriodInMilliseconds);
     }
   }
-  void DIMINUISCI_POSIZIONE(const uint8_t &GRADI,const uint16_t &PERIODO_IN_MILLISECONDI){
-    for(int16_t P=POSIZIONE();P>=GRADI;P--){
-    SCRIVI_POSIZIONE(P);
-    delay(PERIODO_IN_MILLISECONDI);
+  void DecreasePosition(uint8_t Degrees,uint16_t PeriodInMilliseconds){
+    for(int16_t P=Position();P>=Degrees;P--){
+    WritePosition(P);
+    delay(PeriodInMilliseconds);
     }
   }
-  void SWIPE_AVANTI()override{IMPOSTA_POSIZIONE(POSIZIONE_AVANTI, PERIODO_SPOSTAMENTO_IN_MILLISECONDI);}
-  void SWIPE_INDIETRO()override{IMPOSTA_POSIZIONE(POSIZIONE_INDIETRO, PERIODO_SPOSTAMENTO_IN_MILLISECONDI);}
+  void ForwardSwipe()override{SetPosition(PositionForward, MovementPeriodInMilliseconds);}
+  void BackSwipe()override{SetPosition(PositionBackward, MovementPeriodInMilliseconds);}
 public:
- uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI;
- void IMPOSTA_POSIZIONE(uint16_t GRADI,uint16_t PERIODO_IN_MILLISECONDI){
-  if(PERIODO_IN_MILLISECONDI>0){
-   AUMENTA_POSIZIONE(GRADI,PERIODO_IN_MILLISECONDI);
-   DIMINUISCI_POSIZIONE(GRADI,PERIODO_IN_MILLISECONDI);
+ uint16_t MovementPeriodInMilliseconds;
+ void SetPosition(uint16_t Degrees,uint16_t PeriodInMilliseconds){
+  if(PeriodInMilliseconds>0){
+   IncreasePosition(Degrees,PeriodInMilliseconds);
+   DecreasePosition(Degrees,PeriodInMilliseconds);
   }
-  else{SCRIVI_POSIZIONE(GRADI);}
+  else{WritePosition(Degrees);}
  }
- void SWIPING(uint8_t POSIZIONE_AVANTI, uint8_t POSIZIONE_INDIETRO,uint16_t TEMPO_DA_FERMO, UNITA_DI_TEMPO UNITA){
-  this->POSIZIONE_AVANTI = POSIZIONE_AVANTI;
-  this->POSIZIONE_INDIETRO = POSIZIONE_INDIETRO;
-  MOTORE_SWIPING::SWIPING(TEMPO_DA_FERMO,UNITA);
+ void Swiping(uint8_t PositionForward, uint8_t PositionBackward,uint16_t IdleTime, UnitOfTime Unit){
+  this->PositionForward = PositionForward;
+  this->PositionBackward = PositionBackward;
+  MotorSwipingF::Swiping(IdleTime,Unit);
  }
- SERVOMOTORE(uint8_t PIN):Servo(),MOTORE_SWIPING(){
-  this->PIN = PIN;
-  /*NON SI PUO USARE LA FUNZIONE "attach" PRIMA DEL SETUP,
-  IPOTIZZO CHE PRIMA DEL SETUP NON VENGONO INIZIALIZZATE LE FUNZIONI PRINCIPALI DELL'AMBIENTE DI SVILUPPO,
-  QUINDI VERRA ESEGUITO LA PRIMA VOLTA CHE SI USA IL SERVOMOTORE*/
+ ServomotorF(uint8_t Pin):Servo(),MotorSwipingF(){
+  this->Pin = Pin;
+  /*YOU CANNOT USE THE ‘attach’ FUNCTION BEFORE SETUP. I ASSUME THAT BEFORE SETUP THE MAIN FUNCTIONS
+  OF THE DEVELOPMENT ENVIRONMENT ARE NOT INITIALIZED, SO IT WILL BE EXECUTED THE FIRST TIME
+  YOU USE THE SERVOMOTOR.”*/
  }
 };
 #endif
