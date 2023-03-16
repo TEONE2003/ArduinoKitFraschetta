@@ -8,7 +8,6 @@ class ThermostatF:ReleF,VirtualCycleF{
   ThermostatType TypeT;
  public:
   uint8_t TemperatureThreshold=20;
- ThermostatF():ReleF(){}
  ThermostatF(uint8_t PinRele=0,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):ReleF(PinRele,ReleType),
  VirtualCycleF(10,Seconds){this->TypeT=TypeT;}
  void ThermostatFunction(uint8_t CurrentTemperature){
