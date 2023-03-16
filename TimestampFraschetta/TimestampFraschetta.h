@@ -1,54 +1,54 @@
 #ifndef TimestampFraschetta_h
 #define TimestampFraschetta_h
 #include <TimeFraschetta.h>
-struct ORARIO{
+struct TimestampF{
 protected:
- double NANOSEC,MICROSEC,MILLISEC,SEC,O,M;
+ double Nanosec,Microsec,Millisec,Sec,O,M;
 public:
 
-void ORE(uint64_t ORE){O = ORE;}
+void hours(uint64_t Hours){O = Hours;}
     
-void MINUTI(uint64_t MINUTI){
- TEMPO T(MINUTI,MINUTI);
- if(MINUTI>59){
-  O += T.ORE();
-  M += T.RESTO();
+void Minutes(uint64_t Minutes){
+ TEMPO T(Minutes,Minutes);
+ if(Minutes>59){
+  O += T.Hours();
+  M += T.Remainder();
  }
- else{M += MINUTI;}
+ else{M += Minutes;}
 }
 
-void SECONDI(uint64_t SECONDI){
- TEMPO T(SECONDI,SECONDI);
- if(SECONDI > 59){MINUTI(T.MINUTI()); SEC += T.RESTO();}
- else{SEC += T.VALORE;}
+void Seconds(uint64_t Seconds){
+ TEMPO T(Seconds,Seconds);
+ if(Seconds > 59){Minutes(T.Minutes()); Sec += T.Remainder();}
+ else{Sec += T.Value;}
 }
 
-void MILLISECONDI(uint64_t MILLISECONDI){
- TEMPO T(MILLISECONDI,MILLISECONDI);
- if(MILLISECONDI > 999){SECONDI(T.SECONDI()); MILLISEC += T.RESTO();}
- else{MILLISEC += T.VALORE;}
+void Milliseconds(uint64_t Milliseconds){
+ TEMPO T(Milliseconds,Milliseconds);
+ if(Milliseconds > 999){Seconds(T.Seconds()); Millisec += T.Remainder();}
+ else{Millisec += T.Value;}
 }
 
-void MICROSECONDI(uint64_t MICROSECONDI){
- TEMPO T(MICROSECONDI,MICROSECONDI);
- if(MICROSECONDI > 999){MILLISECONDI(T.MILLISECONDI()); MICROSEC += T.RESTO();}
- else{MICROSEC += T.VALORE;}
+void Microseconds(uint64_t Microseconds){
+ TEMPO T(Microseconds,Microseconds);
+ if(Microseconds > 999){Milliseconds(T.Milliseconds()); Microsec += T.Remainder();}
+ else{Microsec += T.Value;}
 }
     
-void NANOSECONDI(uint64_t NANOSECONDI){
- TEMPO T(NANOSECONDI,NANOSECONDI);
- if(NANOSECONDI > 999){MICROSECONDI(T.MICROSECONDI()); NANOSEC += T.RESTO();}
- else{NANOSEC += T.VALORE;}
+void Nanoseconds(uint64_t Nanoseconds){
+ TEMPO T(Nanoseconds,Nanoseconds);
+ if(Nanoseconds > 999){Microseconds(T.Microseconds()); Nanosec += T.Remainder();}
+ else{Nanosec += T.Value;}
 }
       
-uint64_t  NANOSECONDI(){return NANOSEC;}
-uint64_t  MICROSECONDI(){return MICROSEC;}
-uint64_t  MILLISECONDI(){return MILLISEC;}
-uint64_t  SECONDI(){return SEC;}
-uint64_t  MINUTI(){return M;}
-uint64_t  ORE(){return O;}
-ORARIO(uint64_t ORE=0,uint64_t MINUTI=0,uint64_t SECONDI=0,uint64_t MILLISECONDI=0,uint64_t MICROSECONDI=0,uint64_t NANOSECONDI=0)
-{this->NANOSECONDI=NANOSECONDI; this->MICROSECOND=MICROSECONDI; this->MILLISECONDI=MILLISECONDI; this->SECONDI=SECONDI; this->MINUTI=MINUTI; this->ORE=ORE;}
-ORARIO(TEMPO TEMPO_DA_IMPOSTARE){this->NANOSECONDI(TEMPO_DA_IMPOSTARE.NANOSECONDI());}
+uint64_t  Nanoseconds(){return Nanosec;}
+uint64_t  Microseconds(){return Microsec;}
+uint64_t  Milliseconds(){return Millisec;}
+uint64_t  Seconds(){return Sec;}
+uint64_t  Minutes(){return M;}
+uint64_t  Hours(){return O;}
+TimestampF(uint64_t Hours=0,uint64_t Minutes=0,uint64_t Seconds=0,uint64_t Milliseconds=0,uint64_t Microseconds=0,uint64_t Nanoseconds=0)
+{this->Nanoseconds=Nanoseconds; this->Microseconds=Microseconds; this->Milliseconds=Milliseconds; this->Seconds=Seconds; this->Minutes=Minutes; this->Hours=Hours;}
+TimestampF(TEMPO TimeToSet){this->Nanoseconds(TimeToSet.Nanoseconds());}
 };
 #endif
