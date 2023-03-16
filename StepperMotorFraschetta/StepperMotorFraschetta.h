@@ -1,24 +1,24 @@
 #ifndef StepperMotorFraschetta_h
 #define StepperMotorFraschetta_h
 #include <BasicStepperMotorFraschetta.h>
-class MOTORE_STEPPER:public MOTORE_STEPPER_BASE{
+class StepperMotorF:public BasicStepperMotorF{
 protected:
- uint8_t PIN_CONTROLLO_PASSO,PIN_VERSO;
- boolean STATO_PIN_VERSO_DESTRA;
- void PASSO(){
-  digitalWrite(PIN_CONTROLLO_PASSO,HIGH);
+ uint8_t PinControlStep,PinTowards;
+ boolean StatePinTowardsRight;
+ void Step(){
+  digitalWrite(PinControlStep,HIGH);
   delay(2);
-  digitalWrite(PIN_CONTROLLO_PASSO,LOW);
+  digitalWrite(PinControlStep,LOW);
  }
 public:
- void PASSO_A_SINISTRA()override{digitalWrite(PIN_VERSO,STATO_PIN_VERSO_DESTRA); PASSO(); MEMORIZZA_PASSI(POSIZIONE()-1);}
- void PASSO_A_DESTRA()override{digitalWrite(PIN_VERSO,!STATO_PIN_VERSO_DESTRA); PASSO(); MEMORIZZA_PASSI(POSIZIONE()+1);}
- MOTORE_STEPPER(uint8_t PIN_CONTROLLO_PASSO,uint8_t PIN_VERSO, boolean STATO_PIN_VERSO_DESTRA, uint16_t PASSI_MASSIMI,uint16_t PERIODO_SPOSTAMENTO_IN_MILLISECONDI):
-  MOTORE_STEPPER_BASE(PASSI_MASSIMI,PERIODO_SPOSTAMENTO_IN_MILLISECONDI,PIN_CONTROLLO_PASSO,PIN_VERSO){
-   this->PIN_CONTROLLO_PASSO=PIN_CONTROLLO_PASSO;
-   this->PIN_VERSO=PIN_VERSO;
-   pinMode(PIN_CONTROLLO_PASSO,OUTPUT);
-   pinMode(PIN_VERSO,OUTPUT);
+ void LeftStep()override{digitalWrite(PinTowards,StatePinTowardsRight); Step(); MemorizeSteps(Position()-1);}
+ void RightStep()override{digitalWrite(PinTowards,!StatePinTowardsRight); Step(); MemorizeSteps(Position()+1);}
+ StepperMotorF(uint8_t PinControlStep,uint8_t PinTowards, boolean StatePinTowardsRight, uint16_t MaximumSteps,uint16_t ShiftPeriodInMilliseconds):
+  BasicStepperMotorF(MaximumSteps,ShiftPeriodInMilliseconds,PinControlStep,PinTowards){
+   this->PinControlStep=PinControlStep;
+   this->PinTowards=PinTowards;
+   pinMode(PinControlStep,OUTPUT);
+   pinMode(PinTowards,OUTPUT);
   }
 };
 #endif
