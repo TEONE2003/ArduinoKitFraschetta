@@ -2,13 +2,13 @@
 #define VirtualClockFraschetta_h
 #include <TimeFraschetta.h>
 #include <VirtualStopwatchFraschetta.h>
-class OROLOGIO_VIRTUALE:CronometroVirtualeF{
+class VirtualClockF:VirtualStopwatchF{
 protected:
- ORARIO O;
+ TimestampF O;
 public:
- OROLOGIO_VIRTUALE(uint64_t ORE=0,uint64_t MINUTI=0,uint64_t SECONDI=0,uint64_t MILLISECONDI=0,uint64_t MICROSECONDI=0,uint64_t NANOSECONDI=0):CronometroVirtualeF(MICROSECONDI){
-  O=ORARIO(NANOSECONDI,MICROSECONDI,MILLISECONDI,SECONDI,MINUTI,ORA);
+ VirtualClockF(uint64_t Hours=0,uint64_t Minutes=0,uint64_t Seconds=0,uint64_t Milliseconds=0,uint64_t Microseconds=0,uint64_t Nanoseconds=0):VirtualStopwatchF(Microseconds){
+  O=TimestampF(NANOSeconds,Microseconds,Milliseconds,Seconds,Minutes,ORA);
  }
- ORARIO LEGGI_ORARIO(){O = ORARIO(tempoPassato()); return O;}
+ TimestampF ReadTimestamp(){O = TimestampF(ElapsedTime()); return O;}
 };
 #endif
