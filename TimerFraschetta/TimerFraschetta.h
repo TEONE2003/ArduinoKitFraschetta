@@ -1,33 +1,33 @@
 #ifndef TimerFraschetta_h
 #define TimerFraschetta_h
 #include <TimeFraschetta.h>
-enum TIPO_TIMER{NON_BLOCCANTE,BLOCCANTE};
-class TimerF:CronometroVirtualeF{
+enum TimerType{NotBlocking,Blocking};
+class TimerF:VirtualStopwatchF{
  protected:
-  TEMPO PERIODO;
-  TIPO_TIMER T_TIMER;
-  boolean ABILITAT,T_INIZIALIZZATO;
+  TimeF Period;
+  TimerType TimerT;
+  boolean En,InizializedT;
  public:
-  boolean INIZIALIZZATO(){return T_INIZIALIZZATO;}
-  void ABILITA(){if(T_TIMER==NON_BLOCCANTE){avvia(); ABILITAT=1;}}
-  boolean ABILITATO(){return ABILITAT;}
-  void DISABILITA(){stoppa(); ABILITAT=0;}
-  TEMPO tempoPassato_FINO_AD_ORA(){return tempoPassato();}
-  void IMPOSTA_PERIODO_E_UNITA_DI_TEMPO(uint64_t PERIODO,UNITA_DI_TEMPO UNITA){
-  IMPOSTA_UNITA_DI_TEMPO(UNITA);
-  this->PERIODO = TEMPO(PERIODO,UNITA);
-  this->PERIODO.CONVERTI_IN(MICROSECONDI);
+  boolean Inizialized(){return InizializedT;}
+  void Enable(){if(TimerT==NotBlocking){avvia(); En=1;}}
+  boolean Enabled(){return En;}
+  void Disable(){Stop(); En=0;}
+  TimeF ElapsedTime(){return ElapsedTime();}
+  void SetPeriodAndTimeUnit(uint64_t Period,UnitOfTime Unit){
+  SetUnitOfTime(Unit);
+  this->Period = TimeF(Period,Unit);
+  this->Period.ConvertTo(Microseconds);
 }
-void IMPOSTA_TIPO_TIMER(TIPO_TIMER TIPO){T_TIMER=TIPO;}
-boolean STOP(){
- switch(T_TIMER){
-  case NON_BLOCCANTE: if(tempoPassato()>=PERIODO){DISABILITA(); return 1;}
+void SetTimerType(TimerType Type){TimerT=Type;}
+boolean Stop(){
+ switch(TimerT){
+  case NotBlocking: if(ElapsedTime()>=Period){Disable(); return 1;}
     return 0;
-  case BLOCCANTE: ASPETTA(PERIODO);
+  case Blocking: Wait(Period);
     return 1;
     }
 }
-TimerF(uint64_t PERIODO=0,UNITA_DI_TEMPO UNITA=SECONDI,TIPO_TIMER TIPO=NON_BLOCCANTE):CronometroVirtualeF(UNITA)
-{IMPOSTA_PERIODO_E_UNITA_DI_TEMPO(PERIODO,UNITA);  IMPOSTA_TIPO_TIMER(TIPO); T_INIZIALIZZATO=1;}
+TimerF(uint64_t Period=0,UnitOfTime Unit=Seconds,TimerType Type=NotBlocking):VirtualStopwatchF(Unit)
+{SetPeriodAndTimeUnit(Period,Unit);  SetTimerType(Type); InizializedT=1;}
 };
 #endif
