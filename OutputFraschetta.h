@@ -58,7 +58,7 @@ public:
  }
  void Blink(uint16_t Period,UnitOfTime Unit){
   if(!Bli.Inizialized()){Bli = VirtualCycleF(Period,Unit);}
-  if(Bli.Tick()){InvertStatus();}
+  for(uint64_t = Bli.nTick(),){InvertStatus();}
  }
  void FadingLoop(uint8_t MaximumPercentage,uint16_t Period,UnitOfTime Unit){
   TurnOnWithFade(MaximumPercentage,Period,Unit);
