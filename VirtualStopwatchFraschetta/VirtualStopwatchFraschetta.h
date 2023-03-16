@@ -1,24 +1,24 @@
 #ifndef VirtualStopwatchFraschetta_h
 #define VirtualStopwatchFraschetta_h
 #include <TimeFraschetta.h>
-class CronometroVirtualeF{
+class VirtualStopwatchF{
 protected:
-boolean CRONOMETRO_ATTIVO;
-uint64_t MICROSECONDI_ATTUALI;
-TEMPO TI,TEMPO_PASS;
-UNITA_DI_TEMPO UNITA_DI_TEMPO_CRONOMETRO;
+boolean ActiveStopwatch;
+uint64_t CurrentMicroseconds;
+TimeF It,ElapsedTime;
+UnitOfTime StopwatchUnitOfTime;
 public:
-void IMPOSTA_UNITA_DI_TEMPO(UNITA_DI_TEMPO UNITA){UNITA_DI_TEMPO_CRONOMETRO = UNITA;}
-CronometroVirtualeF(UNITA_DI_TEMPO UNITA=MILLISECONDI){IMPOSTA_UNITA_DI_TEMPO(UNITA); TI = TEMPO(0,MICROSECONDI); TEMPO_PASS=TI; MICROSECONDI_ATTUALI=0; CRONOMETRO_ATTIVO=0;}
-void avvia(){if(!CRONOMETRO_ATTIVO){CRONOMETRO_ATTIVO=1; TI.VALORE = micros();}}
-void stoppa(){CRONOMETRO_ATTIVO=0;}
-TEMPO tempoPassato(){
-if(CRONOMETRO_ATTIVO){
-if(TI.VALORE>=MICROSECONDI_ATTUALI){TEMPO_PASS = TEMPO(MICROSECONDI_ATTUALI-TI.VALORE,MICROSECONDI);}
-else{TEMPO_PASS=TEMPO(0xFFFFFFFFFFFFFFFF-TI.VALORE,MICROSECONDI);}
-return TEMPO_PASS.CONVERTITO_IN(UNITA_DI_TEMPO_CRONOMETRO);
+void SetUnitOfTime(UnitOfTime Unit){StopwatchUnitOfTime = Unit;}
+VirtualStopwatchF(UnitOfTime Unit=MILLISECONDI){SetUnitOfTime(Unit); It = TimeF(0,Microseconds); ElapsedTime=It; CurrentMicroseconds=0; ActiveStopwatch=0;}
+void Start(){if(!ActiveStopwatch){ActiveStopwatch=1; It.Value = micros();}}
+void Stop(){ActiveStopwatch=0;}
+TimeF ElapsedTime(){
+if(ActiveStopwatch){
+if(It.Value>=CurrentMicroseconds){ElapsedTime = TimeF(CurrentMicroseconds-It.Value,Microseconds);}
+else{ElapsedTime=TimeF(0xFFFFFFFFFFFFFFFF-It.Value,Microseconds);}
+return ElapsedTime.ConvertTo(StopwatchUnitOfTime);
 }
-else{return TEMPO(0,UNITA_DI_TEMPO_CRONOMETRO);}
+else{return TimeF(0,StopwatchUnitOfTime);}
 }
 };
 #endif
