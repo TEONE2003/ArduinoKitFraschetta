@@ -1,14 +1,19 @@
 #ifndef PhysicalEntranceFraschetta_h
 #define PhysicalEntranceFraschetta_h
+#include <ButtonFraschetta.h>
 class PhysicalEntranceF{
-protected: uint8_t PinOpeningLimitSwitch,PinClosingLimitSwitch;
-public:
-  PhysicalEntranceF(){}
-  PhysicalEntranceF(uint8_t PinOpeningLimitSwitch,uint8_t PinClosingLimitSwitch){
-   this->PinOpeningLimitSwitch=PinOpeningLimitSwitch;
-   this->PinClosingLimitSwitch=PinClosingLimitSwitch;
+protected:
+  ButtonF ButtonOpeningLimitSwitch;
+  ButtonF ButtonClosingLimitSwitch;
+ public:
+  PhysicalEntranceF(uint8_t PinOpeningLimitSwitch,uint8_t PinClosingLimitSwitch,uint64_t DelayLimitSwitch1,UnitOfTime UnitLimitSwitch1,
+                    uint64_t DelayLimitSwitch2,UnitOfTime UnitLimitSwitch2){
+   ButtonOpeningLimitSwitch = ButtonF(PinOpeningLimitSwitch,DelayLimitSwitch1,UnitLimitSwitch1);
+   ButtonClosingLimitSwitch = ButtonF(PinClosingLimitSwitch,DelayLimitSwitch2,UnitLimitSwitch2);
   }
-  bool Opened(){return digitalRead(PinOpeningLimitSwitch);}
-  bool Closed(){return digitalRead(PinClosingLimitSwitch);}
+  PhysicalEntranceF(uint8_t PinOpeningLimitSwitch,uint8_t PinClosingLimitSwitch,uint64_t DelayLimitSwitch,UnitOfTime UnitLimitSwitch):
+      PhysicalEntranceF(PinOpeningLimitSwitch,PinClosingLimitSwitch,DelayLimitSwitch,UnitLimitSwitch,DelayLimitSwitch,UnitLimitSwitch){}
+  boolean Opened(){return ButtonOpeningLimitSwitch.Pressed();}
+  boolean Closed(){return ButtonClosingLimitSwitch.Pressed();}
 };
 #endif
