@@ -18,7 +18,7 @@ public:
  boolean Initialized(){return I;}
  void ReceiveString(){
   InitializeIfNotInitialized();
-  if(DataPresent()){S=String();}
+  if(DataPresent()){S=string();}
   else{S="";}
  }
  void ReceiveByte(){
