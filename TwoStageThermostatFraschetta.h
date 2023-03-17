@@ -11,7 +11,7 @@ class TwoStageThermostatF{
   }
   TwoStageThermostatF(uint8_t HeatingPin,uint8_t CoolingPin,DigitalType RelayType):
   TwoStageThermostatF(HeatingPin,RelayType,CoolingPin,RelayType){}
-  void ThermostatFunction(uint8_t CurrentTemperature){
+  void TwoStageThermostatFunction(uint8_t CurrentTemperature){
    ThermostatHeating.ThermostatFunction(CurrentTemperature);
    ThermostatCooling.ThermostatFunction(CurrentTemperature);
   }
