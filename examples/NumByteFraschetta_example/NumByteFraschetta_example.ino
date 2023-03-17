@@ -1,23 +1,21 @@
-#include "ArduinoKitFraschetta.h"
-DEFAULT_SERIAL S(9600);
-uint32_t N=78687999; //su arduino non funziona la scrittura nei numeri a 64 bit con bitWrite
+#include "NumByteFraschetta.h"
+uint32_t N=78687999; //Your Arduino Uno is not working with writing to 64-bit numbers using bitWrite.
 uint8_t A[4]={230,100,255,80};
 
-void VISUALIZZA_BYTE_NUMERO(){
+void VisualizeByteNumber(){
 for(uint8_t n=0;n<=3;n++){
-S.INVIA(String(n)+":"+String(LSBDN::LEGGI_BYTE(n,N))+" ");
+Serial.print(String(n)+":"+String(NumByteF::ReadByte(n,N))+" ");
 }
-S.INVIA("\n");
+Serial.print("\n");
 }
 
 void setup(){
-VISUALIZZA_BYTE_NUMERO();
-
+Serial.begin(9600);
+VisualizeByteNumber();
 for(uint8_t n=0; n<=3; n++){
-LSBDN::SCRIVI_BYTE(n, N, A[n]);
+NumByteF::WriteByte(n, N, A[n]);
 }
-
-VISUALIZZA_BYTE_NUMERO();
+VisualizeByteNumber();
 }
 
 void loop(){}

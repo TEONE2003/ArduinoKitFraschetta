@@ -1,6 +1,7 @@
 #ifndef ServomotorFraschetta_h
 #define ServomotorFraschetta_h
 #include <Servo.h>
+#include <EEPROM.h>
 #include <MotorSwipingFraschetta.h>
 class ServomotorF:Servo,MotorSwipingF{
  protected:
@@ -25,8 +26,8 @@ class ServomotorF:Servo,MotorSwipingF{
     delay(PeriodInMilliseconds);
     }
   }
-  void ForwardSwipe()override{SetPosition(PositionForward, MovementPeriodInMilliseconds);}
-  void BackSwipe()override{SetPosition(PositionBackward, MovementPeriodInMilliseconds);}
+  void ForwardSwipe()override{SetPosition(ForwardPosition, MovementPeriodInMilliseconds);}
+  void BackSwipe()override{SetPosition(BackPosition, MovementPeriodInMilliseconds);}
 public:
  uint16_t MovementPeriodInMilliseconds;
  void SetPosition(uint16_t Degrees,uint16_t PeriodInMilliseconds){
@@ -36,9 +37,9 @@ public:
   }
   else{WritePosition(Degrees);}
  }
- void Swiping(uint8_t PositionForward, uint8_t PositionBackward,uint16_t IdleTime, UnitOfTime Unit){
-  this->PositionForward = PositionForward;
-  this->PositionBackward = PositionBackward;
+ void Swiping(uint8_t ForwardPosition, uint8_t BackPosition,uint16_t IdleTime, UnitOfTime Unit){
+  this->ForwardPosition = ForwardPosition;
+  this->BackPosition = BackPosition;
   MotorSwipingF::Swiping(IdleTime,Unit);
  }
  ServomotorF(uint8_t Pin):Servo(),MotorSwipingF(){

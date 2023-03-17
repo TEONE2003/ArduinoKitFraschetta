@@ -3,14 +3,15 @@
 #include <DigitalTypeFraschetta.h>
 #include <VirtualCycleFraschetta.h>
 #include <TimerFraschetta.h>
-enum MemorizeState:boolean{DoNotSaveState=0,SaveStatus=1};
+#include <EEPROM.h>
+enum MemorizeStatus:boolean{DoNotSaveStatus=0,SaveStatus=1};
 class OutputF{
 protected:
  uint8_t Pin;
  VirtualCycleF Bli;
  TimerF Period;
  DigitalType TypeD;
- MemorizeState Save;
+ MemorizeStatus Save;
  void SetPin(uint8_t &Pin){
   this->Pin=Pin; pinMode(Pin,OUTPUT);
   if(TypeD){digitalWrite(Pin,0);}
@@ -27,11 +28,12 @@ protected:
  void InitializePin(uint8_t &Pin){SetPin(Pin); SetStatus(EEPROM.read(Pin));};
 public:
  void SetAnalogStatus(uint8_t Status){SetStatus((Status*100)/255);}
- OutputF(uint8_t Pin=0,DigitalType TypeD=NormalLogic,MemorizeState Save=DoNotSaveState){
+ OutputF(uint8_t Pin=0,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
  this->TypeD=TypeD;
  this->Save=Save;
  InitializePin(Pin);
  }
+OutputF(uint8_t Pin,MemorizeStatus Save):OutputF(Pin,NormalLogic,Save){}
  void TurnOn(){SetStatus(100);}
  void TurnOff(){SetStatus(0);}
  void SetStatusWithDelay(uint8_t Percentage,uint64_t Delay,UnitOfTime Unit){
@@ -58,7 +60,7 @@ public:
  }
  void Blink(uint16_t Period,UnitOfTime Unit){
   if(!Bli.Inizialized()){Bli = VirtualCycleF(Period,Unit);}
-  for(uint64_t = Bli.nTick(),){InvertStatus();}
+     for(uint64_t n=Bli.nTick();n>=1;n--){InvertStatus();}
  }
  void FadingLoop(uint8_t MaximumPercentage,uint16_t Period,UnitOfTime Unit){
   TurnOnWithFade(MaximumPercentage,Period,Unit);

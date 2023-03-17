@@ -1,7 +1,7 @@
-#include "ArduinoKitFraschetta.h"
-SERVOMOTORE S(2);
+#include "ServomotorFraschetta.h"
+ServomotorF S(2);
 void setup(){}
-void loop(){S.SWIPING(180,0,10,3,SECONDI);}
-/*GLI SPASMI INIZIALI NON DIPENDONO DAl CODICE
-SE ANCHE STACCANDO IL CAVO DATI DEL SERVOMOTORE
-SI VERIFICA UNO SPASMO*/
+void loop(){S.Swiping(180,0,3,Seconds);}
+/*The initial spasms do not depend on the code.
+Even if disconnecting the data cable of the servo motor,
+spasms still occur.*/

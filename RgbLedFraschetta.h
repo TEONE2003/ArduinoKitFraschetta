@@ -16,19 +16,19 @@ const RgbValuesF GreenColor=RgbValuesF(0,128,0),RedColor=RgbValuesF(255,0,0);
 const RgbValuesF BlueColor=RgbValuesF(0,0,255),WhiteColor=RgbValuesF(255,255,255);
 class RgbLedF{
  protected:
-  LED Green,Red,Blue;
+  LedF Green,Red,Blue;
   RgbValuesF Color;
  public:
   void SetColor(RgbValuesF Color){
-   Green.SetAnalogState(Color.Green);
-   Red.SetAnalogState(Color.Red);
-   Blue.SetAnalogState(Color.Blue);
+   Green.SetAnalogStatus(Color.Green);
+   Red.SetAnalogStatus(Color.Red);
+   Blue.SetAnalogStatus(Color.Blue);
   }
-  void Blink(uint16_t Period,UnitOfTime Unit){
-   Green.TurnOff(); Red.TurnOff(); Blue.TurnOff();
-  Wait(Period,Unit);
-   SetColor(Color);
-  }
+ void SetBrightness(uint8_t Percentage){Color.SetBrightness(Percentage);}
+ void Blink(uint16_t Period,UnitOfTime Unit){
+  Green.TurnOff(); Red.TurnOff(); Blue.TurnOff();
+  Wait(Period,Unit); SetColor(Color);
+ }
   void TurnOnWithFader(uint8_t MaximumPercentage,uint16_t Slow,UnitOfTime Unit){
    RgbValuesF ColorChanged = this->Color;
    for(uint8_t P=0;P<MaximumPercentage;P++){
@@ -47,10 +47,10 @@ class RgbLedF{
    TurnOnWithFader(MaximumPercentage,Slow,Unit);
    TurnOffWithFader(MaximumPercentage,Slow,Unit);
   }
-  RgbLedF(uint8_t PinGreen=3,uint8_t PinRed=5,uint8_t PinBlue=6,MemorizeStatus Save=DoNotSaveStatus,RgbValuesF Color=GreenColor){
-   Green = LED(PinGreen,Save);
-   Red = LED(PinRed,Save);
-   Blue = LED(PinBlue,Save);
+  RgbLedF(uint8_t PinGreen=2,uint8_t PinRed=3,uint8_t PinBlue=4,MemorizeStatus Save=DoNotSaveStatus,RgbValuesF Color=GreenColor){
+   Green = LedF(PinGreen,Save);
+   Red = LedF(PinRed,Save);
+   Blue = LedF(PinBlue,Save);
    this->Color=Color;
    SetColor(Color);
   }

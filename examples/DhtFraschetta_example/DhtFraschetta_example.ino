@@ -1,4 +1,4 @@
-#include "ArduinoKitFraschetta.h"
-RELE LUCE_SOGGIORNO(13,LOGICA_NORMALE);
-void setup(){LUCE_SOGGIORNO.ACCENDI();}
-void loop(){}
+#include "DhtFraschetta.h"
+DhtF D(2,DHT11);
+void setup(){Serial.begin(9600);}
+void loop(){Serial.println(D.readTemperature()); delay(1000);}

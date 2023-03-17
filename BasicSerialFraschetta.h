@@ -5,13 +5,13 @@ protected:
  String S;
  uint8_t B;
  char C;
- boolean I,SerialBridge;
+ bool I,SerialBridge;
  uint16_t Baud;
  uint8_t Tx;
  uint8_t Rx;
  virtual void InitializeIfNotInitialized()=0;
- virtual boolean DataPresent()=0;
- virtual String String()=0;
+ virtual bool DataPresent()=0;
+ virtual String string()=0;
  virtual uint8_t Byte()=0;
  virtual char Char()=0;
 public:

@@ -1,16 +1,11 @@
-#include "ArduinoKitFraschetta.h"
-MOTORE_STEPPER_BIPOLARE M(2,3,4,5,512,0);
-DEFAULT_SERIAL S(9600);
-void setup(){
-
-
-
-}
+#include "BipolarStepperMotorFraschetta.h"
+BipolarStepperMotorF M(2,3,4,5,512,0);
+void setup(){Serial.begin(9600);}
 void loop(){
 delay(1000);
-M.POSIZIONE(511);
-S.INVIA_ANDANDO_A_CAPO(M.POSIZIONE());
+M.Position(511);
+Serial.println(M.Position());
 delay(1000);
-M.POSIZIONE(10);
-S.INVIA_ANDANDO_A_CAPO(M.POSIZIONE());
+M.Position(10);
+Serial.println(M.Position());
 }

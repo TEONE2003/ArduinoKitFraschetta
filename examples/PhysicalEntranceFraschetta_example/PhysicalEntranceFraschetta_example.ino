@@ -1,4 +1,11 @@
-#include "ArduinoKitFraschetta.h"
-RELE LUCE_SOGGIORNO(13,LOGICA_NORMALE);
-void setup(){LUCE_SOGGIORNO.ACCENDI();}
-void loop(){}
+#include "PhysicalEntranceFraschetta.h"
+PhysicalEntranceF Door(2,3);
+void setup(){Serial.begin(9600);}
+void loop(){
+if(Door.Opened()){
+ Serial.println("Opened");
+}
+else if(Door.Closed()){
+Serial.println("Closed");
+}
+}

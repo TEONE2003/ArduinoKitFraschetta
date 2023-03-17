@@ -8,9 +8,9 @@ class MotorSwipingF{
   virtual uint16_t Position()=0;
   virtual void ForwardSwipe()=0;
   virtual void BackSwipe()=0;
-  void Swiping(uint16_t IdleTime, TimeOfUnit Unit){
-   if(!C.Initialized()){C = VirtualCycleF(IdleTime,Unit);}
-    if(C.Tick()){
+  void Swiping(uint16_t IdleTime, UnitOfTime Unit){
+   if(!C.Inizialized()){C = VirtualCycleF(IdleTime,Unit);}
+    for(uint64_t n=C.nTick();n>=1;n--){
      if(ForwardPosition>BackPosition){
       if(Position()<ForwardPosition){ForwardSwipe();}
       else if(Position()>BackPosition){BackSwipe();}

@@ -1,4 +1,4 @@
-#include "ArduinoKitFraschetta.h"
-RELE LUCE_SOGGIORNO(13,LOGICA_NORMALE);
-void setup(){LUCE_SOGGIORNO.ACCENDI();}
+#include "MatrixKeyboardFraschetta.h"
+MatrixKeyboardF K();
+void setup(){}
 void loop(){}

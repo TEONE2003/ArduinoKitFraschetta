@@ -5,7 +5,7 @@
 class BasicEntranceStepperF:BasicStepperMotorF,public MotorizedEntranceF{
  public:
   virtual uint16_t Position()=0;
-  void Opened override {
+  void Open() override {
    MemorizeStatus(Opening);
    BasicStepperMotorF::Position(OpeningLimitSwitch);
   }

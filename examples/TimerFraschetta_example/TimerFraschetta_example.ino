@@ -1,10 +1,9 @@
-#include "ArduinoKitFraschetta.h"
-TIMER T(1,SECONDI);
-LED L(13);
-void setup(){T.ABILITA();}
+#include "TimerFraschetta.h"
+TimerF T(1,Seconds);
+void setup(){pinMode(13,OUTPUT);}
 void loop(){
-if(T.STOP()){
-L.INVERTI_STATO();
-T.ABILITA();
+if(T.Stop()){
+digitalWrite(13,!digitalRead(13));
+T.Enable();
 }
 }

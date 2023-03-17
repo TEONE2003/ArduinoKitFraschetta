@@ -1,4 +1,4 @@
-#include "ArduinoKitFraschetta.h"
-RELE LUCE_SOGGIORNO(13,LOGICA_NORMALE);
-void setup(){LUCE_SOGGIORNO.ACCENDI();}
-void loop(){}
+#include "ButtonFraschetta.h"
+ButtonF B(13,NormalLogic);
+void setup(){Serial.begin(9600);}
+void loop(){if(B.Clicked()){Serial.println("Clicked");}}

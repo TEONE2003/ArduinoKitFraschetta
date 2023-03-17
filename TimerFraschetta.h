@@ -1,6 +1,7 @@
 #ifndef TimerFraschetta_h
 #define TimerFraschetta_h
 #include <TimeFraschetta.h>
+#include <VirtualStopwatchFraschetta.h>
 enum TimerType{NotBlocking,Blocking};
 class TimerF:VirtualStopwatchF{
  protected:
@@ -9,7 +10,7 @@ class TimerF:VirtualStopwatchF{
   boolean En,InizializedT;
  public:
   boolean Inizialized(){return InizializedT;}
-  void Enable(){if(TimerT==NotBlocking){avvia(); En=1;}}
+  void Enable(){if(TimerT==NotBlocking){Start(); En=1;}}
   boolean Enabled(){return En;}
   void Disable(){Stop(); En=0;}
   TimeF ElapsedTime(){return ElapsedTime();}

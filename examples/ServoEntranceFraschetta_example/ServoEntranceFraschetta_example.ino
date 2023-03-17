@@ -1,16 +1,16 @@
-#include "ArduinoKitFraschetta.h"
-SERVO_INGRESSO S(2,180,0,3,10);
-void setup(){S.CONTROLLO_STATO_MOVIMENTO();}
+#include "ServoEntranceFraschetta.h"
+ServoEntranceF S(2,180,0,3,10);
+void setup(){S.MovementStatusCheck();}
 void loop(){
 delay(3000);
-/*bisogna mettere il delay qui perchè così qualsiasi
-istruzione viene eseguita solo dopo i 3 secondi dopo il setup,
-in questo caso verrebbe eseguito CHIUDI(); e APRI(); subito dopo,
-quindi ci vuole il delay per separare il setup da loop*/
-S.APRI();
+/*We need to put the delay here so that any instruction is executed
+only after 3 seconds after the setup.
+In this case, Close(); and Open(); would be executed immediately
+after, so we need the delay to separate the setup from the loop.*/
+S.Open();
 delay(3000);
-S.CHIUDI();
+S.Close();
 }
-/*GLI SPASMI INIZIALI NON DIPENDONO DAl CODICE
-SE ANCHE STACCANDO IL CAVO DATI DEL SERVOMOTORE
-SI VERIFICA UNO SPASMO*/
+/*THE INITIAL SPASMS DO NOT DEPEND ON THE CODE.
+EVEN IF DISCONNECTING THE DATA CABLE OF THE SERVO MOTOR,
+SPASMS STILL OCCUR.*/

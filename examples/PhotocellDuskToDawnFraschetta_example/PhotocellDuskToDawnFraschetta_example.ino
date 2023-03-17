@@ -1,9 +1,6 @@
-#include "ArduinoKitFraschetta.h"
-
-CREPUSCOLARE C(A0,800,200,1,SECONDI,13,NORMALE);
-
-void setup() {}
-
-void loop() {
-C.FUNZIONE_CREPUSCOLARE();
+#include "PhotocellDuskToDawnFraschetta.h"
+PhotocellDuskToDawnF C(A0,800,200,1,Seconds,13,NormalLogic);
+void setup(){}
+void loop(){
+C.PhotocellDuskToDawnFunction();
 }

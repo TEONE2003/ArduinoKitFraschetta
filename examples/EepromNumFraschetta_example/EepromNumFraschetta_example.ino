@@ -1,8 +1,8 @@
-#include "ArduinoKitFraschetta.h"
-DEFAULT_SERIAL S(9600);
-NE::EEPROM_UINT32_T N(200,0,50,100); //su arduino non funziona la scrittura nei numeri a 64 bit con bitWrite
+#include "EepromNumFraschetta.h"
+EepromNumF::EepromUint32T N(200,0,50,100); //Your Arduino Uno is not working with writing to 64-bit numbers using bitWrite
 void setup() {
-N.VALORE(16868);
-S.INVIA_ANDANDO_A_CAPO(N.VALORE());
+Serial.begin(9600);
+N.Value(16868);
+Serial.println(N.Value());
 }
 void loop() {}

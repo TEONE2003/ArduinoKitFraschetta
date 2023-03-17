@@ -1,9 +1,9 @@
-#ifndef ReleFraschetta_h
-#define ReleFraschetta_h
+#ifndef RelayFraschetta_h
+#define RelayFraschetta_h
 #include <OutputFraschetta.h>
-class Rele:OutputF{
+class RelayF:OutputF{
  public:
-  Rele(uint8_t Pin=0,DigitalType Type=NormalLogic,MemorizeStatus Save=SaveStatus):OutputF(Pin,Type,Save){}
+  RelayF(uint8_t Pin=0,DigitalType Type=NormalLogic,MemorizeStatus Save=SaveStatus):OutputF(Pin,Type,Save){}
   void TurnOn(){OutputF::TurnOn();}
   void TurnOff(){OutputF::TurnOff();}
   void InvertStatus(){OutputF::InvertStatus();}

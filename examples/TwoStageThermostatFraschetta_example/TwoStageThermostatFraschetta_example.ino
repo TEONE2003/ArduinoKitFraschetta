@@ -1,4 +1,4 @@
-#include "ArduinoKitFraschetta.h"
-RELE LUCE_SOGGIORNO(13,LOGICA_NORMALE);
-void setup(){LUCE_SOGGIORNO.ACCENDI();}
-void loop(){}
+#include "TwoStageThermostatFraschetta.h"
+TwoStageThermostatF TST(2,3,NormalLogic);
+void setup(){}
+void loop(){TST.ThermostatFunction(24);}
