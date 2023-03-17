@@ -9,7 +9,7 @@ class ButtonF:InputF,VirtualCycleF{
   ButtonF(){}
   ButtonF(uint8_t Pin,uint64_t Delay=0,UnitOfTime Unit=Milliseconds,ResistanceMode ResistanceM=ExternalResistance,
   DigitalType DigitalReadM=NormalLogic):InputF(Pin,ResistanceM,DigitalReadM),VirtualCycleF(Delay,Unit){}
-  boolean Clicked(){
+  bool Clicked(){
    if(nTick()){
     if(PreviousStatus==0 && DigitalRead()){
      PreviousStatus=1; return 1;
@@ -18,6 +18,7 @@ class ButtonF:InputF,VirtualCycleF{
    }
    return 0;
   }
+  bool Pressed(){return DigitalRead();}
   void SetExternalResistance(){InputF::SetExternalResistance();}
   void SetPullUp(){InputF::SetPullUp();}
   void SetPullDown(){InputF::SetPullDown();}
