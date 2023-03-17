@@ -3,7 +3,7 @@
 #include <OutputFraschetta.h>
 class RelayF:OutputF{
  public:
-  RelayF(uint8_t Pin=0,DigitalType Type=NormalLogic,MemorizeStatus Save=SaveStatus):OutputF(Pin,Type,Save){}
+  RelayF(uint8_t Pin=0,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus):OutputF(Pin,Type,Save){}
   void TurnOn(){OutputF::TurnOn();}
   void TurnOff(){OutputF::TurnOff();}
   void InvertStatus(){OutputF::InvertStatus();}
