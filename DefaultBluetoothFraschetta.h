@@ -13,7 +13,7 @@ public:
  void Send(T t){DefaultSerialF::Send(t);}
 };
 
-#ifdef __AVR_Atmega2560__ || __AVR_Atmega1280__
+#ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
 class Default1BluetoothF:public DefaultSerial1F,public AtCommands{
 public:
  Default1BluetoothF(uint32_t Baud=9600):DefaultSerial1F(Baud){}
