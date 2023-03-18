@@ -1,6 +1,6 @@
 #ifndef TwoStageThermostatFraschetta_h
 #define TwoStageThermostatFraschetta_h
-#include <ThermostatFraschetta.h>
+#include "ThermostatFraschetta.h"
 class TwoStageThermostatF{
  protected:
     ThermostatF ThermostatHeating,ThermostatCooling;
@@ -15,9 +15,9 @@ class TwoStageThermostatF{
    ThermostatHeating.ThermostatFunction(CurrentTemperature);
    ThermostatCooling.ThermostatFunction(CurrentTemperature);
   }
-  void SetTemperatureThreshold(uint8_t Temperature){
-   ThermostatHeating.TemperatureThreshold = Temperature;
-   ThermostatHeating.TemperatureThreshold = Temperature;
+  void SetTemperatureThreshold(uint8_t TemperatureThreshold){
+   ThermostatHeating.SetTemperatureThreshold(TemperatureThreshold);
+   ThermostatHeating.SetTemperatureThreshold(TemperatureThreshold);
   }
   uint8_t TemperatureThreshold(){return ThermostatHeating.TemperatureThreshold;}
 };
