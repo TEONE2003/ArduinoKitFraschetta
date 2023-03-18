@@ -17,7 +17,7 @@ class TwoStageThermostatF{
   }
   void SetTemperatureThreshold(uint8_t TemperatureThreshold){
    ThermostatHeating.SetTemperatureThreshold(TemperatureThreshold);
-   ThermostatHeating.SetTemperatureThreshold(TemperatureThreshold);
+   ThermostatCooling.SetTemperatureThreshold(TemperatureThreshold);
   }
   uint8_t TemperatureThreshold(){return ThermostatHeating.TemperatureThreshold();}
 };
