@@ -9,6 +9,7 @@ class ThermostatF:RelayF,VirtualCycleF{
  ThermostatF(){}
  ThermostatF(uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):RelayF(PinRele,ReleType),
  VirtualCycleF(5,Seconds){this->TypeT=TypeT; this->PinRele=PinRele; TemperatureThreshold=EEPROM.read(PinRele);}
+ uint8_t TemperatureThreshold(){return TemperatureThreshold;}
  void SetTemperatureThreshold(uint8_t TemperatureThreshold){
   EEPROM.update(PinRele,TemperatureThreshold);
   this->TemperatureThreshold=TemperatureThreshold;
