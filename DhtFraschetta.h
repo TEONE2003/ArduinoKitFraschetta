@@ -7,9 +7,9 @@ class DhtF:DHT{
   void InitializesIfNotInitialized(){if(!Initialized){begin();}}
  public:
   DhtF(uint8_t Pin,uint8_t Type):DHT(Pin,Type){}
-  float readTemperature(){
-   InitializesIfNotInitialized(); return DHT::readTemperature();}
-  float readHumidity(){
-   InitializesIfNotInitialized(); return DHT::readHumidity();}
+  float ReadTemperature(){
+   InitializesIfNotInitialized(); return readTemperature();}
+  float ReadHumidity(){
+   InitializesIfNotInitialized(); return readHumidity();}
 };
 #endif
