@@ -4,9 +4,8 @@
 #include "VirtualCycleFraschetta.h"
 enum ThermostatType{Heating,Cooling};
 class ThermostatF:RelayF,VirtualCycleF{
- protected: ThermostatType TypeT;
+ protected: ThermostatType TypeT; uint8_t PinRele,TemperatureThreshold;
  public:
- uint8_t PinRele,TemperatureThreshold;
  ThermostatF(){}
  ThermostatF(uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):RelayF(PinRele,ReleType),
  VirtualCycleF(5,Seconds){this->TypeT=TypeT; this->PinRele=PinRele; TemperatureThreshold=EEPROM.read(PinRele);}
