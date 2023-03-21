@@ -1,7 +1,7 @@
 #ifndef VirtualClockFraschetta_h
 #define VirtualClockFraschetta_h
-#include <TimeFraschetta.h>
-#include <VirtualStopwatchFraschetta.h>
+#include "TimeFraschetta.h"
+#include "VirtualStopwatchFraschetta.h"
 class VirtualClockF:VirtualStopwatchF{
 protected:
  TimestampF O;

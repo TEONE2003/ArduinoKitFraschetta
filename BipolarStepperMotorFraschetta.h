@@ -1,6 +1,6 @@
 #ifndef BipolarStepperMotorFraschetta_h
 #define BipolarStepperMotorFraschetta_h
-#include <BasicStepperMotorFraschetta.h>
+#include "BasicStepperMotorFraschetta.h"
 class BipolarStepperMotorF:public BasicStepperMotorF{
 protected:
  uint8_t PinA,PinB,PinC,PinD;

@@ -1,7 +1,7 @@
 #ifndef BasicStepperMotorFraschetta_h
 #define BasicStepperMotorFraschetta_h
-#include <MotorSwipingFraschetta.h>
-#include <EepromNumFraschetta.h>
+#include "MotorSwipingFraschetta.h"
+#include "EepromNumFraschetta.h"
 class BasicStepperMotorF:MotorSwipingF{
 protected:
  uint16_t MaximumSteps,ForwardPosition,BackPosition;

@@ -1,6 +1,6 @@
 #ifndef MotorSwipingFraschetta_h
 #define MotorSwipingFraschetta_h
-#include <VirtualCycleFraschetta.h>
+#include "VirtualCycleFraschetta.h"
 class MotorSwipingF{
  public:
   VirtualCycleF C;

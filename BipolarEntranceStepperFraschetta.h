@@ -1,7 +1,7 @@
 #ifndef BipolarEntranceStepperFraschetta_h
 #define BipolarEntranceStepperFraschetta_h
-#include <BipolarStepperMotorFraschetta.h>
-#include <BasicEntranceStepperFraschetta.h>
+#include "BipolarStepperMotorFraschetta.h"
+#include "BasicEntranceStepperFraschetta.h"
 class BipolarEntranceStepperF:public BipolarStepperMotorF,public BasicEntranceStepperF{
  public:
   void CheckStatusMotion(){BasicEntranceStepperF::CheckStatusMotion();}

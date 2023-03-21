@@ -1,6 +1,6 @@
 #ifndef InputFraschetta_h
 #define InputFraschetta_h
-#include <DigitalTypeFraschetta.h>
+#include "DigitalTypeFraschetta.h"
 enum ResistanceMode{ExternalResistance,PullUp,PullDown};
 class InputF{
  protected:

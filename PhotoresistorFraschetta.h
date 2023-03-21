@@ -1,7 +1,7 @@
 #ifndef PhotoresistorFraschetta_h
 #define PhotoresistorFraschetta_h
-#include <InputFraschetta.h>
-#include <VirtualCycleFraschetta.h>
+#include "InputFraschetta.h"
+#include "VirtualCycleFraschetta.h"
 class PhotoresistorF:InputF,VirtualCycleF{
 protected:
  uint16_t TurnOnThreshold,TurnOffThreshold;

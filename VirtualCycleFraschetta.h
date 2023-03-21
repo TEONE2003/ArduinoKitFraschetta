@@ -1,6 +1,6 @@
 #ifndef VirtualCycleFraschetta_h
 #define VirtualCycleFraschetta_h
-#include <VirtualStopwatchFraschetta.h>
+#include "VirtualStopwatchFraschetta.h"
 class VirtualCycleF:VirtualStopwatchF{
 protected: TimeF Period; uint64_t Divider; bool I;
 public:

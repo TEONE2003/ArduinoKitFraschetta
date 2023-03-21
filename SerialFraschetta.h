@@ -1,7 +1,7 @@
 #ifndef SerialFraschetta_h
 #define SerialFraschetta_h
-#include <BasicSerialFraschetta.h>
-#include <SoftwareSerial.h>
+#include "BasicSerialFraschetta.h"
+#include "SoftwareSerial.h"
 class SerialF:SoftwareSerial,public BasicSerialF{
 protected:
  void InitializeIfNotInitialized()override{if(!Initialized()){end(); begin(Baud); I=1;}}
