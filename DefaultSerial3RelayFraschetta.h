@@ -5,7 +5,7 @@
 class DefaultSerial3RelayF:DefaultSerial3F,public BasicSerialRelay{
 public:
  DefaultSerial3RelayF(){}
- DefaultSerial3RelayF(uint8_t Pin,String Tag,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus,uint16_t Baud=9600):BasicSerialRelay(Pin,Tag,Type,Save):DefaultSerial3F(Baud){}
+ DefaultSerial3RelayF(uint8_t Pin,String Tag,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus,String StatusRequestString="",uint16_t Baud=9600):BasicSerialRelay(Pin,Tag,Type,Save,StatusRequestString):DefaultSerial3F(Baud){}
  void Send(String s)override{DefaultSerial3F:Send(s);}
 };
 #endif

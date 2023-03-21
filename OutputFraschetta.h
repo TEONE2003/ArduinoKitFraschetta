@@ -24,11 +24,18 @@ public:
  else{analogWrite(Pin,(Percentage*255)/100);}
  if(Save){EEPROM.update(Pin,Percentage);}
  }
+ bool ReadDigitalStatus(){
+  bool r=digitalRead(Pin);
+  if(TypeD){return r;}
+  else{return !r;}
+ }
+ uint8_t ReadAnalogStatusPercentage(){return (analogRead(Pin)*255)/100;}
 protected:
- void InitializePin(uint8_t &Pin){SetPin(Pin); SetStatus(EEPROM.read(Pin));};
+ void InitializePin(uint8_t Pin){SetPin(Pin); SetStatus(EEPROM.read(Pin));};
 public:
- void SetAnalogStatus(uint8_t Status){SetStatus((Status*100)/255);}
- OutputF(uint8_t Pin=0,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
+ void SetAnalogStatus(uint8_t StatusPercentage){SetStatus((Status*100)/255);}
+OutputF(){}
+OutputF(uint8_t Pin=0,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
  this->TypeD=TypeD;
  this->Save=Save;
  InitializePin(Pin);

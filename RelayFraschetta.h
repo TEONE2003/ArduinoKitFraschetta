@@ -8,5 +8,6 @@ class RelayF:OutputF{
   void TurnOff(){OutputF::TurnOff();}
   void InvertStatus(){OutputF::InvertStatus();}
   void Blink(uint16_t Period,UnitOfTime Unit){OutputF::Blink(Period,Unit);}
+  bool ReadDigitalStatus(){return OutputF::ReadDigitalStatus();}
 };
 #endif
