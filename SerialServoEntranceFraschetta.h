@@ -1,12 +1,13 @@
 #ifndef SerialServoEntranceFraschetta_h
 #define SerialServoEntranceFraschetta_h
 #include "BasicSerialServoEntranceFraschetta.h"
-class SerialServoEntranceFraschetta:SerialF,public BasicSerialServoEntranceFraschetta{
+#include "SerialFraschetta.h"
+class SerialServoEntranceF:SerialF,public BasicSerialServoEntranceF{
 protected: void Send(String s)override{SerialF::SendLn(s);}
 public:
-    SerialServoEntranceFraschetta(String Tag,String StatusRequestString,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition,
+    SerialServoEntranceF(String Tag,String StatusRequestString,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition,
      uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds,uint8_t Rx=2,uint8_t Tx=3,uint32_t Baud=9600):
-     BasicSerialServoEntranceFraschetta(Tag,StatusRequestString,Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds):
-    SerialF(Rx,Tx,Baud){}
+     BasicSerialServoEntranceF(Tag,StatusRequestString,Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds),
+     SerialF(Rx,Tx,Baud){}
 };
 #endif

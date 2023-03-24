@@ -1,12 +1,12 @@
 #ifndef BasicSerialServoEntranceFraschetta_h
 #define BasicSerialServoEntranceFraschetta_h
 #include "ServoEntranceFraschetta.h"
-class BasicSerialServoEntranceFraschetta:public ServoEntranceFraschetta{
-protected: String OpenString,CloseString,StatusRequestString; bool invalidCommand; virtual void Send(String s)=0
+class BasicSerialServoEntranceF:public ServoEntranceF{
+protected: String OpenString,CloseString,StatusRequestString; bool invalidCommand; virtual void Send(String s)=0;
 public:
- BasicSerialServoEntranceFraschetta(String Tag,String StatusRequestString,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition,
+ BasicSerialServoEntranceF(String Tag,String StatusRequestString,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition,
   uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds):
-  ServoEntranceFraschetta(Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds){
+  ServoEntranceF(Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds){
    OpenString=Tag+'1'; CloseString=Tag+'0';
    this->StatusRequestString=StatusRequestString;
    invalidCommand=0;

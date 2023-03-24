@@ -33,7 +33,7 @@ public:
 protected:
  void InitializePin(uint8_t Pin){SetPin(Pin); SetStatus(EEPROM.read(Pin));};
 public:
- void SetAnalogStatus(uint8_t StatusPercentage){SetStatus((Status*100)/255);}
+ void SetAnalogStatus(uint8_t StatusPercentage){SetStatus((StatusPercentage*100)/255);}
 OutputF(){}
 OutputF(uint8_t Pin=0,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
  this->TypeD=TypeD;
