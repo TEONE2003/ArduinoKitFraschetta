@@ -4,7 +4,7 @@
 #include "VirtualCycleFraschetta.h"
 enum ThermostatType{Heating,Cooling};
 class ThermostatF:RelayF,VirtualCycleF{
- protected: ThermostatType TypeT; uint8_t PinRele; byte TemperatureThresholdS;
+protected: ThermostatType TypeT; uint8_t PinRele; byte TemperatureThresholdS; uint64_t nTick(){return VirtualCycleF::nTick();}
  public:
  ThermostatF(){}
  ThermostatF(uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):RelayF(PinRele,ReleType),

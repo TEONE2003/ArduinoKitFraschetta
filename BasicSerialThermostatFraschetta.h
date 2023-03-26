@@ -3,11 +3,10 @@
 #include "ThermostatFraschetta.h"
 class BasicSerialThermostatF:public ThermostatF{
  protected: String Tag,StatusRequestString; int TempIdex; bool invalidCommand;
-  using ThermostatF::ThermostatFunction;
   virtual void Send(String s)=0;
    String Status(){
-       if(ReadDigitalStatus()){return "ON"}
-       else{return "OFF"}
+       if(ReadDigitalStatus()){return "1";}
+       else{return "0";}
     }
 public:
     BasicSerialThermostatF(uint8_t PinRele,String Tag,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating,String StatusRequestString=""):ThermostatF(PinRele,ReleType,TypeT){
@@ -21,15 +20,15 @@ public:
     
     bool InvalidCommand(){return invalidCommand;}
     
-    void ThermostatFunction(byte CurrentTemperature,byte CurrentUmidity,String ReceivedString){
-        BasicSerialThermostatF::ThermostatFunction(CurrentTemperature);
+    void SerialThermostatFunction(byte CurrentTemperature,byte CurrentUmidity,String ReceivedString){
+        ThermostatF::ThermostatFunction(CurrentTemperature);
         invalidCommand=0;
         if(nTick()){
             TempIdex = ReceivedString.indexOf(Tag+" T=");
             if(ReceivedString==StatusRequestString){SendState(CurrentTemperature,CurrentUmidity);}
             else if(TempIdex>=0){
                 TempIdex=TempIdex+Tag.length();
-                SetTemperatureThreshold(byte(ReceivedString.substring(TempIdex+4,TempIdex+6)));
+                SetTemperatureThreshold(byte(ReceivedString.substring(TempIdex+4,TempIdex+6).toInt()));
             }
             else if(ReceivedString!=""){invalidCommand=1;}
         }
