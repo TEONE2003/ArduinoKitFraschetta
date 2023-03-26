@@ -5,5 +5,5 @@ SerialRelayF LivingRoomLight(13,"LRL",NormalLogic,SaveStatus,"SR",2,3,9600);
 void setup(){}
 void loop(){
  BT.ReceiveString();
- LivingRoomLight.FunctionSerialRelay(BT.string());
+ LivingRoomLight.FunctionSerialRelay(BT.ReadString());
 }

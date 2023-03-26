@@ -21,7 +21,7 @@ void FunctionSerialServoEntrance(String ReceivedString){
   if(ReceivedString==OpenString){Open(); Send(OpenString);}
   else if(ReceivedString==CloseString){Close(); Send(CloseString);}
   else if(ReceivedString==StatusRequestString){SendState();}
-  else{invalidCommand=1;}
+  else if(ReceivedString!=""){invalidCommand=1;}
  }
 };
 #endif

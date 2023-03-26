@@ -31,7 +31,7 @@ public:
                 TempIdex=TempIdex+Tag.length();
                 SetTemperatureThreshold(byte(ReceivedString.substring(TempIdex+4,TempIdex+6)));
             }
-            else{invalidCommand=1;}
+            else if(ReceivedString!=""){invalidCommand=1;}
         }
     }
 };

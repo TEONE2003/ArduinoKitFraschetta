@@ -13,12 +13,12 @@ public:
   if(ReadDigitalStatus()){Send(TurnOnString);}
   else{Send(TurnOffString);}
  }
- void FuncionSerialRelay(String ReceivedString){
+ void FunctionSerialRelay(String ReceivedString){
   invalidCommand=0;
   if(ReceivedString == TurnOnString){TurnOn(); Send(TurnOnString);}
   else if(ReceivedString == TurnOffString){TurnOff(); Send(TurnOffString);}
   if(ReceivedString==StatusRequestString){SendState();}
-  else{invalidCommand=1;}
+  else if(ReceivedString!=""){invalidCommand=1;}
  }
 };
 #endif
