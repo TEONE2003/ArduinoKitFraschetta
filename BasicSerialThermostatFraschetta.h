@@ -16,7 +16,7 @@ public:
         invalidCommand=0;
     }
     
-    void SendState(byte CurrentTemperature,byte CurrentUmidity){Send(Tag+" T:"+String(CurrentTemperature)+" U:"+String(CurrentUmidity)+' '+Status());}
+    void SendState(byte CurrentTemperature,byte CurrentUmidity){Send(Tag+" T="+String(TemperatureThresholdS)+" T:"+String(CurrentTemperature)+" U:"+String(CurrentUmidity)+" S:"+Status());}
     
     bool InvalidCommand(){return invalidCommand;}
     
