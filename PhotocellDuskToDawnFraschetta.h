@@ -8,5 +8,6 @@ public:
  uint8_t PinRele,DigitalType ReleType):PhotoresistorF(PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit),
  RelayF(PinRele,ReleType){}
  void PhotocellDuskToDawnFunction(){if(Check()){TurnOn();} else{TurnOff();}}
+ using RelayF::ReadDigitalStatus;
 };
 #endif

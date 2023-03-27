@@ -8,6 +8,7 @@ class BasicSerialThermostatF:public ThermostatF{
        if(ReadDigitalStatus()){return "1";}
        else{return "0";}
     }
+    using ThermostatF::ThermostatFunction;
 public:
     BasicSerialThermostatF(uint8_t PinRele,String Tag,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating,String StatusRequestString=""):ThermostatF(PinRele,ReleType,TypeT){
         this->StatusRequestString=StatusRequestString;
@@ -21,7 +22,7 @@ public:
     bool InvalidCommand(){return invalidCommand;}
     
     void SerialThermostatFunction(byte CurrentTemperature,byte CurrentUmidity,String ReceivedString){
-        ThermostatF::ThermostatFunction(CurrentTemperature);
+        ThermostatFunction(CurrentTemperature);
         invalidCommand=0;
         if(nTick()){
             TempIdex = ReceivedString.indexOf(Tag+" T=");
