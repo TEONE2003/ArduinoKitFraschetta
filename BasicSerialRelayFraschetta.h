@@ -7,6 +7,7 @@ public:
  BasicSerialRelayF(uint8_t Pin,String Tag,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus,String StatusRequestString=""):RelayF(Pin,Type,Save){
   TurnOnString=Tag+'1'; TurnOffString=Tag+'0';
   this->StatusRequestString=StatusRequestString;
+  invalidCommand=0;
  }
  bool InvalidCommand(){return invalidCommand;}
  void SendState(){
