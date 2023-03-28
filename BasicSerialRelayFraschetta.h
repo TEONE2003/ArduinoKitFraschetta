@@ -10,15 +10,15 @@ public:
   invalidCommand=0;
  }
  bool InvalidCommand(){return invalidCommand;}
- void SendState(){
-  if(ReadDigitalStatus()){Send('1');}
-  else{Send('0');}
+ void SendStatus(){
+  if(ReadDigitalStatus()){Send("1");}
+  else{Send("0");}
  }
  void FunctionSerialRelay(String ReceivedString){
   invalidCommand=0;
   if(ReceivedString == TurnOnString){TurnOn(); Send(TurnOnString);}
   else if(ReceivedString == TurnOffString){TurnOff(); Send(TurnOffString);}
-  if(ReceivedString==StatusRequestString){SendState();}
+  if(ReceivedString==StatusRequestString){SendStatus();}
   else if(ReceivedString!=""){invalidCommand=1;}
  }
 };
