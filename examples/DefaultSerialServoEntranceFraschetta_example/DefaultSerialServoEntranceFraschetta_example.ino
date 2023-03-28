@@ -1,6 +1,6 @@
 #include "DefaultSerialServoEntranceFraschetta.h"
 #include "DefaultBluetoothFraschetta.h"
-DefaultSerialServoEntranceF S("S","SR",2,180,0,3,10,9600);
+DefaultSerialServoEntranceF S("S",2,180,0,3,10,9600);
 DefaultBluetoothF B(9600);
 void setup(){S.MovementStatusCheck();}
 void loop(){

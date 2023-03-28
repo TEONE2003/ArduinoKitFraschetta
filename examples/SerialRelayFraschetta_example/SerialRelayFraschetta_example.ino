@@ -6,4 +6,5 @@ void setup(){}
 void loop(){
  BT.ReceiveString();
  LivingRoomLight.FunctionSerialRelay(BT.ReadString());
+ if(LivingRoomLight.InvalidCommand()){BT.SendLn("INVALID COMMAND");}
 }
