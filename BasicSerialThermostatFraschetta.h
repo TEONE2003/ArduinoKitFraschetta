@@ -2,37 +2,40 @@
 #define BasicSerialThermostatFraschetta_h
 #include "ThermostatFraschetta.h"
 class BasicSerialThermostatF:public ThermostatF{
- protected: String Tag,StatusRequestString; int TempIdex; bool invalidCommand;
+ protected: String StringSetTemperatureThreshold,StringStatusRelay,StringCurrentUmidityRequest,StringCurrentTemperatureRequest,StringTemperatureThresholdRequest;
+  int TempIdex,TagLength; bool invalidCommand;
   virtual void Send(String s)=0;
-   String Status(){
-       if(ReadDigitalStatus()){return "1";}
-       else{return "0";}
-    }
-    using ThermostatF::ThermostatFunction;
+  using ThermostatF::ThermostatFunction;
 public:
-    BasicSerialThermostatF(uint8_t PinRele,String Tag,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating,String StatusRequestString=""):ThermostatF(PinRele,ReleType,TypeT){
-        this->StatusRequestString=StatusRequestString;
-        this->Tag=Tag;
-        TempIdex=-1;
-        invalidCommand=0;
-    }
-    
-    void SendState(byte CurrentTemperature,byte CurrentUmidity){Send(Tag+" T="+String(TemperatureThresholdS)+" T:"+String(CurrentTemperature)+" U:"+String(CurrentUmidity)+" S:"+Status());}
-    
-    bool InvalidCommand(){return invalidCommand;}
-    
-    void SerialThermostatFunction(byte CurrentTemperature,byte CurrentUmidity,String ReceivedString){
-        ThermostatFunction(CurrentTemperature);
-        invalidCommand=0;
-        if(nTick()){
-            TempIdex = ReceivedString.indexOf(Tag+" T=");
-            if(ReceivedString==StatusRequestString){SendState(CurrentTemperature,CurrentUmidity);}
-            else if(TempIdex>=0){
-                TempIdex=TempIdex+Tag.length();
-                SetTemperatureThreshold(byte(ReceivedString.substring(TempIdex+4,TempIdex+6).toInt()));
-            }
-            else if(ReceivedString!=""){invalidCommand=1;}
-        }
-    }
+ BasicSerialThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):ThermostatF(PinRele,ReleType,TypeT){
+  StringTemperatureThresholdRequest=Tag+".TT";
+  StringCurrentTemperatureRequest=Tag+".CT";
+  StringCurrentUmidityRequest=Tag=".CH";
+  StringStatusRelay=".S";
+  StringSetTemperatureThreshold=Tag+".T=";
+  TempIdex=-1;
+  TagLength=Tag.length();
+  invalidCommand=0;
+ }
+ bool InvalidCommand(){return invalidCommand;}
+ void SerialThermostatFunction(byte CurrentTemperature,byte CurrentUmidity,String ReceivedString){
+  ThermostatFunction(CurrentTemperature);
+  invalidCommand=0;
+  if(nTick()){
+   TempIdex = ReceivedString.indexOf(StringSetTemperatureThreshold);
+   if(ReceivedString==StringTemperatureThresholdRequest){Send(String(TemperatureThresholdS));}
+   else if(ReceivedString==StringCurrentTemperatureRequest){Send(String(CurrentTemperature));}
+   else if(ReceivedString==StringCurrentUmidityRequest){Send(String(CurrentUmidity));}
+   else if(ReceivedString==StringStatusRelay){
+    if(ReadDigitalStatus()){Send("1");}
+    else{Send("0");}
+   }
+   else if(TempIdex>=0){
+    TempIdex=TempIdex+TagLength;
+    SetTemperatureThreshold(byte(ReceivedString.substring(TempIdex+4,TempIdex+6).toInt()));
+   }
+   else if(ReceivedString!=""){invalidCommand=1;}
+   }
+ }
 };
 #endif

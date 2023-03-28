@@ -1,6 +1,6 @@
 #include "SerialThermostatFraschetta.h"
 #include "BluetoothFraschetta.h"
-SerialThermostatF T(13,"T",NormalLogic,Heating,"RS",2,3,9600);
+SerialThermostatF T("T",13,NormalLogic,Heating,2,3,9600);
 BluetoothF B(2,3,9600);
 void setup(){}
 void loop(){
