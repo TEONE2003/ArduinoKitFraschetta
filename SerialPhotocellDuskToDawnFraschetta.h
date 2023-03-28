@@ -5,6 +5,6 @@
 class SerialPhotocellDuskToDawnF:public BasicSerialPhotocellDuskToDawnF,SerialF{
 protected: void Send(String s)override{SerialF::SendLn(s);}
 public:
- SerialPhotocellDuskToDawnF(String Tag,String StatusRequestString,uint8_t PinPhotoresistor,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit,uint8_t PinRele,DigitalType ReleType,uint8_t RX=2,uint8_t TX=3,uint32_t Baud=9600):BasicSerialPhotocellDuskToDawnF(Tag,StatusRequestString,PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit,PinRele,ReleType),SerialF(RX,TX,Baud){}
+ SerialPhotocellDuskToDawnF(String Tag,uint8_t PinPhotoresistor,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit,uint8_t PinRele,DigitalType ReleType,uint8_t Rx=2,uint8_t Tx=3,uint32_t Baud=9600):BasicSerialPhotocellDuskToDawnF(Tag,PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit,PinRele,ReleType),SerialF(Rx,Tx,Baud){}
 };
 #endif
