@@ -6,6 +6,6 @@ class DefaultSerialRelayF:DefaultSerialF,public BasicSerialRelayF{
 protected: void Send(String s)override{DefaultSerialF::SendLn(s);}
 public:
  DefaultSerialRelayF(){}
- DefaultSerialRelayF(uint8_t Pin,String Tag,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus,String StatusRequestString="",uint16_t Baud=9600):BasicSerialRelayF(Pin,Tag,Type,Save,StatusRequestString),DefaultSerialF(Baud){}
+ DefaultSerialRelayF(String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus,uint16_t Baud=9600):BasicSerialRelayF(Tag,Pin,Type,Save),DefaultSerialF(Baud){}
 };
 #endif
