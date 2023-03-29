@@ -10,7 +10,7 @@ public:
  BasicSerialThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):ThermostatF(PinRele,ReleType,TypeT){
   StringTemperatureThresholdRequest=Tag+".TT";
   StringStatusRelay=Tag+".S";
-  StringSetTemperatureThreshold=Tag+".T=";
+  StringSetTemperatureThreshold=Tag+"=";
   TempIdex=-1;
   TagLength=Tag.length();
   invalidCommand=0;
@@ -27,7 +27,7 @@ public:
    }
    else if(TempIdex>=0){
     TempIdex=TempIdex+TagLength;
-    SetTemperatureThreshold(byte(ReceivedString.substring(TempIdex+4,TempIdex+6).toInt()));
+    SetTemperatureThreshold(byte(ReceivedString.substring(TempIdex+1,TempIdex+3).toInt()));
     Send(String(TemperatureThresholdS));
    }
    else if(ReceivedString!=""){invalidCommand=1;}
