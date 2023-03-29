@@ -16,8 +16,8 @@ public:
  }
  void FunctionSerialRelay(String ReceivedString){
   invalidCommand=0;
-  if(ReceivedString == TurnOnString){TurnOn(); Send(TurnOnString);}
-  else if(ReceivedString==TurnOffString){TurnOff(); Send(TurnOffString);}
+  if(ReceivedString==TurnOnString){TurnOn(); Send("1");}
+  else if(ReceivedString==TurnOffString){TurnOff(); Send("0");}
   else if(ReceivedString==StatusRequestString){SendStatus();}
   else if(ReceivedString!=""){invalidCommand=1;}
  }
