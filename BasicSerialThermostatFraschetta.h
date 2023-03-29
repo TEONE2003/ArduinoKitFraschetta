@@ -21,7 +21,6 @@ public:
  void SerialThermostatFunction(byte CurrentTemperature,byte CurrentUmidity,String ReceivedString){
   ThermostatFunction(CurrentTemperature);
   invalidCommand=0;
-  if(nTick()){
    TempIdex = ReceivedString.indexOf(StringSetTemperatureThreshold);
    if(ReceivedString==StringTemperatureThresholdRequest){Send(String(TemperatureThresholdS));}
    else if(ReceivedString==StringCurrentTemperatureRequest){Send(String(CurrentTemperature));}
@@ -33,9 +32,9 @@ public:
    else if(TempIdex>=0){
     TempIdex=TempIdex+TagLength;
     SetTemperatureThreshold(byte(ReceivedString.substring(TempIdex+4,TempIdex+6).toInt()));
+    Send(String(TemperatureThresholdS));
    }
    else if(ReceivedString!=""){invalidCommand=1;}
-   }
  }
 };
 #endif
