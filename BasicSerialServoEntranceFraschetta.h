@@ -13,13 +13,13 @@ public:
  }
  bool InvalidCommand(){return invalidCommand;}
  void SendStatus(){
-  if(Opened()){Send("1");}
-  else if(Closed()){Send("0");}
+  if(Opened()){Send("O");}
+  else if(Closed()){Send("C");}
  }
 void FunctionSerialServoEntrance(String ReceivedString){
   invalidCommand=0;
-  if(ReceivedString==OpenString){Open(); Send(OpenString);}
-  else if(ReceivedString==CloseString){Close(); Send(CloseString);}
+  if(ReceivedString==OpenString){Open(); Send("O");}
+  else if(ReceivedString==CloseString){Close(); Send("C");}
   else if(ReceivedString==StatusRequestString){SendStatus();}
   else if(ReceivedString!=""){invalidCommand=1;}
  }
