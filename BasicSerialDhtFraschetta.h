@@ -1,7 +1,7 @@
 #ifndef BasicSerialDhtFraschetta_h
 #define BasicSerialDhtFraschetta_h
 #include "DhtFraschetta.h"
-class BasicSerialDhtF:DhtF{
+class BasicSerialDhtF:public DhtF{
 protected: String StringCurrentUmidityRequest,StringCurrentTemperatureRequest; bool invalidCommand;
   virtual void Send(String s)=0;
  public:
