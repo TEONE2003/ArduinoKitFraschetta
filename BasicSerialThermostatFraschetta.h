@@ -9,7 +9,7 @@ class BasicSerialThermostatF:public ThermostatF{
 public:
  BasicSerialThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):ThermostatF(PinRele,ReleType,TypeT){
   StringTemperatureThresholdRequest=Tag+".TT";
-  StringStatusRelay=".S";
+  StringStatusRelay=Tag+".S";
   StringSetTemperatureThreshold=Tag+".T=";
   TempIdex=-1;
   TagLength=Tag.length();
