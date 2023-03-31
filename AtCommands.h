@@ -7,12 +7,12 @@ protected:
  virtual String ReadString()=0;
  virtual void Send(String s)=0;
  const String NlCr="\r\n";
+public:
  bool WaitOk(){
   while(ReadString().indexOf("OK")<0){ReceiveString();}
   ReceiveString();
   return 1;
  }
-public:
  bool ModeAt(){Send("AT"+NlCr); return WaitOk();}
  String AtName(){
   while(!ModeAt()){}
@@ -22,8 +22,13 @@ public:
   ReceiveString();
   return RS;
  }
- bool AtUart(){
-  
+ int AtUart(){
+  while(!ModeAt()){}
+  Send("AT+UART?"+NlCr);
+  while(ReadString()==""){ReceiveString();}
+  String RS=ReadString().substring(6,ReadString().length()-10);
+  ReceiveString();
+  return RS.toInt();
  }
  bool AtRole(){
   while(!ModeAt()){}
@@ -35,13 +40,13 @@ public:
  }
  bool AtRole(Role R){
   while(!ModeAt()){}
-  if(R==Master){Send("AT+ROLE1"+NlCr);}
-  else{Send("AT+ROLE0"+NlCr);}
+  if(R==Master){Send("AT+ROLE=1"+NlCr);}
+  else{Send("AT+ROLE=0"+NlCr);}
   return AtRole();
  }
  bool AtResetSettings(){while(!ModeAt()){} Send("AT+RESET"+NlCr); return WaitOk();}
  bool AtName(String Name){while(!ModeAt()){} Send("AT+NAME="+Name+NlCr); return Name==AtName();}
- bool AtUart(uint8_t Baud){ while(!ModeAt()){} Send("AT+UART="+String(Baud)+",0,0"+NlCr); return WaitOk();}
+ bool AtUart(int Baud){ while(!ModeAt()){} Send("AT+UART="+String(Baud)+",0,0"+NlCr); return Baud==AtUart();}
  bool AtAssociate(uint8_t MacAddress){ while(!ModeAt()){} Send("AT+BIND="+String(MacAddress)+NlCr); return WaitOk();}
 };
 #endif
