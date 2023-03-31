@@ -1,5 +1,5 @@
 #include "BluetoothFraschetta.h"
-BluetoothF B(2,3,9600);
+BluetoothF B(2,3,9600); /*it may be necessary to change the speed to 38400, some communicate to 9600 and others to 38400*/
 void setup(){}
 void loop(){B.SerialBridgeFunction();}
 /*
