@@ -6,29 +6,42 @@ protected:
  virtual void ReceiveString()=0;
  virtual String ReadString()=0;
  virtual void Send(String s)=0;
+ const String NlCr="\r\n";
+ bool WaitOk(){
+  while(ReadString().indexOf("OK")<0){ReceiveString();}
+  ReceiveString();
+  return 1;
+ }
 public:
- boolean ModeAt(){
- Send("At");
- while(ReadString()==""){ReceiveString();}
- return ReadString()=="OK";
- }
- void AtResetSettings(){Send("At+RESET");}
- void AtSetName(String Name){Send("At+NAME"+Name);}
+ bool ModeAt(){Send("AT"+NlCr); return WaitOk();}
  String AtName(){
- Send("At+NAME?");
- while(ReadString()==""){ReceiveString();}
- return ReadString().substring(8,ReadString().length()-8);
+  while(!ModeAt()){}
+  Send("AT+NAME?"+NlCr);
+  while(ReadString()==""){ReceiveString();}
+  String RS=ReadString().substring(6,ReadString().length()-6);
+  ReceiveString();
+  return RS;
  }
- boolean AtRole(){
- Send("At+ROLE?");
- while(ReadString()==""){ReceiveString();}
- return ReadString().indexOf('1')>=0;
+ bool AtUart(){
+  
  }
- void AtSetRole(Role R){
-  if(R==Master){Send("At+ROLE1");}
-  else{Send("At+ROLE0");}
-  }
-  AtSetBaud(uint8_t Baud){Send("At+BAUD"+String(Baud));}
-  AtAssociate(uint8_t MacAddress){Send("At+BIND"+String(MacAddress));}
+ bool AtRole(){
+  while(!ModeAt()){}
+  Send("AT+ROLE?"+NlCr);
+  while(ReadString()==""){ReceiveString();}
+  String RS=ReadString();
+  ReceiveString();
+  return RS.indexOf('1')>=0;
+ }
+ bool AtRole(Role R){
+  while(!ModeAt()){}
+  if(R==Master){Send("AT+ROLE1"+NlCr);}
+  else{Send("AT+ROLE0"+NlCr);}
+  return AtRole();
+ }
+ bool AtResetSettings(){while(!ModeAt()){} Send("AT+RESET"+NlCr); return WaitOk();}
+ bool AtName(String Name){while(!ModeAt()){} Send("AT+NAME="+Name+NlCr); return Name==AtName();}
+ bool AtUart(uint8_t Baud){ while(!ModeAt()){} Send("AT+UART="+String(Baud)+",0,0"+NlCr); return WaitOk();}
+ bool AtAssociate(uint8_t MacAddress){ while(!ModeAt()){} Send("AT+BIND="+String(MacAddress)+NlCr); return WaitOk();}
 };
 #endif
