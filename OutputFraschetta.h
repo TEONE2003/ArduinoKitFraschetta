@@ -35,7 +35,7 @@ protected:
 public:
  void SetAnalogStatus(uint8_t StatusPercentage){SetStatus((StatusPercentage*100)/255);}
 OutputF(){}
-OutputF(uint8_t Pin=0,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
+OutputF(uint8_t Pin,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
  this->TypeD=TypeD;
  this->Save=Save;
  InitializePin(Pin);
