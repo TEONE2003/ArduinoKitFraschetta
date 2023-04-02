@@ -43,7 +43,7 @@ public:
   BipolarStepperMotorF(uint8_t PinA,uint8_t PinB,uint8_t PinC,uint8_t PinD,uint16_t MaximumSteps,uint16_t ShiftPeriodInMilliseconds):
   BasicStepperMotorF(MaximumSteps,ShiftPeriodInMilliseconds,PinA,PinB){
    this->PinA=PinA; this->PinB=PinB; this->PinC=PinC; this->PinD=PinD;
-   pinMode(PinA,OUTPUT); pinMode(PinB,OUTPUT); pinMode(PinC,OUTPUT); pinMode(PinD,OUTPUT);
   }
+    void Begin(){pinMode(PinA,OUTPUT); pinMode(PinB,OUTPUT); pinMode(PinC,OUTPUT); pinMode(PinD,OUTPUT);}
 };
 #endif

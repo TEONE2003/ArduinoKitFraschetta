@@ -10,30 +10,24 @@ class InputF{
  public:
   void SetExternalResistance(){ResistanceM=ResistanceMode::ExternalResistance; pinMode(Pin,INPUT);}
   void SetPullUp(){ResistanceM=ResistanceMode::PullUp; pinMode(Pin,INPUT_PULLUP);}
-  void SetPullDown(){ResistanceM=ResistanceMode::PullDown; digitalWrite(Pin,0);}
- protected:
-  void SetPin(uint8_t Pin){this->Pin=Pin; SetExternalResistance();}
-  void SetResistanceMode(ResistanceMode ResistanceM){
-   switch(ResistanceM){
+  void SetPullDown(){ResistanceM=ResistanceMode::PullDown; pinMode(Pin,INPUT_PULLUP);}
+  void SetResistanceMode(ResistanceMode ResistanceType){
+   switch(ResistanceType){
     case ResistanceMode::ExternalResistance: SetExternalResistance(); break;
     case ResistanceMode::PullUp: SetPullUp(); break;
     case ResistanceMode::PullDown: SetPullDown(); break;
    }
   }
-  void SetDigitalReadMode(DigitalType DigitalReadM){
-   this->DigitalReadM=DigitalReadM;
-  }
- public:
+  void SetDigitalReadMode(DigitalType DigitalReadM){this->DigitalReadM=DigitalReadM;}
   boolean DigitalRead(){
-   boolean L=digitalRead(Pin);
-   if(DigitalReadM){return L;}
-   else{return !L;}
+   boolean R=digitalRead(Pin);
+   if((DigitalReadM && (ResistanceM==ExternalResistance || ResistanceM==PullUp)) ||  !DigitalReadM && ResistanceM==PullDown){return R;}
+   else{return !R;}
   }
+  void Begin(){pinMode(Pin,INPUT); SetResistanceMode(ResistanceM);}
   uint16_t AnalogRead(){return analogRead(Pin);}
   InputF(uint8_t Pin=0,ResistanceMode ResistanceM=ExternalResistance,DigitalType DigitalReadM=NormalLogic){
-   SetResistanceMode(ResistanceM);
-   SetDigitalReadMode(DigitalReadM);
-   SetPin(Pin);
+   SetResistanceMode(ResistanceM); SetDigitalReadMode(DigitalReadM); this->Pin=Pin;
   }
 };
 #endif

@@ -20,8 +20,9 @@ class ButtonF:InputF,VirtualCycleF{
    if(nTick()){SavePressed=DigitalRead();}
    return SavePressed;
   }
-  void SetExternalResistance(){InputF::SetExternalResistance();}
-  void SetPullUp(){InputF::SetPullUp();}
-  void SetPullDown(){InputF::SetPullDown();}
+  using InputF::SetExternalResistance;
+  using InputF::SetPullUp;
+  using InputF::SetPullDown;
+  using InputF::Begin;
 };
 #endif

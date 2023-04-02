@@ -20,5 +20,6 @@ class TwoStageThermostatF{
    ThermostatCooling.SetTemperatureThreshold(TemperatureThreshold);
   }
   uint8_t TemperatureThreshold(){return ThermostatHeating.TemperatureThreshold();}
+  void Begin(){ThermostatHeating.Begin(); ThermostatCooling.Begin();}
 };
 #endif

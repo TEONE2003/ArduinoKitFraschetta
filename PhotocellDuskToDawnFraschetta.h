@@ -9,6 +9,6 @@ public:
  RelayF(PinRele,ReleType){}
  void PhotocellDuskToDawnFunction(){if(Check()){TurnOn();} else{TurnOff();}}
  using RelayF::ReadDigitalStatus;
- using RelayF::Begin;
+ void Begin(){RelayF::Begin(); PhotoresistorF::Begin();}
 };
 #endif

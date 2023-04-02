@@ -6,6 +6,7 @@ protected:
   ButtonF ButtonOpeningLimitSwitch;
   ButtonF ButtonClosingLimitSwitch;
  public:
+  PhysicalEntranceF(){}
   PhysicalEntranceF(uint8_t PinOpeningLimitSwitch,uint8_t PinClosingLimitSwitch,uint64_t DelayLimitSwitch1,UnitOfTime UnitLimitSwitch1,
                     uint64_t DelayLimitSwitch2,UnitOfTime UnitLimitSwitch2){
    ButtonOpeningLimitSwitch = ButtonF(PinOpeningLimitSwitch,DelayLimitSwitch1,UnitLimitSwitch1);
@@ -15,5 +16,6 @@ protected:
       PhysicalEntranceF(PinOpeningLimitSwitch,PinClosingLimitSwitch,DelayLimitSwitch,UnitLimitSwitch,DelayLimitSwitch,UnitLimitSwitch){}
   boolean Opened(){return ButtonOpeningLimitSwitch.Pressed();}
   boolean Closed(){return ButtonClosingLimitSwitch.Pressed();}
+  void Begin(){ButtonOpeningLimitSwitch.Begin(); ButtonClosingLimitSwitch.Begin();}
 };
 #endif

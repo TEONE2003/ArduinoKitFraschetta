@@ -1,4 +1,4 @@
 #include "TwoStageThermostatFraschetta.h"
 TwoStageThermostatF TST(2,3,NormalLogic);
-void setup(){}
-void loop(){TST.ThermostatFunction(24);}
+void setup(){TST.Begin();}
+void loop(){TST.TwoStageThermostatFunction(24);}
