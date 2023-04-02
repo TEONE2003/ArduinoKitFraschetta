@@ -47,6 +47,7 @@ class RgbLedF{
    TurnOnWithFader(MaximumPercentage,Slow,Unit);
    TurnOffWithFader(MaximumPercentage,Slow,Unit);
   }
+  void Begin(){Green.Begin(); Red.Begin(); Blue.Begin();}
   RgbLedF(uint8_t PinGreen=2,uint8_t PinRed=3,uint8_t PinBlue=4,MemorizeStatus Save=DoNotSaveStatus,RgbValuesF Color=GreenColor){
    Green = LedF(PinGreen,Save);
    Red = LedF(PinRed,Save);

@@ -2,7 +2,7 @@
 #include "DefaultBluetoothFraschetta.h"
 DefaultSerialThermostatF T("T",13,NormalLogic,Heating,9600);
 DefaultBluetoothF B(9600);
-void setup(){}
+void setup(){T.Begin();}
 void loop(){
 B.ReceiveString();
 T.SerialThermostatFunction(24,B.ReadString());

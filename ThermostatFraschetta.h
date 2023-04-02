@@ -11,6 +11,7 @@ protected: ThermostatType TypeT; uint8_t PinRele; byte TemperatureThresholdS; ui
  VirtualCycleF(5,Seconds){this->TypeT=TypeT; this->PinRele=PinRele; TemperatureThresholdS=EEPROM.read(PinRele);}
  byte TemperatureThreshold(){return TemperatureThresholdS;}
  using RelayF::ReadDigitalStatus;
+ using RelayF::Begin;
  void SetTemperatureThreshold(byte TemperatureThreshold){
   EEPROM.update(PinRele,TemperatureThreshold);
   TemperatureThresholdS=TemperatureThreshold;

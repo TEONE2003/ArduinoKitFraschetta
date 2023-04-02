@@ -12,17 +12,12 @@ protected:
  TimerF Period;
  DigitalType TypeD;
  MemorizeStatus Save;
- void SetPin(uint8_t &Pin){
-  this->Pin=Pin; pinMode(Pin,OUTPUT);
-  if(TypeD){digitalWrite(Pin,0);}
-  else{digitalWrite(Pin,1);}
- }
 public:
  void SetStatus(uint8_t Percentage){
- if(Percentage==100){digitalWrite(Pin,TypeD);}
- else if(Percentage==0){digitalWrite(Pin,!TypeD);}
- else{analogWrite(Pin,(Percentage*255)/100);}
- if(Save){EEPROM.update(Pin,Percentage);}
+  if(Percentage==100){digitalWrite(Pin,TypeD);}
+  else if(Percentage==0){digitalWrite(Pin,!TypeD);}
+  else{analogWrite(Pin,(Percentage*255)/100);}
+  if(Save){EEPROM.update(Pin,Percentage);}
  }
  bool ReadDigitalStatus(){
   bool r=digitalRead(Pin);
@@ -30,15 +25,18 @@ public:
   else{return !r;}
  }
  uint8_t ReadAnalogStatusPercentage(){return (analogRead(Pin)*255)/100;}
-protected:
- void InitializePin(uint8_t Pin){SetPin(Pin); SetStatus(EEPROM.read(Pin));};
-public:
+ void Begin(){
+  pinMode(Pin,OUTPUT);
+  if(Save){SetStatus(EEPROM.read(Pin));}
+  else{
+   if(TypeD){digitalWrite(Pin,0);}
+   else{digitalWrite(Pin,1);}
+  }
+ }
  void SetAnalogStatus(uint8_t StatusPercentage){SetStatus((StatusPercentage*100)/255);}
 OutputF(){}
 OutputF(uint8_t Pin,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
- this->TypeD=TypeD;
- this->Save=Save;
- InitializePin(Pin);
+ this->TypeD=TypeD; this->Save=Save; this->Pin=Pin;
  }
 OutputF(uint8_t Pin,MemorizeStatus Save):OutputF(Pin,NormalLogic,Save){}
  void TurnOn(){SetStatus(100);}
