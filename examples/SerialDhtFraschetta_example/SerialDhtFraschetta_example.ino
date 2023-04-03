@@ -6,4 +6,5 @@ void setup(){}
 void loop(){
  B.ReceiveString();
  D.SerialDhtFFunction(B.ReadString());
+ if(D.InvalidCommand()){B.SendLn("INVALID COMMAND");}
  }
