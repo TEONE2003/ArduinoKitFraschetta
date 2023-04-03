@@ -1,10 +1,10 @@
 #include "DefaultSerialRelayFraschetta.h"
 #include "DefaultBluetoothFraschetta.h"
-DefaultBluetoothF BT(9600);
+DefaultBluetoothF B(9600);
 DefaultSerialRelayF LivingRoomLight("LRL",13,NormalLogic,SaveStatus,9600);
 void setup(){LivingRoomLight.Begin();}
 void loop(){
- BT.ReceiveString();
- LivingRoomLight.FunctionSerialRelay(BT.ReadString());
- if(LivingRoomLight.InvalidCommand()){BT.SendLn("INVALID COMMAND");}
+ B.ReceiveString();
+ LivingRoomLight.FunctionSerialRelay(B.ReadString());
+ if(LivingRoomLight.InvalidCommand()){B.SendLn("INVALID COMMAND: ["+B.ReadString()+']');}
 }

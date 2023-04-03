@@ -6,5 +6,5 @@ void setup(){T.Begin();}
 void loop(){
 B.ReceiveString();
 T.SerialThermostatFunction(24,B.ReadString());
-if(T.InvalidCommand()){B.SendLn("INVALID COMMAND");}
+if(T.InvalidCommand()){B.SendLn("INVALID COMMAND: ["+B.ReadString()+']');}
 }

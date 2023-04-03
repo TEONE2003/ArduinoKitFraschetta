@@ -6,5 +6,5 @@ void setup(){P.Begin();}
 void loop(){
 B.ReceiveString();
 P.SerialPhotocellDuskToDawnFunction(B.ReadString());
-if(P.InvalidCommand()){B.SendLn("INVALID COMMAND");}
+if(P.InvalidCommand()){B.SendLn("INVALID COMMAND: ["+B.ReadString()+']');}
 }
