@@ -6,11 +6,11 @@ class BasicSerialPhotocellDuskToDawnF:public SerialDriverObjectF,public Photocel
 protected:
  virtual void Send(String s)=0; String StatusRequestString;
  using PhotocellDuskToDawnF::PhotocellDuskToDawnFunction;
-public:
-    BasicSerialPhotocellDuskToDawnF(String Tag,uint8_t PinPhotoresistor,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit,
+ BasicSerialPhotocellDuskToDawnF(String Tag,uint8_t PinPhotoresistor,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit,
                       uint8_t PinRele,DigitalType ReleType):PhotocellDuskToDawnF(PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit,PinRele,ReleType),SerialDriverObjectF(){
      StatusRequestString=Tag+".S";
  }
+public:
     void SendStatus(){
         if(ReadDigitalStatus()){Send("1");}
         else{Send("0");}

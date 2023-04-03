@@ -6,6 +6,11 @@ class BasicStepperMotorF:MotorSwipingF{
 protected:
  uint16_t MaximumSteps,ForwardPosition,BackPosition;
  EepromNumF::EepromUint16T MP;
+ BasicStepperMotorF(uint16_t MaximumSteps,uint16_t ShiftPeriodInMilliseconds,uint16_t EepromAddressCell1Position,uint16_t EepromAddressCell2Position){
+  this->MaximumSteps=MaximumSteps;
+  this->ShiftPeriodInMilliseconds=ShiftPeriodInMilliseconds;
+  MP = EepromNumF::EepromUint16T(EepromAddressCell1Position,EepromAddressCell2Position);
+ }
 public:
  uint16_t ShiftPeriodInMilliseconds;
  uint16_t Position()override{return MP.Value();}
@@ -16,11 +21,6 @@ public:
   else{
    MP.Value(0);
   }
- }
- BasicStepperMotorF(uint16_t MaximumSteps,uint16_t ShiftPeriodInMilliseconds,uint16_t EepromAddressCell1Position,uint16_t EepromAddressCell2Position){
-  this->MaximumSteps=MaximumSteps;
-  this->ShiftPeriodInMilliseconds=ShiftPeriodInMilliseconds;
-  MP = EepromNumF::EepromUint16T(EepromAddressCell1Position,EepromAddressCell2Position);
  }
  virtual void RightStep()=0;
  virtual void LeftStep()=0;

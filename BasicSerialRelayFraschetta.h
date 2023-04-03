@@ -3,12 +3,13 @@
 #include "SerialDriverObjectFraschetta.h"
 #include "RelayFraschetta.h"
 class BasicSerialRelayF:public SerialDriverObjectF,public RelayF{
-protected: String TurnOnString,TurnOffString,StatusRequestString; virtual void Send(String s)=0;
-public:
+protected:
+ String TurnOnString,TurnOffString,StatusRequestString; virtual void Send(String s)=0;
  BasicSerialRelayF(String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus):RelayF(Pin,Type,Save),SerialDriverObjectF(){
   TurnOnString=Tag+"=1"; TurnOffString=Tag+"=0";
   StatusRequestString=Tag+".S";
  }
+public:
  void SendStatus(){
   if(ReadDigitalStatus()){Send("1");}
   else{Send("0");}

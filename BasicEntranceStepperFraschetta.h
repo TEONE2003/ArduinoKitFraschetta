@@ -15,6 +15,7 @@ class BasicEntranceStepperF:BasicStepperMotorF,public MotorizedEntranceF{
   }
   boolean Opened() override {return Position()==OpeningLimitSwitch;}
   boolean Closed() override {return Position()==ClosingLimitSwitch;}
+ protected:
   BasicEntranceStepperF(uint16_t MaximumSteps,uint16_t OpeningSteps,uint16_t ClosingSteps,
   uint16_t ShiftPeriodInMilliseconds,uint16_t EepromAddressCell1Position,uint16_t EepromAddressCell2Position,uint16_t AddressMotionStatusPosition):
    BasicStepperMotorF(MaximumSteps,ShiftPeriodInMilliseconds,EepromAddressCell1Position,EepromAddressCell1Position),

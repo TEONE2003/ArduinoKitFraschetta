@@ -14,6 +14,7 @@ protected:
  virtual String string()=0;
  virtual uint8_t Byte()=0;
  virtual char Char()=0;
+ BasicSerialF(uint16_t Baud=9600){this->Baud=Baud;}
 public:
  boolean Initialized(){return I;}
  void ReceiveString(){
@@ -34,6 +35,5 @@ public:
  String ReadString(){return S;}
  uint8_t ReadByte(){return B;}
  char ReadChar(){return C;}
- BasicSerialF(uint16_t Baud=9600){this->Baud=Baud;}
 };
 #endif

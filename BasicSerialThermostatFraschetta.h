@@ -7,14 +7,14 @@ class BasicSerialThermostatF:public SerialDriverObjectF,public ThermostatF{
   int TempIdex,TagLength; bool invalidCommand;
   virtual void Send(String s)=0;
   using ThermostatF::ThermostatFunction;
+  BasicSerialThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):ThermostatF(PinRele,ReleType,TypeT),SerialDriverObjectF(){
+   StringTemperatureThresholdRequest=Tag+".TT";
+   StringStatusRelay=Tag+".S";
+   StringSetTemperatureThreshold=Tag+"=";
+   TempIdex=-1;
+   TagLength=Tag.length();
+  }
 public:
- BasicSerialThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):ThermostatF(PinRele,ReleType,TypeT),SerialDriverObjectF(){
-  StringTemperatureThresholdRequest=Tag+".TT";
-  StringStatusRelay=Tag+".S";
-  StringSetTemperatureThreshold=Tag+"=";
-  TempIdex=-1;
-  TagLength=Tag.length();
- }
  void SerialThermostatFunction(byte CurrentTemperature,String ReceivedString){
   ThermostatFunction(CurrentTemperature);
    SetReceivedString(ReceivedString);
