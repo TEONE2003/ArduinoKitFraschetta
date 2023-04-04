@@ -16,8 +16,8 @@ protected: ThermostatType TypeT; uint8_t PinRele; byte TemperatureThresholdS; bo
   EEPROM.update(PinRele,TemperatureThreshold);
   TemperatureThresholdS=TemperatureThreshold;
  }
- void TurnOn(){State=1; /*if(TemperatureThresholdS<0){SetTemperatureThreshold(-TemperatureThresholdS);*/}}
- void TurnOff(){State=0; /*if(TemperatureThresholdS>=0){SetTemperatureThreshold(-TemperatureThresholdS);*/}}
+ void TurnOn(){State=1; /*if(TemperatureThresholdS<0){SetTemperatureThreshold(-TemperatureThresholdS);}*/}
+ void TurnOff(){State=0; /*if(TemperatureThresholdS>=0){SetTemperatureThreshold(-TemperatureThresholdS);}*/}
  void ThermostatFunction(byte CurrentTemperature){
   if(nTick() && State){
    if(TypeT==Heating){if(CurrentTemperature<TemperatureThresholdS){TurnOn();} else{RelayF::TurnOff();}}

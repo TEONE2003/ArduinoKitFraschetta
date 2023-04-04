@@ -4,8 +4,7 @@
 class VirtualCycleF:VirtualStopwatchF{
 protected: TimeF Period; uint64_t Divider; bool I;
 public:
- VirtualCycleF(){}
- VirtualCycleF(uint64_t Period,UnitOfTime Unit):VirtualStopwatchF(Unit){I=1; this->Period=TimeF(Period,Unit);}
+ VirtualCycleF(uint64_t Period=0,UnitOfTime Unit=Seconds):VirtualStopwatchF(Unit){I=1; this->Period=TimeF(Period,Unit);}
  bool Inizialized(){return I;}
  TimeF ElapsedTime(){return VirtualStopwatchF::ElapsedTime();}
  uint64_t nTick(){

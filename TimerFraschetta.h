@@ -29,6 +29,6 @@ boolean Stop(){
     }
 }
 TimerF(uint64_t Period=0,UnitOfTime Unit=Seconds,TimerType Type=NotBlocking):VirtualStopwatchF(Unit)
-{SetPeriodAndTimeUnit(Period,Unit);  SetTimerType(Type); InizializedT=1;}
+ {SetPeriodAndTimeUnit(Period,Unit);  SetTimerType(Type); InizializedT=1; En=0;}
 };
 #endif

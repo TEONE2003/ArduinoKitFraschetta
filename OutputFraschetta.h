@@ -36,8 +36,8 @@ public:
  void SetAnalogStatus(uint8_t StatusPercentage){SetStatus((StatusPercentage*100)/255);}
 OutputF(){}
 OutputF(uint8_t Pin,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
- this->TypeD=TypeD; this->Save=Save; this->Pin=Pin;
- }
+ this->TypeD=TypeD; this->Save=Save; this->Pin=Pin; Period=TimerF(); Bli=VirtualCycleF();
+}
 OutputF(uint8_t Pin,MemorizeStatus Save):OutputF(Pin,NormalLogic,Save){}
  void TurnOn(){SetStatus(100);}
  void TurnOff(){SetStatus(0);}
@@ -58,11 +58,17 @@ OutputF(uint8_t Pin,MemorizeStatus Save):OutputF(Pin,NormalLogic,Save){}
    Wait(Time,Unit); SetStatus(P);
   }
  }
- void InvertStatus(){
+void InvertStatus(){
+ if(Save){
   uint8_t S=EEPROM.read(Pin);
   if(S==100){SetStatus(0);}
   if(S==0){SetStatus(100);}
  }
+ else{
+  if(ReadDigitalStatus()){SetStatus(0);}
+  else{SetStatus(100);}
+ }
+}
  void Blink(uint16_t Period,UnitOfTime Unit){
   if(!Bli.Inizialized()){Bli = VirtualCycleF(Period,Unit);}
      for(uint64_t n=Bli.nTick();n>=1;n--){InvertStatus();}

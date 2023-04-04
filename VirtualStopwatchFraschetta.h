@@ -9,7 +9,7 @@ TimeF ET;
 UnitOfTime StopwatchUnitOfTime;
 public:
 void SetUnitOfTime(UnitOfTime Unit){StopwatchUnitOfTime = Unit;}
-VirtualStopwatchF(UnitOfTime Unit=Milliseconds){SetUnitOfTime(Unit); ST=0; ET=ST; ActiveStopwatch=0;}
+    VirtualStopwatchF(UnitOfTime Unit=Milliseconds){SetUnitOfTime(Unit); ST=0; ET=TimeF(); ActiveStopwatch=0;}
 void Start(){if(!ActiveStopwatch){ActiveStopwatch=1; ST = micros();}}
 void Stop(){ActiveStopwatch=0;}
 TimeF ElapsedTime(){

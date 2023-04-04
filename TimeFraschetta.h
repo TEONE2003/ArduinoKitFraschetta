@@ -206,6 +206,10 @@ uint64_t Remainder(){uint64_t r=Rest; Rest=0; return r;}
  boolean operator<=(const TimeF &b){b.ConvertTo(Unit); if(Value <= b.Value){return 1;} return 0;}
  TimeF(uint64_t Value=0,UnitOfTime Unit=UnitOfTime::Milliseconds){this->Unit=Unit; this->Value=Value; Rest=0; Divisor=0;}
 };
-void Wait(uint64_t Value,UnitOfTime Unit){TimeF t(Value,Unit); delayMicroseconds(t.Microseconds());}
-void Wait(TimeF t){delayMicroseconds(t.Microseconds());}
+void Wait(TimeF t){
+ if(t.Unit==Microseconds){delayMicroseconds(t.Value);}
+ else if(t.Unit==Minutes){for(uint64_t n=0;n<=t.Value;n++){delay(60000);}}
+ else{delay(t.Milliseconds());}
+}
+void Wait(uint64_t Value,UnitOfTime Unit){TimeF t(Value,Unit); Wait(t);}
 #endif
