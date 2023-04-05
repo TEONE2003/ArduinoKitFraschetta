@@ -7,7 +7,8 @@ class ServomotorF:Servo,MotorSwipingF{
  protected:
   uint8_t Pin;
   uint16_t Position()override{return EEPROM.read(Pin);}
-  void Begin(){attach(Pin); write(uint8_t(Position())); delay(2);}
+public: void Begin(){attach(Pin); write(uint8_t(Position())); delay(2);}
+protected:
   void WritePosition(uint8_t Degrees){
    if(Degrees>180){Degrees=180;}
    write(Degrees);

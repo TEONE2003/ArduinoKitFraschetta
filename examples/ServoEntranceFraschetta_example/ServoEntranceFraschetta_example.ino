@@ -1,6 +1,6 @@
 #include "ServoEntranceFraschetta.h"
 ServoEntranceF S(2,180,0,3,10);
-void setup(){S.MovementStatusCheck();}
+void setup(){S.Begin();}
 void loop(){
 delay(3000);
 /*We need to put the delay here so that any instruction is executed
