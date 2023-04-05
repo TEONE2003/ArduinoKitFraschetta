@@ -16,12 +16,9 @@ namespace EepromNumF{
          EEPROM.update(Cell0,A[0]); EEPROM.update(Cell1,A[1]);
         }
         uint16_t Value(){return NumSplitJoinF::JoinUint16T(EEPROM.read(Cell0),EEPROM.read(Cell1));}
-        EepromUint16T(uint16_t Cell0,uint16_t Cell1){
-         SetCells(Cell0,Cell1);
-        }
+        EepromUint16T(uint16_t Cell0,uint16_t Cell1){SetCells(Cell0,Cell1);}
         EepromUint16T(uint16_t Cell0,uint16_t Cell1, uint8_t Value){
-         SetCells(Cell0,Cell1);
-         this->Value(Value);
+         SetCells(Cell0,Cell1); this->Value(Value);
         }
         EepromUint16T(){}
     };

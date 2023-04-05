@@ -6,12 +6,12 @@ class ServoEntranceF:ServomotorF,MotorizedEntranceF{
  protected:
   uint16_t MovementDelayInMilliseconds;
  public:
-  void MovementStatusCheck(){MotorizedEntranceF::MovementStatusCheck();}
-    void Open() override {
+    void Begin(){ServomotorF::Begin(); MotorizedEntranceF::MovementStatusCheck();}
+    void Open()override{
     MemorizeStatus(Opening);
     SetPosition(OpeningLimitSwitch,MovementDelayInMilliseconds);
    }
-   void Close() override {
+   void Close()override{
     MemorizeStatus(Closing);
     SetPosition(ClosingLimitSwitch,MovementDelayInMilliseconds);
    }
