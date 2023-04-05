@@ -14,11 +14,15 @@ protected:
  MemorizeStatus Save;
 public:
  void SetStatus(uint8_t Percentage){
-  if(Percentage==100){digitalWrite(Pin,TypeD);}
+  bool P=Percentage>=100;
+  if(P){digitalWrite(Pin,TypeD);}
   else if(Percentage==0){digitalWrite(Pin,!TypeD);}
   else{analogWrite(Pin,(Percentage*255)/100);}
-  if(Save){EEPROM.update(Pin,Percentage);}
+  if(Save){
+  if(P){EEPROM.update(Pin,100);}
+  else{EEPROM.update(Pin,Percentage);}
  }
+}
  bool ReadDigitalStatus(){
   bool r=digitalRead(Pin);
   if(TypeD){return r;}
@@ -27,7 +31,10 @@ public:
  uint8_t ReadAnalogStatusPercentage(){return (analogRead(Pin)*255)/100;}
  void Begin(){
   pinMode(Pin,OUTPUT);
-  if(Save){SetStatus(EEPROM.read(Pin));}
+  if(Save){
+   if(EEPROM.read(Pin)>100){EEPROM.update(Pin,0);}
+   SetStatus(EEPROM.read(Pin));
+  }
   else{
    if(TypeD){digitalWrite(Pin,0);}
    else{digitalWrite(Pin,1);}
