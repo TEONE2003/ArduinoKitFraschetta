@@ -4,16 +4,20 @@
 #include "VirtualCycleFraschetta.h"
 enum ThermostatType{Heating,Cooling};
 class ThermostatF:RelayF,VirtualCycleF{
-protected: ThermostatType TypeT; uint8_t PinRele; byte TemperatureThresholdS; bool State;
+protected: ThermostatType TypeT; uint8_t PinRelay; byte TemperatureThresholdS; bool State;
  public:
  ThermostatF(){}
- ThermostatF(uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):RelayF(PinRele,ReleType),
-  VirtualCycleF(5,Seconds){State=1; this->TypeT=TypeT; this->PinRele=PinRele; TemperatureThresholdS=EEPROM.read(PinRele);}
+ ThermostatF(uint8_t PinRelay,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):RelayF(PinRelay,ReleType),
+    VirtualCycleF(5,Seconds){State=1; this->TypeT=TypeT; this->PinRelay=PinRelay; TemperatureThresholdS=0;}
  byte TemperatureThreshold(){return TemperatureThresholdS;}
  using RelayF::ReadDigitalStatus;
- using RelayF::Begin;
+ void Begin(){
+  RelayF::Begin();
+  if(EEPROM.read(PinRelay)>49){EEPROM.update(PinRelay,20);}
+  TemperatureThresholdS=EEPROM.read(PinRelay);
+ }
  void SetTemperatureThreshold(byte TemperatureThreshold){
-  EEPROM.update(PinRele,TemperatureThreshold);
+  EEPROM.update(PinRelay,TemperatureThreshold);
   TemperatureThresholdS=TemperatureThreshold;
  }
  void TurnOn(){State=1; /*if(TemperatureThresholdS<0){SetTemperatureThreshold(-TemperatureThresholdS);}*/}
