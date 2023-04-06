@@ -24,8 +24,8 @@ protected: ThermostatType TypeT; uint8_t PinRelay; byte TemperatureThresholdS; b
  void TurnOff(){State=0; /*if(TemperatureThresholdS>=0){SetTemperatureThreshold(-TemperatureThresholdS);}*/}
  void ThermostatFunction(byte CurrentTemperature){
   if(nTick() && State){
-   if(TypeT==Heating){if(CurrentTemperature<TemperatureThresholdS){TurnOn();} else{RelayF::TurnOff();}}
-   else{if(CurrentTemperature>TemperatureThresholdS){TurnOn();} else {RelayF::TurnOff();}}
+   if(TypeT==Heating){if(CurrentTemperature<TemperatureThresholdS){RelayF::TurnOn();} else{RelayF::TurnOff();}}
+   else{if(CurrentTemperature>TemperatureThresholdS){RelayF::TurnOn();} else {RelayF::TurnOff();}}
   }
 }
 };
