@@ -9,7 +9,7 @@ protected: ThermostatType TypeT; uint8_t PinRelay; int8_t TemperatureThresholdS;
  ThermostatF(){}
  ThermostatF(uint8_t PinRelay,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):RelayF(PinRelay,ReleType),
     VirtualCycleF(5,Seconds){State=0; this->TypeT=TypeT; this->PinRelay=PinRelay; TemperatureThresholdS=0;}
- byte TemperatureThreshold(){return TemperatureThresholdS;}
+ uint8_t TemperatureThreshold(){return TemperatureThresholdS;}
  using RelayF::ReadDigitalStatus;
  void Begin(){
   RelayF::Begin();

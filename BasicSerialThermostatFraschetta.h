@@ -20,7 +20,7 @@ class BasicSerialThermostatF:public SerialDriverObjectF,public ThermostatF{
 public:
  void SendStatusRelay(){if(ReadDigitalStatus()){Send("1");} else{Send("0");}}
  void SendStatus(){if(State){Send("1");} else{Send("0");}}
- void SerialThermostatFunction(byte CurrentTemperature,String ReceivedString){
+ void SerialThermostatFunction(uint8_t CurrentTemperature,String ReceivedString){
   ThermostatFunction(CurrentTemperature);
    SetReceivedString(ReceivedString);
    TempIdex = ReceivedString.indexOf(StringSetTemperatureThreshold);
@@ -31,7 +31,7 @@ public:
    else if(CommandFound(StringTurnOff)){TurnOff(); SendStatus();}
    else if(TempIdex>=0){
     TempIdex=TempIdex+TagLength;
-    SetTemperatureThreshold(byte(ReceivedString.substring(TempIdex+1,TempIdex+3).toInt()));
+    SetTemperatureThreshold(uint8_t(ReceivedString.substring(TempIdex+1,TempIdex+3).toInt()));
     Send(String(TemperatureThresholdS));
    }
    else{SetInvalidCommand();}
