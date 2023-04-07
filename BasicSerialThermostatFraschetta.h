@@ -12,8 +12,8 @@ class BasicSerialThermostatF:public SerialDriverObjectF,public ThermostatF{
    StringStatus=Tag+".S";
    StringStatusRelay=Tag+".RS";
    StringSetTemperatureThreshold=Tag+"=";
-   StringTurnOn=Tag+".ON";
-   StringTurnOff=Tag+".OFF";
+   StringTurnOn=Tag+"=1";
+   StringTurnOff=Tag+"=0";
    TempIdex=-1;
    TagLength=Tag.length();
   }
