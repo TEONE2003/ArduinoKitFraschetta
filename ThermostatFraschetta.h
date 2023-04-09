@@ -7,7 +7,7 @@ class ThermostatF:RelayF,VirtualCycleF{
 protected: ThermostatType TypeT; int8_t TemperatureThresholdS; bool State;
  public:
  ThermostatF(){}
- ThermostatF(uint8_t PinRelay,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):RelayF(RelayF::Pin,ReleType),
+ ThermostatF(uint8_t PinRelay,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):RelayF(PinRelay,ReleType),
     VirtualCycleF(5,Seconds){State=0; this->TypeT=TypeT; TemperatureThresholdS=0;}
  uint8_t TemperatureThreshold(){return TemperatureThresholdS;}
  using RelayF::ReadDigitalStatus;
