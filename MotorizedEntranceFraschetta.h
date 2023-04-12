@@ -9,6 +9,7 @@ class MotorizedEntranceF{
   virtual void Close()=0;
   virtual boolean Opened()=0;
   virtual boolean Closed()=0;
+  virtual void Invert()=0;
   void MemorizeStatus(StatusOfMovement Staus){
    EEPROM.update(AddressMotionStatusPosition,Staus);
   }

@@ -3,21 +3,19 @@
 #include "SerialDriverObjectFraschetta.h"
 #include "ServoEntranceFraschetta.h"
 class BasicSerialServoEntranceF:public SerialDriverObjectF,public ServoEntranceF{
-protected: String OpenString,CloseString,StatusRequestString; virtual void Send(String s)=0;
+protected: String OpenString,CloseString,InvertString,StatusRequestString; virtual void Send(String s)=0;
  BasicSerialServoEntranceF(String Tag,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition, uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds):
      ServoEntranceF(Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds),SerialDriverObjectF(){
       OpenString=Tag+".O"; CloseString=Tag+".C";
-      StatusRequestString=Tag+".S";
+      StatusRequestString=Tag+".S"; InvertString=Tag+".I";
     }
 public:
- void SendStatus(){
-  if(Opened()){Send("O");}
-  else if(Closed()){Send("C");}
- }
-void FunctionSerialServoEntrance(String ReceivedString){
+ void SendStatus(){if(Opened()){Send("O");} else{Send("C");}}
+ void FunctionSerialServoEntrance(String ReceivedString){
   SetReceivedString(ReceivedString);
-  if(CommandFound(OpenString)){Open(); Send("O");}
-  else if(CommandFound(CloseString)){Close(); Send("C");}
+  if(CommandFound(InvertString)){Invert(); SendStatus();}
+  else if(CommandFound(OpenString)){Open(); SendStatus();}
+  else if(CommandFound(CloseString)){Close(); SendStatus();}
   else if(CommandFound(StatusRequestString)){SendStatus();}
   else{SetInvalidCommand();}
  }

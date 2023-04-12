@@ -4,21 +4,19 @@
 #include "RelayFraschetta.h"
 class BasicSerialRelayF:public SerialDriverObjectF,public RelayF{
 protected:
- String TurnOnString,TurnOffString,StatusRequestString; virtual void Send(String s)=0;
+ String TurnOnString,TurnOffString,InvertString,StatusString; virtual void Send(String s)=0;
  BasicSerialRelayF(String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus):RelayF(Pin,Type,Save),SerialDriverObjectF(){
   TurnOnString=Tag+"=1"; TurnOffString=Tag+"=0";
-  StatusRequestString=Tag+".S";
+  StatusString=Tag+".S"; InvertString=Tag+".I";
  }
 public:
- void SendStatus(){
-  if(ReadDigitalStatus()){Send("1");}
-  else{Send("0");}
- }
+ void SendStatus(){if(ReadDigitalStatus()){Send("1");}else{Send("0");}}
  void FunctionSerialRelay(String ReceivedString){
   SetReceivedString(ReceivedString);
-  if(CommandFound(TurnOnString)){TurnOn(); Send("1");}
-  else if(CommandFound(TurnOffString)){TurnOff(); Send("0");}
-  else if(CommandFound(StatusRequestString)){SendStatus();}
+  if(CommandFound(InvertString)){InvertStatus(); SendStatus();}
+  else if(CommandFound(TurnOnString)){TurnOn(); SendStatus();}
+  else if(CommandFound(TurnOffString)){TurnOff(); SendStatus();}
+  else if(CommandFound(StatusString)){SendStatus();}
   else{SetInvalidCommand();}
  }
 };

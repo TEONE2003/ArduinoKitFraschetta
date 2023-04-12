@@ -17,6 +17,7 @@ class ServoEntranceF:ServomotorF,MotorizedEntranceF{
    }
     boolean Opened() override {return Position()==OpeningLimitSwitch;}
     boolean Closed() override {return Position()==ClosingLimitSwitch;}
+    void Invert()override{if(Opened()){Close();}else{Open();}}
    ServoEntranceF(uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition,uint16_t AddressMotionStatusPosition,
    uint16_t MovementDelayInMilliseconds):ServomotorF(Pin),MotorizedEntranceF(OpeningPosition,ClosingPosition,AddressMotionStatusPosition){
    this->MovementDelayInMilliseconds = MovementDelayInMilliseconds;}
