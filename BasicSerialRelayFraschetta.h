@@ -10,7 +10,7 @@ protected:
   StatusString=Tag+".S"; InvertString=Tag+".I";
  }
 public:
- void SendStatus(){if(ReadDigitalStatus()){Send("1");}else{Send("0");}}
+ void SendStatus(){if(ReadDigitalStatus()){Send(TurnOnString);}else{Send(TurnOffString);}}
  void FunctionSerialRelay(String ReceivedString){
   SetReceivedString(ReceivedString);
   if(CommandFound(InvertString)){InvertStatus(); SendStatus();}

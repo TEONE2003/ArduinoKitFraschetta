@@ -11,10 +11,7 @@ protected:
      StatusRequestString=Tag+".S";
  }
 public:
-    void SendStatus(){
-        if(ReadDigitalStatus()){Send("1");}
-        else{Send("0");}
-    }
+    void SendStatus(){if(ReadDigitalStatus()){Send(StatusRequestString+"=1");}else{Send(StatusRequestString+"=0");}}
     void SerialPhotocellDuskToDawnFunction(String ReceivedString){
         PhotocellDuskToDawnFunction(); SetReceivedString(ReceivedString);
         if(CommandFound(StatusRequestString)){SendStatus();}
