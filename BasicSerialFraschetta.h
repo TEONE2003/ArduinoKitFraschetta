@@ -1,25 +1,27 @@
 #ifndef BasicSerialFraschetta_h
 #define BasicSerialFraschetta_h
 class BasicSerialF{
-protected:
- String S;
- uint8_t B;
- char C;
- bool I,SerialBridge;
- uint16_t Baud;
- uint8_t Tx;
- uint8_t Rx;
- virtual void InitializeIfNotInitialized()=0;
- virtual bool DataPresent()=0;
- virtual String string()=0;
- virtual uint8_t Byte()=0;
- virtual char Char()=0;
- BasicSerialF(uint16_t Baud=9600){this->Baud=Baud;}
+private:
+  String S; uint8_t B;
+  char C; bool I;
+  long Baud;
+  virtual uint8_t SerialRead()=0;
+  virtual void SerialEnd()=0;
+  virtual void SerialBegin(long Baud)=0;
+  virtual bool DataPresent()=0;
+  String string(){return String(Char(SerialRead()));}
+  uint8_t Byte(){return SerialRead();}
+  char Char(){return SerialRead();}
+ public: boolean Initialized(){return I;}
+ protected:
+  void InitializeIfNotInitialized(){if(!Initialized()){SerialEnd(); SerialBegin(Baud); I=1;}}
+  BasicSerialF(long Baud=9600){this->Baud=Baud; S=""; B=0;}
 public:
- boolean Initialized(){return I;}
  void ReceiveString(){
   InitializeIfNotInitialized();
-  if(DataPresent()){S=string();}
+  if(DataPresent()){
+   while(!(S.indexOf("\n")>=0)){S=S+string();}
+   }
   else{S="";}
  }
  void ReceiveByte(){

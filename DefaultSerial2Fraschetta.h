@@ -4,11 +4,10 @@
 #ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
 class DefaultSerial2F:public BasicSerialF{
 protected:
- void InitializeIfNotInitialized()override{if(!Initialized()){Serial2.end(); Serial2.begin(Baud); I=1;}}
  boolean DataPresent()override{return Serial2.available()>0;}
- String string()override{return Serial2.readString();}
- uint8_t Byte()override{return Serial2.read();}
- char Char()override{return Serial2.read();}
+ void SerialEnd()override{return Serial2.end();}
+ uint8_t SerialBegin(long Baud)override{return Serial2.begin(Baud);}
+ uint8_t SerialRead()override{return Serial2.read();}
 public:
  DefaultSerial2F(uint32_t Baud=9600):BasicSerialF(Baud){}
  template <typename T>

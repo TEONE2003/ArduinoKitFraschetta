@@ -4,13 +4,14 @@
 #include "SoftwareSerial.h"
 class SerialF:SoftwareSerial,public BasicSerialF{
 protected:
+ bool SerialBridge;
  void InitializeIfNotInitialized()override{if(!Initialized()){end(); begin(Baud); I=1;}}
  boolean DataPresent()override{return available()>0;}
- String string()override{return readString();}
- uint8_t Byte()override{return read();}
- char Char()override{return read();}
+ uint8_t SerialRead()override{return read();}
+ void SerialEnd()override{return end();}
+ void SerialBegin()override{return begin();}
 public:
- SerialF(uint8_t RX=2,uint8_t TX=3,uint32_t Baud=9600):SoftwareSerial(RX,TX),BasicSerialF(Baud){}
+ SerialF(uint8_t Rx=2,uint8_t Tx=3,uint32_t Baud=9600):SoftwareSerial(Rx,Tx),BasicSerialF(Baud){SerialBridge=0;}
  template <typename T>
  void Send(T t){InitializeIfNotInitialized(); print(t);}
  template <typename T>

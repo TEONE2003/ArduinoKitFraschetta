@@ -3,11 +3,10 @@
 #include "BasicSerialFraschetta.h"
 class DefaultSerialF:public BasicSerialF{
 protected:
- void InitializeIfNotInitialized()override{if(!Initialized()){Serial.end(); Serial.begin(Baud); I=1;}}
  boolean DataPresent()override{return Serial.available()>0;}
- String string()override{return Serial.readString();}
- uint8_t Byte()override{return Serial.read();}
- char Char()override{return Serial.read();}
+ void SerialEnd()override{return Serial.end();}
+ uint8_t SerialBegin(long Baud)override{return Serial.begin(Baud);}
+ uint8_t SerialRead()override{return Serial.read();}
 public:
  DefaultSerialF(uint32_t Baud=9600):BasicSerialF(Baud){}
  template <typename T>
