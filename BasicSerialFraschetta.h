@@ -20,8 +20,10 @@ public:
  void ReceiveString(){
   InitializeIfNotInitialized();
   if(DataPresent()){
-   while(!(S.indexOf("\n")>=0)){S=S+string();}
-   }
+   int Index=-1;
+   while(Index<0){if(DataPresent()){S=S+string(); Index=S.indexOf("\n");}}
+   S=S.substring(0,Index);
+  }
   else{S="";}
  }
  void ReceiveByte(){
