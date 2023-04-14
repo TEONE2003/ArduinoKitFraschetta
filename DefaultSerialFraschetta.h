@@ -5,7 +5,7 @@ class DefaultSerialF:public BasicSerialF{
 protected:
  boolean DataPresent()override{return Serial.available()>0;}
  void SerialEnd()override{return Serial.end();}
- uint8_t SerialBegin(long Baud)override{return Serial.begin(Baud);}
+ void SerialBegin(long Baud)override{return Serial.begin(Baud);}
  uint8_t SerialRead()override{return Serial.read();}
 public:
  DefaultSerialF(uint32_t Baud=9600):BasicSerialF(Baud){}

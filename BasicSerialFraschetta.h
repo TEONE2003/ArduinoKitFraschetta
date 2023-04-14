@@ -9,7 +9,7 @@ private:
   virtual void SerialEnd()=0;
   virtual void SerialBegin(long Baud)=0;
   virtual bool DataPresent()=0;
-  String string(){return String(Char(SerialRead()));}
+  String string(){return String(char(SerialRead()));}
   uint8_t Byte(){return SerialRead();}
   char Char(){return SerialRead();}
  public: boolean Initialized(){return I;}
