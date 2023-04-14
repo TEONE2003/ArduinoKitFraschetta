@@ -15,7 +15,7 @@ private:
  public: boolean Initialized(){return I;}
  protected:
   void InitializeIfNotInitialized(){if(!Initialized()){SerialEnd(); SerialBegin(Baud); I=1;}}
-  BasicSerialF(long Baud=9600){this->Baud=Baud; S=""; B=0;}
+  BasicSerialF(long Baud=9600){this->Baud=Baud; S=""; B=0; C='_'; I=0;}
 public:
  void ReceiveString(){
   InitializeIfNotInitialized();
