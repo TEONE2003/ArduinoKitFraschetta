@@ -3,8 +3,7 @@
 #include "ServomotorFraschetta.h"
 #include "MotorizedEntranceFraschetta.h"
 class ServoEntranceF:ServomotorF,MotorizedEntranceF{
- protected:
-  uint16_t MovementDelayInMilliseconds;
+ protected: uint16_t MovementDelayInMilliseconds;
  public:
     void Begin(){ServomotorF::Begin(); MotorizedEntranceF::MovementStatusCheck();}
     void Open()override{
