@@ -3,7 +3,7 @@
 #include "RelayFraschetta.h"
 #include "PhotoresistorFraschetta.h"
 class PhotocellDuskToDawnF:RelayF,PhotoresistorF{
-private: bool Bypass;
+protected: bool Bypass;
 public:
  PhotocellDuskToDawnF(uint8_t PinPhotoresistor,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit,
  uint8_t PinRele,DigitalType ReleType):PhotoresistorF(PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit),
@@ -16,3 +16,4 @@ public:
  void Begin(){RelayF::Begin(); PhotoresistorF::Begin();}
 };
 #endif
+
