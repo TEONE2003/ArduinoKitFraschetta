@@ -11,6 +11,7 @@ public:
  void PhotocellDuskToDawnFunction(){if(!Bypass){if(Check()){TurnOn();} else{TurnOff();}}}
  void BypassOn(){Bypass=1; TurnOn();}
  void BypassOff(){Bypass=0;}
+ void InvertBypass(){if(Bypass){Bypass=0;} else{BypassOn();}}
  using RelayF::ReadDigitalStatus;
  void Begin(){RelayF::Begin(); PhotoresistorF::Begin();}
 };
