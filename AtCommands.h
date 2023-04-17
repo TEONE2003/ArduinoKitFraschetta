@@ -2,12 +2,13 @@
 #define AtCommands_h
 enum Role{Slave,Master};
 class AtCommands{
-protected:
+private:
  virtual void ReceiveString()=0;
  virtual String ReadString()=0;
  virtual void Send(String s)=0;
- const String NlCr="\r\n";
+ const String NlCr;
 public:
+ AtCommands(){NlCr="\r\n";}
  bool WaitOk(){
   while(ReadString().indexOf("OK")<0){ReceiveString();}
   ReceiveString();
