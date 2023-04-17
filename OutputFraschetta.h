@@ -9,6 +9,7 @@ class OutputF{
 protected:
  uint8_t Pin;
  VirtualCycleF Bli;
+ bool BliB;
  TimerF Period;
  DigitalType TypeD;
  MemorizeStatus Save;
@@ -43,7 +44,7 @@ public:
  void SetAnalogStatus(uint8_t StatusPercentage){SetStatus((StatusPercentage*100)/255);}
 OutputF(){}
 OutputF(uint8_t Pin,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
- this->TypeD=TypeD; this->Save=Save; this->Pin=Pin; Period=TimerF(); Bli=VirtualCycleF();
+ this->TypeD=TypeD; this->Save=Save; this->Pin=Pin; Period=TimerF(); Bli=VirtualCycleF(); BliB=0;
 }
 OutputF(uint8_t Pin,MemorizeStatus Save):OutputF(Pin,NormalLogic,Save){}
  void TurnOn(){SetStatus(100);}
@@ -77,7 +78,7 @@ void InvertStatus(){
  }
 }
  void Blink(uint16_t Period,UnitOfTime Unit){
-  if(!Bli.Inizialized()){Bli = VirtualCycleF(Period,Unit);}
+  if(!BliB){Bli = VirtualCycleF(Period,Unit); BliB=1;}
      for(uint64_t n=Bli.nTick();n>=1;n--){InvertStatus();}
  }
  void FadingLoop(uint8_t MaximumPercentage,uint16_t Period,UnitOfTime Unit){
