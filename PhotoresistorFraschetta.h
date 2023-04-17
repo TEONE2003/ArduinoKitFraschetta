@@ -5,11 +5,12 @@
 class PhotoresistorF:InputF,VirtualCycleF{
 protected:
  uint16_t TurnOnThreshold,TurnOffThreshold;
- boolean LastCheckExecuted;
+ bool LastCheckExecuted;
 public:
  PhotoresistorF(uint8_t Pin,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit):InputF(Pin),VirtualCycleF(Delay,Unit){
   this->TurnOnThreshold = TurnOnThreshold;
   this->TurnOffThreshold = TurnOffThreshold;
+  LastCheckExecuted=0;
  }
  uint16_t ReadPhotoresistor(){return AnalogRead();}
  boolean Check(){
