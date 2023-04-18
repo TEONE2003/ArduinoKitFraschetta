@@ -13,9 +13,11 @@ protected:
  public:
   void SerialDhtFFunction(String ReceivedString){
    SetReceivedString(ReceivedString);
-   if(CommandFound(StringCurrentTemperatureRequest)){Send(StringCurrentTemperatureRequest+"="+String(byte(ReadTemperature())));}
-   else if(CommandFound(StringCurrentHumidityRequest)){Send(StringCurrentHumidityRequest+"="+String(byte(ReadHumidity())));}
+   if(CommandFound(StringCurrentTemperatureRequest)){Send(StringCurrentTemperatureRequest+"="+String(ReadTemperature()));}
+   else if(CommandFound(StringCurrentHumidityRequest)){Send(StringCurrentHumidityRequest+"="+String(ReadHumidity()));}
    else{SetInvalidCommand();}
+   if(TemperatureChanged()){Send(StringCurrentTemperatureRequest+"="+String(ReadTemperature()));}
+   if(HumidityChanged()){Send(StringCurrentHumidityRequest+"="+String(ReadHumidity()));}
   }
 };
 #endif
