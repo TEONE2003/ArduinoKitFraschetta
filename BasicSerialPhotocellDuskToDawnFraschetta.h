@@ -21,6 +21,7 @@ public:
         else if(CommandFound(BypassOnString)){BypassOn(); SendStatusBypass();}
         else if(CommandFound(BypassOffString)){BypassOff(); SendStatusBypass();}
         else{SetInvalidCommand();}
+        if(RelayChanged()){SendStatus();}
     }
 };
 #endif
