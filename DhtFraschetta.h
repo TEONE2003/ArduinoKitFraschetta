@@ -5,9 +5,9 @@ class DhtF:DHT{
  private: bool I; float PreviousT,PreviousH; void InitializesIfNotI(){if(!I){begin(); I=1;}}
  public:
   DhtF(uint8_t Pin,uint8_t Type):DHT(Pin,Type){I=0; PreviousT=0; PreviousH=0;}
-  float ReadTemperature(){InitializesIfNotI(); PreviousT=readTemperature(); return PreviousT;}
-  float ReadHumidity(){InitializesIfNotI(); PreviousH=readHumidity(); return PreviousH;}
-  bool TemperatureChanged(){return PreviousT!=readTemperature();}
-  bool HumidityChanged(){return PreviousH!=readHumidity();}
+  float ReadTemperature(){InitializesIfNotI(); return readTemperature();}
+  float ReadHumidity(){InitializesIfNotI(); return readHumidity();}
+  bool TemperatureChanged(){if(PreviousT!=readTemperature()){PreviousT=readTemperature(); return 1;}return 0;}
+  bool HumidityChanged(){if(PreviousH!=readHumidity()){PreviousH=readHumidity(); return 1;}return 0;}
 };
 #endif
