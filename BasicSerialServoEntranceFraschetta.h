@@ -10,7 +10,7 @@ protected: String OpenString,CloseString,InvertString,StatusRequestString; virtu
       StatusRequestString=Tag+".S"; InvertString=Tag+".I";
     }
 public:
- void SendStatus(){if(Opened()){Send(OpenString);} else{Send(OpenString);}}
+ void SendStatus(){if(Opened()){Send(OpenString);} else{Send(CloseString);}}
  void FunctionSerialServoEntrance(String ReceivedString){
   SetReceivedString(ReceivedString);
   if(CommandFound(InvertString)){Invert(); SendStatus();}
