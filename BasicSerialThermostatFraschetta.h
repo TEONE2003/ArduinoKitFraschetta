@@ -10,7 +10,7 @@ class BasicSerialThermostatF:public SerialDriverObjectF,public ThermostatF{
    StringTemperatureThresholdRequest=Tag+".TT";
    StringStatus=Tag+".S";
    StringStatusRelay=Tag+".RS";
-   StringSetTemperatureThreshold=Tag+"=";
+   StringSetTemperatureThreshold=StringTemperatureThresholdRequest+"=";
    StringTurnOn=Tag+"=1";
    StringTurnOff=Tag+"=0";
    TagLength=Tag.length();
@@ -18,17 +18,18 @@ class BasicSerialThermostatF:public SerialDriverObjectF,public ThermostatF{
 public:
  void SendStatusRelay(){if(ReadDigitalStatus()){Send(StringStatusRelay+"=1");} else{Send(StringStatusRelay+"=0");}}
  void SendStatus(){if(State){Send(StringTurnOn);} else{Send(StringTurnOff);}}
+ void SendTemperatureThreshold(){Send(StringSetTemperatureThreshold+String(TemperatureThresholdS));}
  void SerialThermostatFunction(uint8_t CurrentTemperature,String ReceivedString){
   ThermostatFunction(CurrentTemperature);
    SetReceivedString(ReceivedString);
-   if(CommandFound(StringTemperatureThresholdRequest)){Send(String(TemperatureThresholdS));}
+   if(CommandFound(StringTemperatureThresholdRequest)){SendTemperatureThreshold();}
    else if(CommandFound(StringStatusRelay)){SendStatusRelay();}
    else if(CommandFound(StringStatus)){SendStatus();}
    else if(CommandFound(StringTurnOn)){TurnOn(); SendStatus();}
    else if(CommandFound(StringTurnOff)){TurnOff(); SendStatus();}
    else if(ContentCommand(StringSetTemperatureThreshold)){
-    SetTemperatureThreshold(uint8_t(ExtractNumber(TagLength,2)));
-    Send(String(TemperatureThresholdS));
+    SetTemperatureThreshold(uint8_t(ExtractNumber(TagLength+3,2)));
+    SendTemperatureThreshold();
    }
    else{SetInvalidCommand();}
  }
