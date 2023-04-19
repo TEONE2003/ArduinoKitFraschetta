@@ -24,6 +24,7 @@ protected: ThermostatType TypeT; int8_t TemperatureThresholdS; bool State;
  }
  void TurnOn(){State=1; SetTemperatureThreshold(TemperatureThresholdS);}
  void TurnOff(){State=0; SetTemperatureThreshold(TemperatureThresholdS);}
+ void InvertStatus(){if(State){TurnOff();}else{TurnOn();}}
  void ThermostatFunction(uint8_t CurrentTemperature){
   if(nTick()>0 && State){
    if(TypeT==Heating){if(CurrentTemperature<TemperatureThresholdS){RelayF::TurnOn();} else{RelayF::TurnOff();}}

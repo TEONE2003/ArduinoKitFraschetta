@@ -3,7 +3,7 @@
 #include "SerialDriverObjectFraschetta.h"
 #include "ThermostatFraschetta.h"
 class BasicSerialThermostatF:public SerialDriverObjectF,public ThermostatF{
- protected: String StringSetTemperatureThreshold,StringStatusRelay,StringStatus,StringTemperatureThresholdRequest,StringTurnOn,StringTurnOff; int TagLength;
+ protected: String StringSetTemperatureThreshold,StringStatusRelay,StringStatus,StringTemperatureThresholdRequest,StringTurnOn,StringTurnOff,StringInvertStatus; int TagLength;
   virtual void Send(String s)=0;
   using ThermostatF::ThermostatFunction;
   BasicSerialThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):ThermostatF(PinRele,ReleType,TypeT),SerialDriverObjectF(){
@@ -13,6 +13,7 @@ class BasicSerialThermostatF:public SerialDriverObjectF,public ThermostatF{
    StringSetTemperatureThreshold=StringTemperatureThresholdRequest+"=";
    StringTurnOn=Tag+"=1";
    StringTurnOff=Tag+"=0";
+   StringInvertStatus=Tag+".I";
    TagLength=Tag.length();
   }
 public:
@@ -27,6 +28,7 @@ public:
    else if(CommandFound(StringStatus)){SendStatus();}
    else if(CommandFound(StringTurnOn)){TurnOn(); SendStatus();}
    else if(CommandFound(StringTurnOff)){TurnOff(); SendStatus();}
+   else if(CommandFound(StringInvertStatus)){InvertStatus(); SendStatus();}
    else if(ContentCommand(StringSetTemperatureThreshold)){
     SetTemperatureThreshold(uint8_t(ExtractNumber(TagLength+3,2)));
     SendTemperatureThreshold();
