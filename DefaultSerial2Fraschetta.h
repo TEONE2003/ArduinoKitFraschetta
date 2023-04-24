@@ -1,7 +1,7 @@
+#ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
 #ifndef DefaultSerial2Fraschetta_h
 #define DefaultSerial2Fraschetta_h
 #include "BasicSerialFraschetta.h"
-#ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
 class DefaultSerial2F:public BasicSerialF{
 protected:
  boolean DataPresent()override{return Serial2.available()>0;}
@@ -9,7 +9,7 @@ protected:
  void SerialBegin(long Baud)override{return Serial2.begin(Baud);}
  uint8_t SerialRead()override{return Serial2.read();}
 public:
- DefaultSerial2F(uint32_t Baud=9600):BasicSerialF(Baud){}
+ DefaultSerial2F(long Baud=9600):BasicSerialF(Baud){}
  template <typename T>
  void Send(T t){InitializeIfNotInitialized(); Serial2.print(t);}
  template <typename T>

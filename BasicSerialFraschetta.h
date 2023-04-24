@@ -4,7 +4,6 @@ class BasicSerialF{
 private:
   String S; uint8_t B;
   char C; bool I;
-  long Baud;
   virtual uint8_t SerialRead()=0;
   virtual void SerialEnd()=0;
   virtual void SerialBegin(long Baud)=0;
@@ -14,6 +13,7 @@ private:
   char Char(){return SerialRead();}
  public: boolean Initialized(){return I;}
  protected:
+  long Baud;
   void InitializeIfNotInitialized(){if(!Initialized()){SerialEnd(); SerialBegin(Baud); I=1;}}
   BasicSerialF(long Baud=9600){this->Baud=Baud; S=""; B=0; C='_'; I=0;}
 public:

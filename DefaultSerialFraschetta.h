@@ -8,7 +8,7 @@ protected:
  void SerialBegin(long Baud)override{return Serial.begin(Baud);}
  uint8_t SerialRead()override{return Serial.read();}
 public:
- DefaultSerialF(uint32_t Baud=9600):BasicSerialF(Baud){}
+ DefaultSerialF(long Baud=9600):BasicSerialF(Baud){}
  template <typename T>
  void Send(T t){InitializeIfNotInitialized(); Serial.print(t);}
  template <typename T>
