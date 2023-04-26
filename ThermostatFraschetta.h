@@ -23,7 +23,7 @@ protected: ThermostatType TypeT; int8_t TemperatureThresholdS; bool State;
   EEPROM.update(RelayF::Pin,TemperatureThreshold);
  }
  void TurnOn(){State=1; SetTemperatureThreshold(TemperatureThresholdS);}
- void TurnOff(){State=0; SetTemperatureThreshold(TemperatureThresholdS);}
+ void TurnOff(){State=0; SetTemperatureThreshold(TemperatureThresholdS); RelayF::TurnOff();}
  void InvertStatus(){if(State){TurnOff();}else{TurnOn();}}
  void ThermostatFunction(uint8_t CurrentTemperature){
   if(nTick()>0 && State){
