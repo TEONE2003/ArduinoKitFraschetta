@@ -4,7 +4,7 @@
 #include "AtCommands.h"
 class DefaultBluetoothF:public DefaultSerialF,public AtCommands{
 public:
- DefaultBluetoothF(uint32_t Baud=9600):DefaultSerialF(Baud){}
+ DefaultBluetoothF(long Baud=9600):DefaultSerialF(Baud){}
  void ReceiveString()override{DefaultSerialF::ReceiveString();}
  String ReadString()override{return DefaultSerialF::ReadString();}
  void Send(String s)override{DefaultSerialF::Send(s);}
