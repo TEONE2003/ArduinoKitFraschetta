@@ -14,7 +14,7 @@ public:
  template <typename T>
  void Send(T t){InitializeIfNotInitialized(); print(t);}
  template <typename T>
- void SendLn(T t){InitializeIfNotInitialized(); println(t);}
+ void SendLn(T t){InitializeIfNotInitialized(); print(t); print("\n");}
  void SerialBridgeFunction(){
   InitializeIfNotInitialized();
   if(!SerialBridge){Serial.end(); Serial.begin(Baud); SerialBridge=1;}
