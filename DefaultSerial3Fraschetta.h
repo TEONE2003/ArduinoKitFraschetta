@@ -13,7 +13,7 @@ public:
  template <typename T>
  void Send(T t){InitializeIfNotInitialized(); Serial3.print(t);}
  template <typename T>
- void SendLn(T t){InitializeIfNotInitialized(); Serial3.println(t);}
+ void SendLn(T t){InitializeIfNotInitialized(); Serial3.println(t+"\n");}
 };
 #endif
 #endif

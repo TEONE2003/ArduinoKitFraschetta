@@ -12,6 +12,6 @@ public:
  template <typename T>
  void Send(T t){InitializeIfNotInitialized(); Serial.print(t);}
  template <typename T>
- void SendLn(T t){InitializeIfNotInitialized(); Serial.println(t);}
+ void SendLn(T t){InitializeIfNotInitialized(); Serial.print(t+"\n");}
 };
 #endif
