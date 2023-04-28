@@ -11,13 +11,15 @@ protected:
    StringCurrentHumidityRequest=Tag+".H";
   }
  public:
+  void SendTemperature(){Send(StringCurrentTemperatureRequest+"="+String(ReadTemperature()));}
+  void SendHumidity(){Send(StringCurrentHumidityRequest+"="+String(ReadHumidity()));}
   void SerialDhtFFunction(String ReceivedString){
    SetReceivedString(ReceivedString);
-   if(CommandFound(StringCurrentTemperatureRequest)){Send(StringCurrentTemperatureRequest+"="+String(ReadTemperature()));}
-   else if(CommandFound(StringCurrentHumidityRequest)){Send(StringCurrentHumidityRequest+"="+String(ReadHumidity()));}
+   if(CommandFound(StringCurrentTemperatureRequest)){SendTemperature();}
+   else if(CommandFound(StringCurrentHumidityRequest)){SendHumidity();}
    else{SetInvalidCommand();}
-   if(TemperatureChanged()){Send(StringCurrentTemperatureRequest+"="+String(ReadTemperature()));}
-   if(HumidityChanged()){Send(StringCurrentHumidityRequest+"="+String(ReadHumidity()));}
+   if(TemperatureChanged()){SendTemperature();}
+   if(HumidityChanged()){SendHumidity();}
   }
 };
 #endif
