@@ -1,3 +1,4 @@
+#ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
 #ifndef DefaultSerial2PhotocellDuskToDawnFraschetta_h
 #define DefaultSerial2PhotocellDuskToDawnFraschetta_h
 #include "BasicSerialPhotocellDuskToDawnFraschetta.h"
@@ -6,5 +7,7 @@ class DefaultSerial2PhotocellDuskToDawnF:public BasicSerialPhotocellDuskToDawnF,
 protected: void Send(String s)override{DefaultSerial2F::SendLn(s);}
 public:
  DefaultSerial2PhotocellDuskToDawnF(String Tag,uint8_t PinPhotoresistor,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit,uint8_t PinRele,DigitalType ReleType,uint16_t Baud=9600):BasicSerialPhotocellDuskToDawnF(Tag,PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit,PinRele,ReleType),DefaultSerial2F(Baud){}
+void Begin(){DefaultSerial2F::Begin(); BasicSerialPhotocellDuskToDawnF::Begin();}
 };
+#endif
 #endif

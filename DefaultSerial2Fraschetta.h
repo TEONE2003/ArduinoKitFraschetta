@@ -5,15 +5,15 @@
 class DefaultSerial2F:public BasicSerialF{
 protected:
  boolean DataPresent()override{return Serial2.available()>0;}
- void SerialEnd()override{return Serial2.end();}
- void SerialBegin(long Baud)override{return Serial2.begin(Baud);}
+ void SendLn(String S)override{SendLn(S);}
+ void SerialBegin(long Baud)override{Serial2.begin(Baud);}
  uint8_t SerialRead()override{return Serial2.read();}
 public:
  DefaultSerial2F(long Baud=9600):BasicSerialF(Baud){}
  template <typename T>
- void Send(T t){InitializeIfNotInitialized(); Serial2.print(t);}
+ void Send(T t){Serial2.print(t);}
  template <typename T>
- void SendLn(T t){InitializeIfNotInitialized(); Serial2.print(t); Serial2.print("\n");}
+ void SendLn(T t){Serial2.print(t); Serial2.print("\n");}
 };
 #endif
 #endif

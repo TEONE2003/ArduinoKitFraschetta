@@ -9,5 +9,6 @@ public:
      uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds,uint32_t Baud=9600):
      BasicSerialServoEntranceF(Tag,Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds),
     DefaultSerialF(Baud){}
+    void Begin(){DefaultSerialF::Begin(); BasicSerialServoEntranceF::Begin();}
 };
 #endif

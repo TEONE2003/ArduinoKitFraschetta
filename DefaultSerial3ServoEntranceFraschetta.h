@@ -1,3 +1,4 @@
+#ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
 #ifndef DefaultSerial3ServoEntranceFraschetta_h
 #define DefaultSerial3ServoEntranceFraschetta_h
 #include "BasicSerialServoEntranceFraschetta.h"
@@ -9,5 +10,7 @@ public:
      uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds,uint32_t Baud=9600):
      BasicSerialServoEntranceF(Tag,Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds),
     DefaultSerial3F(Baud){}
+    void Begin(){DefaultSerial3F::Begin(); BasicSerialServoEntranceF::Begin();}
 };
+#endif
 #endif
