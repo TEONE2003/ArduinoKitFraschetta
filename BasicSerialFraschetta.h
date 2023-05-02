@@ -3,8 +3,8 @@
 class BasicSerialF{
 private:
   String S; uint8_t B; char C;
-  virtual uint8_t SerialRead()=0;
   virtual void SerialBegin(long Baud)=0;
+  virtual uint8_t SerialRead()=0;
   virtual bool DataPresent()=0;
   virtual void SendLn(String S)=0;
   String string(){return String(char(SerialRead()));}
