@@ -6,7 +6,7 @@
 class SerialF:SoftwareSerial,public BasicSerialF,public SerialBridgeF{
 protected:
  boolean DataPresent()override{return available()>0;}
- void SendLn(String S)override{print(S); print("\n"}
+ void SendLn(String S)override{print(S); print("\n");}
  void SerialBegin(long Baud)override{begin(Baud);}
  uint8_t SerialRead()override{return read();}
  void SerialWrite(uint8_t B)override{write(B);}
