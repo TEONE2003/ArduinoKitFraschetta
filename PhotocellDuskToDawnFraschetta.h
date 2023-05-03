@@ -15,6 +15,7 @@ public:
  void BypassOff(){Bypass=0;}
  void InvertBypass(){if(Bypass){Bypass=0;} else{BypassOn();}}
  using RelayF::ReadDigitalStatus;
+ using PhotoresistorF::Calibrate;
  bool RelayChanged(){if(ReadDigitalStatus()!=PreviousRelayStatus){PreviousRelayStatus=ReadDigitalStatus(); return 1;} return 0;}
  void Begin(){RelayF::Begin(); PhotoresistorF::Begin(); PreviousLightStatus=Check(); PreviousRelayStatus=ReadDigitalStatus();}
 };
