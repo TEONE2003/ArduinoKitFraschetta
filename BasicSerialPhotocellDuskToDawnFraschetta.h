@@ -22,7 +22,7 @@ public:
         else if(CommandFound(InvertBypassString)){InvertBypass(); SendBypassStatus();}
         else if(CommandFound(BypassOnString)){BypassOn(); SendBypassStatus();}
         else if(CommandFound(BypassOffString)){BypassOff(); SendBypassStatus();}
-        else if(CommandFound(SyncCommand)){SendRelayStatus(); SendBypassStatus(); SendLightStatus();}
+        else if(CommandFound(SyncCommand())){SendRelayStatus(); SendBypassStatus(); SendLightStatus();}
         else{SetInvalidCommand();}
         if(LightChanged()){SendLightStatus();}
         if(RelayChanged()){SendRelayStatus();}

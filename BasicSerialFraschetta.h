@@ -14,7 +14,7 @@ private:
   long Baud;
   BasicSerialF(long Baud=9600){this->Baud=Baud; S=""; B=0; C='_';}
 public:
- void Begin(){SerialBegin(Baud);}
+ void Begin(){bool static begin=false; if(!begin){SerialBegin(Baud); begin=true;}}
  void ReceiveString(){
   if(DataPresent()){
    int Index=-1;
