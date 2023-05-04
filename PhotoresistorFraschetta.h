@@ -14,7 +14,7 @@ public:
  }
  uint16_t ReadPhotoresistor(){return AnalogRead();}
  void Calibrate(){static bool SerialInizialized=false; if(!SerialInizialized){Serial.end(); Serial.begin(9600); SerialInizialized=true;} Serial.print("Photoresistor: "+String(ReadPhotoresistor())+"\n");}
- boolean Check(){
+ boolean Night(){
  if(nTick()){
   if(ReadPhotoresistor()<=TurnOnThreshold){LastCheckExecuted=1; return 1;}
   if(ReadPhotoresistor()>=TurnOffThreshold){ LastCheckExecuted=0; return 0;}
@@ -22,6 +22,7 @@ public:
  }
  return LastCheckExecuted;
  }
+ bool StatusLight(){return !Night();}
  using InputF::Begin;
 };
 #endif
