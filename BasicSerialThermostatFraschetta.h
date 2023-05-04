@@ -33,6 +33,7 @@ public:
     SetTemperatureThreshold(uint8_t(ExtractNumber(TagLength+3,2)));
     SendTemperatureThreshold();
    }
+   else if(CommandFound(SyncCommand)){SendStatusRelay(); SendStatus(); SendTemperatureThreshold();}
    else{SetInvalidCommand();}
  }
 };

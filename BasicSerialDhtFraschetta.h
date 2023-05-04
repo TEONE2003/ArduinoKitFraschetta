@@ -17,7 +17,7 @@ protected:
    SetReceivedString(ReceivedString);
    if(CommandFound(StringCurrentTemperatureRequest)){SendTemperature();}
    else if(CommandFound(StringCurrentHumidityRequest)){SendHumidity();}
-   else if(CommandFound(SyncCommand){SendTemperature(); SendHumidity(); })
+   else if(CommandFound(SyncCommand)){SendTemperature(); SendHumidity();}
    else{SetInvalidCommand();}
    if(TemperatureChanged()){SendTemperature();}
    if(HumidityChanged()){SendHumidity();}
