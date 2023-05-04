@@ -16,12 +16,12 @@ private:
 public:
  void Begin(){bool static begin=false; if(!begin){SerialBegin(Baud); begin=true;}}
  void ReceiveString(){
+  S="";
   if(DataPresent()){
    int Index=-1;
    while(Index<0){if(DataPresent()){S=S+string(); Index=S.indexOf("\n");}}
    S=S.substring(0,Index);
   }
-  else{S="";}
  }
  void ReceiveByte(){
   if(DataPresent()){B=Byte();}
