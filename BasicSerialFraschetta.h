@@ -19,7 +19,7 @@ public:
   S="";
   if(DataPresent()){
    int Index=-1;
-   while(Index<0){if(DataPresent()){S=S+string(); Index=S.indexOf("\n");}}
+   while(Index<0){if(DataPresent()){S=S+string(); Index=S.indexOf(char(uint8_t(10)));}}
    S=S.substring(0,Index);
   }
  }
