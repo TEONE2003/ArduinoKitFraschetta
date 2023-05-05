@@ -13,7 +13,7 @@ protected:
 public:
     void SendRelayStatus(){if(ReadDigitalStatus()){Send(RelayStatusString+"=1");}else{Send(RelayStatusString+"=0");}}
     void SendBypassStatus(){if(Bypass){Send(BypassOnString);}else{Send(BypassOffString);}}
-    void SendLightStatus(){Send(LightRequest+"="+String(StatusLight()));}
+    void SendLightStatus(){Send(LightRequest+"="+String(Light()));}
     void SerialPhotocellDuskToDawnFunction(String ReceivedString){
         PhotocellDuskToDawnFunction(); SetReceivedString(ReceivedString);
         if(CommandFound(RelayStatusString)){SendRelayStatus();}

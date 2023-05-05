@@ -14,15 +14,14 @@ public:
  }
  uint16_t ReadPhotoresistor(){return AnalogRead();}
  void Calibrate(){static bool SerialInizialized=false; if(!SerialInizialized){Serial.end(); Serial.begin(9600); SerialInizialized=true;} Serial.print("Photoresistor: "+String(ReadPhotoresistor())+"\n");}
- boolean Night(){
+ bool Light(){
  if(nTick()){
-  if(ReadPhotoresistor()<=TurnOnThreshold){LastCheckExecuted=1; return 1;}
-  if(ReadPhotoresistor()>=TurnOffThreshold){ LastCheckExecuted=0; return 0;}
-  return LastCheckExecuted;
+  if(ReadPhotoresistor()>=TurnOffThreshold){LastCheckExecuted=1; return 1;}
+  if(ReadPhotoresistor()<=TurnOnThreshold){LastCheckExecuted=0; return 0;}
  }
  return LastCheckExecuted;
  }
- bool StatusLight(){return !Night();}
+ bool NoLight(){return !Light();}
  using InputF::Begin;
 };
 #endif
