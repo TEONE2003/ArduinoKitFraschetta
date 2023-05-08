@@ -3,7 +3,6 @@
 class BasicSerialF{
 private:
   String S; uint8_t B; char C;
-  virtual void SerialBegin(long Baud)=0;
   virtual uint8_t SerialRead()=0;
   virtual bool DataPresent()=0;
   virtual void SendLn(String S)=0;
@@ -14,7 +13,7 @@ private:
   long Baud;
   BasicSerialF(long Baud=9600){this->Baud=Baud; S=""; B=0; C='_';}
 public:
- void Begin(){bool static begin=false; if(!begin){SerialBegin(Baud); begin=true;}}
+ virtual void Begin()=0;
  void ReceiveString(){
   S="";
   if(DataPresent()){
