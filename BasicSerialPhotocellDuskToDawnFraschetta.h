@@ -11,7 +11,7 @@ protected:
      RelayStatusString=Tag+".S"; BypassString=Tag+".B"; InvertBypassString=Tag+".IB"; BypassOnString=Tag+".B=1"; BypassOffString=Tag+".B=0"; LightRequest=Tag+".L";
  }
 public:
-    void SendRelayStatus(){if(ReadDigitalStatus()){Send(RelayStatusString+"=1");}else{Send(RelayStatusString+"=0");}}
+    void SendRelayStatus(){if(DigitalRead()){Send(RelayStatusString+"=1");}else{Send(RelayStatusString+"=0");}}
     void SendBypassStatus(){if(Bypass){Send(BypassOnString);}else{Send(BypassOffString);}}
     void SendLightStatus(){Send(LightRequest+"="+String(Light()));}
     void SerialPhotocellDuskToDawnFunction(String ReceivedString){

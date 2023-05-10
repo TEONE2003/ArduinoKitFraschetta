@@ -6,11 +6,13 @@ class PhotoresistorF:InputF,VirtualCycleF{
 protected:
  uint16_t TurnOnThreshold,TurnOffThreshold;
  bool LastCheckExecuted;
+ CheckChangeF<bool>Change;
 public:
  PhotoresistorF(uint8_t Pin,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit):InputF(Pin),VirtualCycleF(Delay,Unit){
   this->TurnOnThreshold = TurnOnThreshold;
   this->TurnOffThreshold = TurnOffThreshold;
   LastCheckExecuted=false;
+  Change=CheckChangeF<bool>(false);
  }
  uint16_t ReadPhotoresistor(){return AnalogRead();}
  void Calibrate(){static bool SerialInizialized=false; if(!SerialInizialized){Serial.end(); Serial.begin(9600); SerialInizialized=true;} Serial.print("Photoresistor: "+String(ReadPhotoresistor())+"\n");}
@@ -22,6 +24,7 @@ public:
  return LastCheckExecuted;
  }
  bool NoLight(){return !Light();}
- using InputF::Begin;
+ bool LightChanged(){return Change.Changed(Light());}
+ void Begin(){Change=CheckChangeF<bool>(Light()); InputF::Begin();}
 };
 #endif

@@ -6,6 +6,6 @@ protected: OutputF::Pin;
 public:
   RelayF(){}
   RelayF(uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus):OutputF(Pin,Type,Save){}
-    using OutputF::Begin; using OutputF::TurnOn; using OutputF::TurnOff; using OutputF::InvertStatus; using OutputF::Blink; using OutputF::ReadDigitalStatus;
+    using OutputF::Begin; using OutputF::TurnOn; using OutputF::TurnOff; using OutputF::InvertStatus; using OutputF::Blink; using OutputF::DigitalRead; using OutputF::DigitalChanged;
 };
 #endif

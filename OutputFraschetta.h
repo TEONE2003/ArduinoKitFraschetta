@@ -4,6 +4,7 @@
 #include "VirtualCycleFraschetta.h"
 #include "TimerFraschetta.h"
 #include "EEPROM.h"
+#include "CheckChangeFraschetta.h"
 enum MemorizeStatus:boolean{DoNotSaveStatus=0,SaveStatus=1};
 class OutputF{
 protected:
@@ -13,6 +14,7 @@ protected:
  TimerF Period;
  DigitalType TypeD;
  MemorizeStatus Save;
+ CheckChangeF<bool>Change;
 public:
  void SetStatus(uint8_t Percentage){
   bool P=Percentage>=100;
@@ -24,7 +26,7 @@ public:
   else{EEPROM.update(Pin,Percentage);}
  }
 }
- bool ReadDigitalStatus(){
+ bool DigitalRead(){
   bool r=digitalRead(Pin);
   if(TypeD){return r;}
   else{return !r;}
@@ -32,6 +34,7 @@ public:
  uint8_t ReadAnalogStatusPercentage(){return (analogRead(Pin)*255)/100;}
  void Begin(){
   pinMode(Pin,OUTPUT);
+  Change=CheckChangeF<bool>(DigitalRead());
   if(Save){
    if(EEPROM.read(Pin)>100){EEPROM.update(Pin,0);}
    SetStatus(EEPROM.read(Pin));
@@ -45,6 +48,7 @@ public:
 OutputF(){}
 OutputF(uint8_t Pin,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
  this->TypeD=TypeD; this->Save=Save; this->Pin=Pin; Period=TimerF(); Bli=VirtualCycleF(); BliB=0;
+ Change=CheckChangeF<bool>(false);
 }
 OutputF(uint8_t Pin,MemorizeStatus Save):OutputF(Pin,NormalLogic,Save){}
  void TurnOn(){SetStatus(100);}
@@ -73,7 +77,7 @@ void InvertStatus(){
   if(S==0){SetStatus(100);}
  }
  else{
-  if(ReadDigitalStatus()){SetStatus(0);}
+  if(DigitalRead()){SetStatus(0);}
   else{SetStatus(100);}
  }
 }
@@ -85,5 +89,6 @@ void InvertStatus(){
   TurnOnWithFade(MaximumPercentage,Period,Unit);
   TurnOffWithFade(MaximumPercentage,Period,Unit);
  }
+ bool DigitalChanged(){return Change.Changed(DigitalRead());}
 };
 #endif

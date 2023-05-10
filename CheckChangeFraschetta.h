@@ -1,9 +1,10 @@
 #ifndef CheckChangeFraschetta_h
 #define CheckChangeFraschetta_h
 template <class T> class CheckChangeF{
- private: T V,Vs;
+ private: T Vs;
  public:
-  CheckChangeF(T &V){this->V=V; Vs=this->V;}
-  bool Changed(){if(Vs!=V){Vs=V; return 1; return 0;}}
+  CheckChangeF(){}
+  CheckChangeF(T Value){Vs=Value;}
+  bool Changed(T Value){if(Vs!=Value){Vs=Value; return 1;} return 0;}
 };
 #endif

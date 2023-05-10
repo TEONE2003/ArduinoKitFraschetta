@@ -10,7 +10,8 @@ protected: ThermostatType TypeT; int8_t TemperatureThresholdS; bool State;
  ThermostatF(uint8_t PinRelay,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating):RelayF(PinRelay,ReleType),
     VirtualCycleF(5,Seconds){State=0; this->TypeT=TypeT; TemperatureThresholdS=0;}
  uint8_t TemperatureThreshold(){return TemperatureThresholdS;}
- using RelayF::ReadDigitalStatus;
+ using RelayF::DigitalRead;
+ using RelayF::DigitalChanged;
  void Begin(){
   RelayF::Begin();
   if(EEPROM.read(RelayF::Pin)>49){EEPROM.update(RelayF::Pin,int8_t(-20));}
@@ -28,7 +29,7 @@ protected: ThermostatType TypeT; int8_t TemperatureThresholdS; bool State;
  void ThermostatFunction(uint8_t CurrentTemperature){
   if(nTick()>0 && State){
    if(TypeT==Heating){if(CurrentTemperature<TemperatureThresholdS){RelayF::TurnOn();} else{RelayF::TurnOff();}}
-   else{if(CurrentTemperature>TemperatureThresholdS){RelayF::TurnOn();} else {RelayF::TurnOff();}}
+   else{if(CurrentTemperature>TemperatureThresholdS){RelayF::TurnOn();} else{RelayF::TurnOff();}}
   }
 }
 };
