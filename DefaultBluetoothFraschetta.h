@@ -1,8 +1,8 @@
 #ifndef DefaultBluetoothFraschetta_h
 #define DefaultBluetoothFraschetta_h
 #include "DefaultSerialFraschetta.h"
-#include "AtCommands.h"
-class DefaultBluetoothF:public DefaultSerialF,public AtCommands{
+#include "AtCommandsFraschetta.h"
+class DefaultBluetoothF:public DefaultSerialF,public AtCommandsF{
 public:
  DefaultBluetoothF(long Baud=9600):DefaultSerialF(Baud){}
  void ReceiveString()override{DefaultSerialF::ReceiveString();}

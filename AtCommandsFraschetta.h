@@ -1,14 +1,14 @@
-#ifndef AtCommands_h
-#define AtCommands_h
+#ifndef AtCommandsFraschetta_h
+#define AtCommandsFraschetta_h
 enum Role{Slave,Master};
-class AtCommands{
+class AtCommandsF{
 private:
  virtual void ReceiveString()=0;
  virtual String ReadString()=0;
  virtual void Send(String s)=0;
- const String NlCr;
+ static const String NlCr;
 public:
- AtCommands(){NlCr="\r\n";}
+ AtCommandsF(){}
  bool WaitOk(){
   while(ReadString().indexOf("OK")<0){ReceiveString();}
   ReceiveString();
@@ -50,4 +50,5 @@ public:
  bool AtUart(int Baud){ while(!ModeAt()){} Send("AT+UART="+String(Baud)+",0,0"+NlCr); return Baud==AtUart();}
  bool AtAssociate(uint8_t MacAddress){ while(!ModeAt()){} Send("AT+BIND="+String(MacAddress)+NlCr); return WaitOk();}
 };
+const String AtCommandsF::NlCr="\r\n";
 #endif
