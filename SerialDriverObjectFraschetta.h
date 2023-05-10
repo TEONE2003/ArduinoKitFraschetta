@@ -3,7 +3,7 @@
 class SerialDriverObjectF{
 private: bool invalidCommand; String ReceivedString; int NIndex;
 protected:
- String SyncCommand(){const static String SSyncCommand="SYNC"; return SSyncCommand;}
+static const String SyncCommand;
  void SetReceivedString(String ReceivedString){this->ReceivedString=ReceivedString;}
  void SetInvalidCommand(){if(ReceivedString!=""){invalidCommand=1;}}
  bool CommandFound(String Command){invalidCommand=0; return Command==ReceivedString;}
@@ -12,4 +12,5 @@ protected:
  SerialDriverObjectF(){invalidCommand=0; ReceivedString=""; NIndex=-1;}
 public: bool InvalidCommand(){return invalidCommand;}
 };
+const String SerialDriverObjectF::SyncCommand="SYNC";
 #endif

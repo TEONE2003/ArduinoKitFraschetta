@@ -16,7 +16,7 @@ public:
   if(CommandFound(InvertString)){InvertStatus(); SendStatus();}
   else if(CommandFound(TurnOnString)){TurnOn(); SendStatus();}
   else if(CommandFound(TurnOffString)){TurnOff(); SendStatus();}
-  else if(CommandFound(StatusString)||CommandFound(SyncCommand())){SendStatus();}
+  else if(CommandFound(StatusString)||CommandFound(SyncCommand)){SendStatus();}
   else{SetInvalidCommand();}
  }
 };

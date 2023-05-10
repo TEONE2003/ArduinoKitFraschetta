@@ -16,7 +16,7 @@ public:
   if(CommandFound(InvertString)){Invert(); SendStatus();}
   else if(CommandFound(OpenString)){Open(); SendStatus();}
   else if(CommandFound(CloseString)){Close(); SendStatus();}
-  else if(CommandFound(StatusRequestString)||CommandFound(SyncCommand())){SendStatus();}
+  else if(CommandFound(StatusRequestString)||CommandFound(SyncCommand)){SendStatus();}
   else{SetInvalidCommand();}
  }
 };
