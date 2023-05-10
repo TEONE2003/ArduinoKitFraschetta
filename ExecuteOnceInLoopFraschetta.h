@@ -1,9 +1,10 @@
 #ifndef ExecuteOnceInLoopFraschetta_h
 #define ExecuteOnceInLoopFraschetta_h
 class ExecuteOnceInLoopF{
- private: void (*FunctionToExecuteOnce)(void);
+ private: void (*FunctionToExecuteOnce)(void); bool S;
  public:
-  ExecuteOnceInLoopF(void (*FunctionToExecuteOnce)(void)){this->FunctionToExecuteOnce=FunctionToExecuteOnce;}
-  void RunOnce(){static bool S=0; if(!S){S=1; FunctionToExecuteOnce();}}
+  ExecuteOnceInLoopF(void (*FunctionToExecuteOnce)(void)){S=0; this->FunctionToExecuteOnce=FunctionToExecuteOnce;}
+  void RunOnce(){if(!S){S=1; FunctionToExecuteOnce();}}
+  void Reset(){S=0;}
 };
 #endif
