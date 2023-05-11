@@ -2,11 +2,12 @@
 #define PhotoresistorFraschetta_h
 #include "InputFraschetta.h"
 #include "VirtualCycleFraschetta.h"
+#include "ExecuteOnceFraschetta.h"
 class PhotoresistorF:InputF,VirtualCycleF{
+private: CheckChangeF<bool>Change;
 protected:
  uint16_t TurnOnThreshold,TurnOffThreshold;
  bool LastCheckExecuted;
- CheckChangeF<bool>Change;
 public:
  PhotoresistorF(uint8_t Pin,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit):InputF(Pin),VirtualCycleF(Delay,Unit){
   this->TurnOnThreshold = TurnOnThreshold;
@@ -15,7 +16,7 @@ public:
   Change=CheckChangeF<bool>(false);
  }
  uint16_t ReadPhotoresistor(){return AnalogRead();}
- void Calibrate(){static bool SerialInizialized=false; if(!SerialInizialized){Serial.end(); Serial.begin(9600); SerialInizialized=true;} Serial.print("Photoresistor: "+String(ReadPhotoresistor())+"\n");}
+ void Calibrate(){static VirtualCycleF C=VirtualCycleF(1,Seconds); if(C.nTick()){static ExecuteOnceF IS=ExecuteOnceF(); if(IS.NoExecuted()){Serial.end(); Serial.begin(9600);} Serial.print("Photoresistor: "+String(ReadPhotoresistor())+"\n");}}
  bool Light(){
  if(nTick()){
   if(ReadPhotoresistor()>=TurnOffThreshold){LastCheckExecuted=1; return 1;}
