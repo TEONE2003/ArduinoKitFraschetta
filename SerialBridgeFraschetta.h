@@ -1,5 +1,6 @@
 #ifndef SerialBridgeFraschetta_h
 #define SerialBridgeFraschetta_h
+#include "ExecuteOnceFraschetta.h"
 class SerialBridgeF{
 private:
  long Baud;
@@ -9,8 +10,8 @@ private:
 protected: SerialBridgeF(long Baud=9600){this->Baud=Baud;}
 public:
 void SerialBridgeFunction(){
-  static bool SerialBridge=false;
-  if(!SerialBridge){Serial.end(); Serial.begin(Baud); SerialBridge=true;}
+  static ExecuteOnceF EB=ExecuteOnceF();
+  if(EB.NoExecuted()){Serial.end(); Serial.begin(Baud);}
   if(Serial.available()>0){SerialWrite(Serial.read());}
   if(DataPresent()){Serial.write(SerialRead());}
 }

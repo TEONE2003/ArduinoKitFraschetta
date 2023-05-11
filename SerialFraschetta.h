@@ -10,10 +10,9 @@ protected:
  void SendLn(String S)override{print(S); print("\n");}
  uint8_t SerialRead()override{return read();}
  void SerialWrite(uint8_t B)override{write(B);}
- ExecuteOnceF EB;
 public:
- SerialF(uint8_t Rx=2,uint8_t Tx=3,long Baud=9600):SoftwareSerial(Rx,Tx),BasicSerialF(Baud),SerialBridgeF(Baud){EB=ExecuteOnceF();}
- void Begin()override{if(EB.NoExecuted()){end(); begin(BasicSerialF::Baud);}}
+ SerialF(uint8_t Rx=2,uint8_t Tx=3,long Baud=9600):SoftwareSerial(Rx,Tx),BasicSerialF(Baud),SerialBridgeF(Baud){}
+ void Begin()override{static ExecuteOnceF EB=ExecuteOnceF(); if(EB.NoExecuted()){end(); begin(BasicSerialF::Baud);}}
  template <typename T>
  void Send(T t){print(t);}
  template <typename T>
