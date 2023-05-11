@@ -11,7 +11,7 @@ public:
  PhotoresistorF(uint8_t Pin,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit):InputF(Pin),VirtualCycleF(Delay,Unit){
   this->TurnOnThreshold = TurnOnThreshold;
   this->TurnOffThreshold = TurnOffThreshold;
-  LastCheckExecuted=false;
+  LastCheckExecuted=1;
   Change=CheckChangeF<bool>(false);
  }
  uint16_t ReadPhotoresistor(){return AnalogRead();}
