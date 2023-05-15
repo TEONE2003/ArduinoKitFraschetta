@@ -12,8 +12,8 @@ public:
 void SerialBridgeFunction(){
   static ExecuteOnceF EB=ExecuteOnceF();
   if(EB.NoExecuted()){Serial.end(); Serial.begin(Baud);}
-  if(Serial.available()>0){SerialWrite(Serial.read());}
-  if(DataPresent()){Serial.write(SerialRead());}
+  while(Serial.available()>0){SerialWrite(Serial.read());}
+  while(DataPresent()){Serial.write(SerialRead());}
 }
 };
 #endif
