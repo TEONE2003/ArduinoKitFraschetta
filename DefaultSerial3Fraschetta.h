@@ -3,7 +3,7 @@
 #define DefaultSerial3Fraschetta_h
 #include "BasicSerialFraschetta.h"
 #include "SerialBridgeFraschetta.h"
-#include "ExecuteOnceFraschetta.h"
+#include "Serial3BeginFraschetta.h"
 class DefaultSerial3F:public BasicSerialF,public SerialBridgeF{
 protected:
  boolean DataPresent()override{return Serial3.available()>0;}
@@ -11,8 +11,8 @@ protected:
  uint8_t SerialRead()override{return Serial3.read();}
  void SerialWrite(uint8_t B)override{Serial3.write(B);}
 public:
- DefaultSerial3F(long Baud=9600):BasicSerialF(Baud),SerialBridgeF(Baud){}
- void Begin()override{static ExecuteOnceF IS=ExecuteOnceF(); if(IS.NoExecuted()){Serial3.end(); Serial3.begin(BasicSerialF::Baud);}}
+ DefaultSerial3F():BasicSerialF(),SerialBridgeF(){}
+ void SetBaudRate(long Baud)override{Serial3BeginF(Baud); SerialBridgeF::SetBaudRate(Baud);}
  template <typename T>
  void Send(T t){Serial3.print(t);}
  template <typename T>

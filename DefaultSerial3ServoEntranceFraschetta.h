@@ -7,10 +7,10 @@ class DefaultSerial3ServoEntranceF:DefaultSerial3F,public BasicSerialServoEntran
 protected: void Send(String s)override{DefaultSerial3F:SendLn(s);}
 public:
     DefaultSerial3ServoEntranceF(String Tag,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition,
-     uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds,uint32_t Baud=9600):
+     uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds):
      BasicSerialServoEntranceF(Tag,Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds),
-    DefaultSerial3F(Baud){}
-    void Begin(){DefaultSerial3F::Begin(); BasicSerialServoEntranceF::Begin();}
+     DefaultSerial3F(){}
+    void Begin(long Baud=9600){DefaultSerial3F::SetBaudRate(Baud); BasicSerialServoEntranceF::Begin();}
 };
 #endif
 #endif

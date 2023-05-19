@@ -9,11 +9,10 @@ private:
   String string(){return String(char(SerialRead()));}
   uint8_t Byte(){return SerialRead();}
   char Char(){return SerialRead();}
- protected:
-  long Baud;
-  BasicSerialF(long Baud=9600){this->Baud=Baud; S=""; B=0; C='_';}
+protected:
+ BasicSerialF(){S=""; B=0; C='_';}
 public:
- virtual void Begin()=0;
+ virtual void SetBaudRate(long Baud)=0;
  void ReceiveString(){
   S="";
   if(DataPresent()){

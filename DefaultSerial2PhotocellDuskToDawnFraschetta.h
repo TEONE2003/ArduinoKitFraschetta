@@ -6,8 +6,8 @@
 class DefaultSerial2PhotocellDuskToDawnF:public BasicSerialPhotocellDuskToDawnF,DefaultSerial2F{
 protected: void Send(String s)override{DefaultSerial2F::SendLn(s);}
 public:
- DefaultSerial2PhotocellDuskToDawnF(String Tag,uint8_t PinPhotoresistor,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit,uint8_t PinRele,DigitalType ReleType,uint16_t Baud=9600):BasicSerialPhotocellDuskToDawnF(Tag,PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit,PinRele,ReleType),DefaultSerial2F(Baud){}
-void Begin(){DefaultSerial2F::Begin(); BasicSerialPhotocellDuskToDawnF::Begin();}
+ DefaultSerial2PhotocellDuskToDawnF(String Tag,uint8_t PinPhotoresistor,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit,uint8_t PinRele,DigitalType ReleType):BasicSerialPhotocellDuskToDawnF(Tag,PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit,PinRele,ReleType),DefaultSerial2F(){}
+void Begin(long Baud=9600){DefaultSerial2F::SetBaudRate(Baud); BasicSerialPhotocellDuskToDawnF::Begin();}
 };
 #endif
 #endif

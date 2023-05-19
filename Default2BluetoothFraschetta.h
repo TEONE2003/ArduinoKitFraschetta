@@ -5,7 +5,7 @@
 #include "AtCommandsFraschetta.h"
 class Default2BluetoothF:public DefaultSerial2F,public AtCommandsF{
 public:
- Default2BluetoothF(uint32_t Baud=9600):DefaultSerial2F(Baud){}
+ Default2BluetoothF():DefaultSerial2F(){}
  void ReceiveString()override{DefaultSerial2F::ReceiveString();}
  String ReadString()override{return DefaultSerial2F::ReadString();}
  void Send(String s)override{DefaultSerial2F::Send(s);}

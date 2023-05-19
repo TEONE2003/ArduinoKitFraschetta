@@ -3,19 +3,17 @@
 #include "BasicSerialFraschetta.h"
 #include "SoftwareSerial.h"
 #include "SerialBridgeFraschetta.h"
-#include "ExecuteOnceFraschetta.h"
 class SerialF:SoftwareSerial,public BasicSerialF,public SerialBridgeF{
 protected:
  boolean DataPresent()override{return available()>0;}
  void SendLn(String S)override{print(S); print("\n");}
  uint8_t SerialRead()override{return read();}
  void SerialWrite(uint8_t B)override{write(B);}
+ long Baud;
 public:
- SerialF(uint8_t Rx=2,uint8_t Tx=3,long Baud=9600):SoftwareSerial(Rx,Tx),BasicSerialF(Baud),SerialBridgeF(Baud){}
- void Begin()override{static ExecuteOnceF EB=ExecuteOnceF(); if(EB.NoExecuted()){end(); begin(BasicSerialF::Baud);}}
- template <typename T>
- void Send(T t){print(t);}
- template <typename T>
- void SendLn(T t){print(t); print("\n");}
+ SerialF(uint8_t Rx=2,uint8_t Tx=3):SoftwareSerial(Rx,Tx),BasicSerialF(),SerialBridgeF(){Baud=0;}
+ void SetBaudRate(long Baud)override{if(Baud!=this->Baud){end(); begin(Baud);} SerialBridgeF::SetBaudRate(Baud);}
+ template <typename T> void Send(T t){print(t);}
+ template <typename T> void SendLn(T t){print(t); print("\n");}
 };
 #endif
