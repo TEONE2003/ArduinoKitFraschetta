@@ -22,7 +22,7 @@ class InputF{
   }
   void SetDigitalReadMode(DigitalType DigitalReadM){this->DigitalReadM=DigitalReadM;}
   bool DigitalRead(){
-   boolean R=digitalRead(Pin);
+   bool R=digitalRead(Pin);
    if((DigitalReadM && (ResistanceM==ExternalResistance || ResistanceM==PullUp)) ||  !DigitalReadM && ResistanceM==PullDown){return R;}
    else{return !R;}
   }
