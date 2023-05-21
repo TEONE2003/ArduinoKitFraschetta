@@ -31,7 +31,6 @@ public:
  uint8_t ReadAnalogStatusPercentage(){return (analogRead(Pin)*255)/100;}
  void Begin(){
   pinMode(Pin,OUTPUT);
-  Change=CheckChangeF<bool>(DigitalRead());
   if(Save){
    if(EEPROM.read(Pin)>100){EEPROM.update(Pin,0);}
    SetStatus(EEPROM.read(Pin));
@@ -40,6 +39,7 @@ public:
    if(TypeD){digitalWrite(Pin,0);}
    else{digitalWrite(Pin,1);}
   }
+  Change=CheckChangeF<bool>(DigitalRead());
  }
  void SetAnalogStatus(uint8_t StatusPercentage){SetStatus((StatusPercentage*100)/255);}
 OutputF(){}
