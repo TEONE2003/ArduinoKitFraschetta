@@ -12,6 +12,7 @@ protected:
  DigitalType TypeD;
  MemorizeStatus Save;
  CheckChangeF<bool>Change;
+ VirtualCycleF *Bli;
 public:
  void SetStatus(uint8_t Percentage){
   bool P=Percentage>=100;
@@ -44,7 +45,7 @@ public:
  void SetAnalogStatus(uint8_t StatusPercentage){SetStatus((StatusPercentage*100)/255);}
 OutputF(){}
 OutputF(uint8_t Pin,DigitalType TypeD=NormalLogic,MemorizeStatus Save=DoNotSaveStatus){
- this->TypeD=TypeD; this->Save=Save; this->Pin=Pin; Change=CheckChangeF<bool>(false);
+ this->TypeD=TypeD; this->Save=Save; this->Pin=Pin; Change=CheckChangeF<bool>(false); Bli==nullptr;
 }
 OutputF(uint8_t Pin,MemorizeStatus Save):OutputF(Pin,NormalLogic,Save){}
  void TurnOn(){SetStatus(100);}
@@ -52,11 +53,7 @@ OutputF(uint8_t Pin,MemorizeStatus Save):OutputF(Pin,NormalLogic,Save){}
  void SetStatusWithDelay(uint8_t Percentage,uint64_t Delay,UnitOfTime Unit){
   Wait(Delay,Unit); SetStatus(Percentage);
  }
- void SetStatusWhenTimerExpires(uint8_t Percentage,uint64_t Delay,UnitOfTime Unit){
-  static TimerF Period=TimerF(Delay,Unit);
-  if(!Period.Enabled()){Period.Enable();}
-  if(Period.Stop()){SetStatus(Percentage);}
- }
+
  void TurnOnWithFade(uint8_t MaximumPercentage,uint16_t Time,UnitOfTime Unit){
   for(uint8_t P=0;P<MaximumPercentage;P++){
    Wait(Time,Unit); SetStatus(P);
@@ -79,8 +76,8 @@ void InvertStatus(){
  }
 }
  void Blink(uint16_t Period,UnitOfTime Unit){
-  static VirtualCycleF Bli=VirtualCycleF(Period,Unit);
-  for(uint64_t n=Bli.nTick();n>=1;n--){InvertStatus();}
+  Bli=malloc(sizeof(VirtualCycleF)); *Bli=VirtualCycleF(Period,Unit);
+  for(uint64_t n=Bli->nTick();n>=1;n--){InvertStatus();}
  }
  void FadingLoop(uint8_t MaximumPercentage,uint16_t Period,UnitOfTime Unit){
   TurnOnWithFade(MaximumPercentage,Period,Unit);

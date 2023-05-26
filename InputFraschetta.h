@@ -26,11 +26,12 @@ class InputF{
    if((DigitalReadM && (ResistanceM==ExternalResistance || ResistanceM==PullUp)) ||  !DigitalReadM && ResistanceM==PullDown){return R;}
    else{return !R;}
   }
-  void Begin(){pinMode(Pin,INPUT); SetResistanceMode(ResistanceM); Change=CheckChangeF<bool>(DigitalRead());}
+  void Begin(){SetResistanceMode(ResistanceM); Change=CheckChangeF<bool>(DigitalRead());}
   uint16_t AnalogRead(){return analogRead(Pin);}
    bool DigitalChanged(){return Change.Changed(DigitalRead());}
-   InputF(uint8_t Pin=0,ResistanceMode ResistanceM=ExternalResistance,DigitalType DigitalReadM=NormalLogic){
-   SetResistanceMode(ResistanceM); SetDigitalReadMode(DigitalReadM); this->Pin=Pin; Change=CheckChangeF<bool>(false);
-  }
+   InputF(uint8_t Pin,ResistanceMode ResistanceM=ExternalResistance,DigitalType DigitalReadM=NormalLogic){
+    SetResistanceMode(ResistanceM); SetDigitalReadMode(DigitalReadM); this->Pin=Pin; Change=CheckChangeF<bool>(false);
+   }
+   InputF(){}
 };
 #endif
