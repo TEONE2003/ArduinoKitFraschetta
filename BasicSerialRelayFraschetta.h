@@ -1,11 +1,11 @@
 #ifndef BasicSerialRelayFraschetta_h
 #define BasicSerialRelayFraschetta_h
-#include "SerialDriverObjectFraschetta.h"
+#include "TerminalDriverObjectFraschetta.h"
 #include "RelayFraschetta.h"
-class BasicSerialRelayF:public SerialDriverObjectF,public RelayF{
+class BasicSerialRelayF:public TerminalDriverObjectF,public RelayF{
 protected:
  String TurnOnString,TurnOffString,InvertString,StatusString; virtual void Send(String s)=0;
- BasicSerialRelayF(String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus):RelayF(Pin,Type,Save),SerialDriverObjectF(){
+ BasicSerialRelayF(String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus):RelayF(Pin,Type,Save),TerminalDriverObjectF(){
   TurnOnString=Tag+"=1"; TurnOffString=Tag+"=0";
   StatusString=Tag+".S"; InvertString=Tag+".I";
  }

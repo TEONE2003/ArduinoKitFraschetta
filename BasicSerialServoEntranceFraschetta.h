@@ -1,11 +1,11 @@
 #ifndef BasicSerialServoEntranceFraschetta_h
 #define BasicSerialServoEntranceFraschetta_h
-#include "SerialDriverObjectFraschetta.h"
+#include "TerminalDriverObjectFraschetta.h"
 #include "ServoEntranceFraschetta.h"
-class BasicSerialServoEntranceF:public SerialDriverObjectF,public ServoEntranceF{
+class BasicSerialServoEntranceF:public TerminalDriverObjectF,public ServoEntranceF{
 protected: String OpenString,CloseString,InvertString,StatusRequestString; virtual void Send(String s)=0;
  BasicSerialServoEntranceF(String Tag,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition, uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds):
-     ServoEntranceF(Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds),SerialDriverObjectF(){
+     ServoEntranceF(Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds),TerminalDriverObjectF(){
       OpenString=Tag+"=O"; CloseString=Tag+"=C";
       StatusRequestString=Tag+".S"; InvertString=Tag+".I";
     }

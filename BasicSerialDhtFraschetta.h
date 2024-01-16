@@ -1,12 +1,12 @@
 #ifndef BasicSerialDhtFraschetta_h
 #define BasicSerialDhtFraschetta_h
-#include "SerialDriverObjectFraschetta.h"
+#include "TerminalDriverObjectFraschetta.h"
 #include "DhtFraschetta.h"
-class BasicSerialDhtF:public SerialDriverObjectF,public DhtF{
+class BasicSerialDhtF:public TerminalDriverObjectF,public DhtF{
 protected:
   String StringCurrentHumidityRequest,StringCurrentTemperatureRequest;
   virtual void Send(String s)=0;
-  BasicSerialDhtF(String Tag,uint8_t Pin,uint8_t Type):DhtF(Pin,Type),SerialDriverObjectF(){
+  BasicSerialDhtF(String Tag,uint8_t Pin,uint8_t Type):DhtF(Pin,Type),TerminalDriverObjectF(){
    StringCurrentTemperatureRequest=Tag+".T";
    StringCurrentHumidityRequest=Tag+".H";
   }

@@ -1,13 +1,13 @@
 #ifndef BasicSerialPhotocellDuskToDawnFraschetta_h
 #define BasicSerialPhotocellDuskToDawnFraschetta_h
 #include "PhotocellDuskToDawnFraschetta.h"
-#include "SerialDriverObjectFraschetta.h"
-class BasicSerialPhotocellDuskToDawnF:public SerialDriverObjectF,public PhotocellDuskToDawnF{
+#include "TerminalDriverObjectFraschetta.h"
+class BasicSerialPhotocellDuskToDawnF:public TerminalDriverObjectF,public PhotocellDuskToDawnF{
 protected:
  virtual void Send(String s)=0; String OnString,OffString,StatusRequest,InvertStatusString,RelayStatusString,BypassString,InvertBypassString,BypassOnString,BypassOffString,LightRequest;
  using PhotocellDuskToDawnF::PhotocellDuskToDawnFunction;
  BasicSerialPhotocellDuskToDawnF(String Tag,uint8_t PinPhotoresistor,uint16_t TurnOnThreshold,uint16_t TurnOffThreshold,uint64_t Delay,UnitOfTime Unit,
-                      uint8_t PinRele,DigitalType ReleType):PhotocellDuskToDawnF(PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit,PinRele,ReleType),SerialDriverObjectF(){
+                      uint8_t PinRele,DigitalType ReleType):PhotocellDuskToDawnF(PinPhotoresistor,TurnOnThreshold,TurnOffThreshold,Delay,Unit,PinRele,ReleType),TerminalDriverObjectF(){
     OnString=Tag+"=1"; OffString=Tag+"=0"; StatusRequest=Tag+".S"; InvertStatusString=Tag+".I"; RelayStatusString=Tag+".RS"; BypassString=Tag+".B"; InvertBypassString=Tag+".IB";
     BypassOnString=Tag+".B=1"; BypassOffString=Tag+".B=0"; LightRequest=Tag+".L";
  }
