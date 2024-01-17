@@ -5,7 +5,7 @@
 class BasicSerialServoEntranceF:public TerminalDriverObjectF,public ServoEntranceF{
 protected: String OpenString,CloseString,InvertString,StatusRequestString; virtual void Send(String s)=0;
  BasicSerialServoEntranceF(String Tag,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition, uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds):
-     ServoEntranceF(Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds),TerminalDriverObjectF(){
+     ServoEntranceF(Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds,String *ReceivedString),TerminalDriverObjectF(ReceivedString){
       OpenString=Tag+"=O"; CloseString=Tag+"=C";
       StatusRequestString=Tag+".S"; InvertString=Tag+".I";
     }

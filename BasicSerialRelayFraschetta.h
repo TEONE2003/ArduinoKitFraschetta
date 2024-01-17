@@ -5,7 +5,7 @@
 class BasicSerialRelayF:public TerminalDriverObjectF,public RelayF{
 protected:
  String TurnOnString,TurnOffString,InvertString,StatusString; virtual void Send(String s)=0;
- BasicSerialRelayF(String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus):RelayF(Pin,Type,Save),TerminalDriverObjectF(){
+ BasicSerialRelayF(String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus,String *ReceivedString):RelayF(Pin,Type,Save),TerminalDriverObjectF(ReceivedString){
   TurnOnString=Tag+"=1"; TurnOffString=Tag+"=0";
   StatusString=Tag+".S"; InvertString=Tag+".I";
  }

@@ -6,7 +6,7 @@ class BasicSerialDhtF:public TerminalDriverObjectF,public DhtF{
 protected:
   String StringCurrentHumidityRequest,StringCurrentTemperatureRequest;
   virtual void Send(String s)=0;
-  BasicSerialDhtF(String Tag,uint8_t Pin,uint8_t Type):DhtF(Pin,Type),TerminalDriverObjectF(){
+  BasicSerialDhtF(String Tag,uint8_t Pin,uint8_t Type,String *ReceivedString):DhtF(Pin,Type),TerminalDriverObjectF(ReceivedString){
    StringCurrentTemperatureRequest=Tag+".T";
    StringCurrentHumidityRequest=Tag+".H";
   }
