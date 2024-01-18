@@ -14,7 +14,7 @@ protected:
   void SendTemperature(){Send(StringCurrentTemperatureRequest+"="+String(ReadTemperature()));}
   void SendHumidity(){Send(StringCurrentHumidityRequest+"="+String(ReadHumidity()));}
   void SerialDhtFFunction(String ReceivedString){
-   SetReceivedString(ReceivedString);
+   
    if(CommandFound(StringCurrentTemperatureRequest)){SendTemperature();}
    else if(CommandFound(StringCurrentHumidityRequest)){SendHumidity();}
    else if(CommandFound(SyncCommand)){SendTemperature(); SendHumidity();}

@@ -22,7 +22,7 @@ public:
  void SendTemperatureThreshold(){Send(StringSetTemperatureThreshold+String(TemperatureThresholdS));}
  void SerialThermostatFunction(uint8_t CurrentTemperature,String ReceivedString){
   ThermostatFunction(CurrentTemperature);
-   SetReceivedString(ReceivedString);
+   
    if(CommandFound(StringTemperatureThresholdRequest)){SendTemperatureThreshold();}
    else if(CommandFound(StringStatusRelay)){SendStatusRelay();}
    else if(CommandFound(StringStatus)){SendStatus();}

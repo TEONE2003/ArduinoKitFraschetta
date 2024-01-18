@@ -12,7 +12,7 @@ protected: String OpenString,CloseString,InvertString,StatusRequestString; virtu
 public:
  void SendStatus(){if(Opened()){Send(OpenString);} else{Send(CloseString);}}
  void FunctionSerialServoEntrance(String ReceivedString){
-  SetReceivedString(ReceivedString);
+  
   if(CommandFound(InvertString)){Invert(); SendStatus();}
   else if(CommandFound(OpenString)){Open(); SendStatus();}
   else if(CommandFound(CloseString)){Close(); SendStatus();}

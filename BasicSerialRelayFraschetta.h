@@ -12,7 +12,7 @@ protected:
 public:
  void SendStatus(){if(StatusRelay()){Send(TurnOnString);}else{Send(TurnOffString);}}
  void FunctionSerialRelay(String ReceivedString){
-  SetReceivedString(ReceivedString);
+  
   if(CommandFound(InvertString)){InvertStatus(); SendStatus();}
   else if(CommandFound(TurnOnString)){TurnOn(); SendStatus();}
   else if(CommandFound(TurnOffString)){TurnOff(); SendStatus();}
