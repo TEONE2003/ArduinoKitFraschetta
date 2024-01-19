@@ -16,7 +16,7 @@ public:
     void SendBypassStatus(){if(bypass){Send(BypassOnString);}else{Send(BypassOffString);}}
     void SendStatus(){if(active){Send(OnString);} else{Send(OffString);}}
     void SendLightStatus(){Send(LightRequest+"="+String(Light()));}
-    void SerialPhotocellDuskToDawnFunction(String ReceivedString){
+    void SerialPhotocellDuskToDawnFunction(){
         PhotocellDuskToDawnFunction(); 
         if(CommandFound(RelayStatusString)){SendRelayStatus();}
         else if(CommandFound(LightRequest)){SendLightStatus();}

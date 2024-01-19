@@ -20,9 +20,8 @@ public:
  void SendStatusRelay(){if(StatusRelay()){Send(StringStatusRelay+"=1");} else{Send(StringStatusRelay+"=0");}}
  void SendStatus(){if(State){Send(StringTurnOn);} else{Send(StringTurnOff);}}
  void SendTemperatureThreshold(){Send(StringSetTemperatureThreshold+String(TemperatureThresholdS));}
- void SerialThermostatFunction(uint8_t CurrentTemperature,String ReceivedString){
-  ThermostatFunction(CurrentTemperature);
-   
+ void SerialThermostatFunction(uint8_t CurrentTemperature){
+   ThermostatFunction(CurrentTemperature);
    if(CommandFound(StringTemperatureThresholdRequest)){SendTemperatureThreshold();}
    else if(CommandFound(StringStatusRelay)){SendStatusRelay();}
    else if(CommandFound(StringStatus)){SendStatus();}
