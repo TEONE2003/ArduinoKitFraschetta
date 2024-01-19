@@ -32,6 +32,5 @@ public:
  String ReadString(){return S;}
  uint8_t ReadByte(){return B;}
  char ReadChar(){return C;}
- void HandleInvalidCommands(bool AllInvalidCommand){if(AllInvalidCommand){SendLn("INVALID COMMAND: ["+ReadString()+"]");}}
 };
 #endif
