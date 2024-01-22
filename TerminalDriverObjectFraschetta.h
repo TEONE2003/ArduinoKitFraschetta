@@ -1,7 +1,7 @@
 #ifndef TerminalDriverObjectFraschetta_h
 #define TerminalDriverObjectFraschetta_h
 class TerminalDriverObjectF{
-private: String *ReceivedString; int NIndex; bool Subscribe; static const String IC1; static const char IC2;
+private: String *ReceivedString; int NIndex; bool Subscribe; static const String IC;
 virtual void SendLn(String Command)=0;
 protected:
 static const String SyncCommand;
@@ -10,7 +10,7 @@ static int CountInvalidCommand;
 static bool Readable;
  void SetInvalidCommand(){
    if(Subscribe){CountInvalidCommand+=1; Subscribe=0;} 
-   if(CountInvalidCommand==InstanceCounter) SendLn(IC1+ (*ReceivedString) +IC2);
+   if(CountInvalidCommand==InstanceCounter) SendLn(IC+ (*ReceivedString) + char(125));
  }
  bool CommandFound(String Command){if(Readable){Subscribe=1; return Command == *ReceivedString;} return false;}
  bool ContentCommand(String Command){if(Readable){Subscribe=1; NIndex= (*ReceivedString).indexOf(Command); return NIndex>=0;} return false;}
@@ -20,8 +20,7 @@ static bool Readable;
     this->ReceivedString=ReceivedString; NIndex=-1; Subscribe=false;}
 };
 const String TerminalDriverObjectF::SyncCommand="SYNC";
-const String TerminalDriverObjectF::IC1="INVALID COMMAND: [";
-const char TerminalDriverObjectF::IC2=']';
+const String TerminalDriverObjectF::IC="INVALID COMMAND: [";
 int TerminalDriverObjectF::InstanceCounter=0;
 int TerminalDriverObjectF::CountInvalidCommand=0;
 bool TerminalDriverObjectF::Readable=false;
