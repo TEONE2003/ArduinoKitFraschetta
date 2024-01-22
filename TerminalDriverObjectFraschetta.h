@@ -2,7 +2,7 @@
 #define TerminalDriverObjectFraschetta_h
 class TerminalDriverObjectF{
 private: String *ReceivedString; int NIndex; bool Subscribe; static const String IC; static bool Readable;
-virtual void Send(String Command)=0;
+virtual void Send(String s)=0;
 protected:
 static const String SyncCommand;
 static int InstanceCounter;
