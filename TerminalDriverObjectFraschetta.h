@@ -2,7 +2,7 @@
 #define TerminalDriverObjectFraschetta_h
 class TerminalDriverObjectF{
 private: String *ReceivedString; int NIndex; bool Subscribe; static const String IC; static bool Readable;
-virtual void SendLn(String Command)=0;
+virtual void Send(String Command)=0;
 protected:
 static const String SyncCommand;
 static int InstanceCounter;
@@ -10,7 +10,7 @@ static int CountInvalidCommand;
  void SetReadible(){Readable=true;}
  void SetInvalidCommand(){
    if(Subscribe){CountInvalidCommand+=1; Subscribe=0;} 
-   if(CountInvalidCommand==InstanceCounter) SendLn(IC+ (*ReceivedString) + char(125));
+   if(CountInvalidCommand==InstanceCounter) Send(IC+ (*ReceivedString) + char(125));
  }
  bool CommandFound(String Command){if(Readable){Subscribe=1; Readable=false; return Command == *ReceivedString;} return false;}
  bool ContentCommand(String Command){if(Readable){Subscribe=1; Readable=false; NIndex= (*ReceivedString).indexOf(Command); return NIndex>=0;} return false;}
