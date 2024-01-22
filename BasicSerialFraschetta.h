@@ -30,6 +30,7 @@ public:
   else{C=0;}
 }
  String ReadString(){return S;}
+ void SetStringAddress(String &var){var = &S;}
  uint8_t ReadByte(){return B;}
  char ReadChar(){return C;}
 };
