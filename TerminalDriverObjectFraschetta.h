@@ -1,19 +1,19 @@
 #ifndef TerminalDriverObjectFraschetta_h
 #define TerminalDriverObjectFraschetta_h
 class TerminalDriverObjectF{
-private: String *ReceivedString; int NIndex; bool Subscribe; static const String IC;
+private: String *ReceivedString; int NIndex; bool Subscribe; static const String IC; static bool Readable;
 virtual void SendLn(String Command)=0;
 protected:
 static const String SyncCommand;
 static int InstanceCounter;
 static int CountInvalidCommand;
-static bool Readable;
+ void SetReadible(){Readable=true;}
  void SetInvalidCommand(){
    if(Subscribe){CountInvalidCommand+=1; Subscribe=0;} 
    if(CountInvalidCommand==InstanceCounter) SendLn(IC+ (*ReceivedString) + char(125));
  }
- bool CommandFound(String Command){if(Readable){Subscribe=1; return Command == *ReceivedString;} return false;}
- bool ContentCommand(String Command){if(Readable){Subscribe=1; NIndex= (*ReceivedString).indexOf(Command); return NIndex>=0;} return false;}
+ bool CommandFound(String Command){if(Readable){Subscribe=1; Readable=false; return Command == *ReceivedString;} return false;}
+ bool ContentCommand(String Command){if(Readable){Subscribe=1; Readable=false; NIndex= (*ReceivedString).indexOf(Command); return NIndex>=0;} return false;}
  int ExtractNumber(int TagLength,uint8_t NumberDigits){NIndex+=TagLength; return (*ReceivedString).substring(NIndex+1,NIndex+NumberDigits+1).toInt();}
  TerminalDriverObjectF(String *ReceivedString){
     TerminalDriverObjectF::InstanceCounter+=1;
