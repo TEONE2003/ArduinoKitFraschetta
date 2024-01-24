@@ -7,8 +7,8 @@ class DefaultSerial1ServoEntranceF:DefaultSerial1F,public BasicSerialServoEntran
 protected: void Send(String s)override{DefaultSerial1F:SendLn(s);}
 public:
     DefaultSerial1ServoEntranceF(String Tag,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition,
-     uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds):
-     BasicSerialServoEntranceF(Tag,Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds),
+     uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds,String *ReceivedString):
+     BasicSerialServoEntranceF(Tag,Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds,ReceivedString),
     DefaultSerial1F(){}
     void Begin(long Baud=9600){DefaultSerial1F::SetBaudRate(Baud); BasicSerialServoEntranceF::Begin();}
 };
