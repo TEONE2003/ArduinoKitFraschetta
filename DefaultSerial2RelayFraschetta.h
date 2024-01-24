@@ -6,7 +6,7 @@
 class DefaultSerial2RelayF:DefaultSerial2F,public BasicSerialRelayF{
 protected: void Send(String s)override{DefaultSerial2F::SendLn(s);}
 public:
- DefaultSerial2RelayF(String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus,long Baud=9600):BasicSerialRelayF(Tag,Pin,Type,Save),DefaultSerial2F(Baud){}
+ DefaultSerial2RelayF(String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus,long Baud=9600,ReceivedString):BasicSerialRelayF(Tag,Pin,Type,Save,ReceivedString),DefaultSerial2F(Baud){}
 void Begin(long Baud=9600){DefaultSerial2F::SetBaudRate(Baud); BasicSerialRelayF::Begin();}
 };
 #endif
