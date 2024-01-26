@@ -32,8 +32,9 @@ public:
 }
  String ReadString(){R=false; return S;}
  String* GetStringAddress(){return &S;}
+ bool* GetReadableAddress(){return &R;}
  uint8_t ReadByte(){R=false; return B;}
  char ReadChar(){R=false; return C;}
- bool Readible(){return R;}
+ bool Readable(){return R;}
 };
 #endif
