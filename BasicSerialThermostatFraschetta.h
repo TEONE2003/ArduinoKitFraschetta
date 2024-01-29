@@ -1,12 +1,12 @@
-#ifndef BasicSerialThermostatFraschetta_h
-#define BasicSerialThermostatFraschetta_h
+#ifndef BasicTerminalThermostatFraschetta_h
+#define BasicTerminalThermostatFraschetta_h
 #include "TerminalDriverObjectFraschetta.h"
 #include "ThermostatFraschetta.h"
-class BasicSerialThermostatF:public TerminalDriverObjectF,public ThermostatF{
+class BasicTerminalThermostatF:public TerminalDriverObjectF,public ThermostatF{
  protected: String StringSetTemperatureThreshold,StringStatusRelay,StringStatus,StringTemperatureThresholdRequest,StringTurnOn,StringTurnOff,StringInvertStatus; int TagLength;
   virtual void Send(String s)=0;
   using ThermostatF::ThermostatFunction;
-  BasicSerialThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating,String *ReceivedString,bool *Readable):ThermostatF(PinRele,ReleType,TypeT),TerminalDriverObjectF(ReceivedString,Readable){
+  BasicTerminalThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating,String *ReceivedString,bool *Readable):ThermostatF(PinRele,ReleType,TypeT),TerminalDriverObjectF(ReceivedString,Readable){
    StringTemperatureThresholdRequest=Tag+".TT";
    StringStatus=Tag+".S";
    StringStatusRelay=Tag+".RS";

@@ -1,5 +1,5 @@
-#ifndef BasicSerialDhtFraschetta_h
-#define BasicSerialDhtFraschetta_h
+#ifndef BasicTerminalDhtFraschetta_h
+#define BasicTerminalDhtFraschetta_h
 #include "TerminalDriverObjectFraschetta.h"
 #include "DhtFraschetta.h"
 class BasicSerialDhtF:public TerminalDriverObjectF,public DhtF{

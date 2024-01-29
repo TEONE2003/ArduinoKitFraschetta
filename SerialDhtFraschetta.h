@@ -1,6 +1,6 @@
 #ifndef SerialDhtFraschetta_h
 #define SerialDhtFraschetta_h
-#include "BasicSerialDhtFraschetta.h"
+#include "BasicTerminalDhtFraschetta.h"
 #include "SerialFraschetta.h"
 class SerialDhtF:SerialF,public BasicSerialDhtF{
 protected: void Send(String s)override{SerialF::SendLn(s);}

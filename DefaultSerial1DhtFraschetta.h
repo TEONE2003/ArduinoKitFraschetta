@@ -1,7 +1,7 @@
 #ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
 #ifndef DefaultSerial1DhtFraschetta_h
 #define DefaultSerial1DhtFraschetta_h
-#include "BasicSerialDhtFraschetta.h"
+#include "BasicTerminalDhtFraschetta.h"
 #include "DefaultSerial1Fraschetta.h"
 class DefaultSerial1DhtF:DefaultSerial1F,public BasicSerialDhtF{
 protected: void Send(String s)override{DefaultSerial1F::SendLn(s);}
