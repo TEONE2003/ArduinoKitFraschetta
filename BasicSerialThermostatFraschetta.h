@@ -6,7 +6,7 @@ class BasicSerialThermostatF:public TerminalDriverObjectF,public ThermostatF{
  protected: String StringSetTemperatureThreshold,StringStatusRelay,StringStatus,StringTemperatureThresholdRequest,StringTurnOn,StringTurnOff,StringInvertStatus; int TagLength;
   virtual void Send(String s)=0;
   using ThermostatF::ThermostatFunction;
-  BasicSerialThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating,String *ReceivedString):ThermostatF(PinRele,ReleType,TypeT),TerminalDriverObjectF(ReceivedString){
+  BasicSerialThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating,String *ReceivedString,bool *Readable):ThermostatF(PinRele,ReleType,TypeT),TerminalDriverObjectF(ReceivedString,Readable){
    StringTemperatureThresholdRequest=Tag+".TT";
    StringStatus=Tag+".S";
    StringStatusRelay=Tag+".RS";
