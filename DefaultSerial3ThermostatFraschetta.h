@@ -6,7 +6,7 @@
 class DefaultSerial3ThermostatF:public BasicTerminalThermostatF,DefaultSerial3F{
 protected: void Send(String s)override{DefaultSerial3F::SendLn(s);}
 public:
-  DefaultSerial3ThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating,String *ReceivedString):BasicTerminalThermostatF(Tag,PinRele,ReleType,TypeT,ReceivedString),DefaultSerial3F(){}
+  DefaultSerial3ThermostatF(String Tag,uint8_t PinRele,DigitalType ReleType=NormalLogic,ThermostatType TypeT=Heating,String *ReceivedString,bool *Readable):BasicTerminalThermostatF(Tag,PinRele,ReleType,TypeT,ReceivedString,Readable),DefaultSerial3F(){}
 void Begin(long Baud=9600){DefaultSerial3F::SetBaudRate(Baud); BasicTerminalThermostatF::Begin();}
 };
 #endif
