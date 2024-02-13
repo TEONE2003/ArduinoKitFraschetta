@@ -1,7 +1,7 @@
 #include "SerialServoEntranceFraschetta.h"
 #include "BluetoothFraschetta.h"
 BluetoothF B(3,4,9600);
-SerialServoEntranceF S("S",2,180,0,3,10,3,4,9600,B.GetStringAddress());
+SerialServoEntranceF S(B.GetStringAddress(),B.GetReadableAddress(),"S",2,180,0,3,10,3,4,9600);
 void setup(){S.MovementStatusCheck();}
 void loop(){
 B.ReceiveString();
