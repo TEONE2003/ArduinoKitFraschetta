@@ -4,8 +4,8 @@
 #include "ServoEntranceFraschetta.h"
 class BasicTerminalServoEntranceF:public TerminalDriverObjectF,public ServoEntranceF{
 protected: String OpenString,CloseString,InvertString,StatusRequestString; virtual void Send(String s)=0;
- BasicTerminalServoEntranceF(String Tag,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition, uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds):
-     ServoEntranceF(Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds,String *ReceivedString,bool *Readable),TerminalDriverObjectF(ReceivedString,Readable){
+ BasicTerminalServoEntranceF(String *ReceivedString,bool *Readable,String Tag,uint8_t Pin,uint16_t OpeningPosition,uint16_t ClosingPosition, uint16_t AddressMotionStatusPosition,uint16_t MovementDelayInMilliseconds):
+     ServoEntranceF(Pin,OpeningPosition,ClosingPosition,AddressMotionStatusPosition,MovementDelayInMilliseconds),TerminalDriverObjectF(ReceivedString,Readable){
       OpenString=Tag+"=O"; CloseString=Tag+"=C";
       StatusRequestString=Tag+".S"; InvertString=Tag+".I";
     }
