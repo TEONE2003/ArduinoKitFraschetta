@@ -17,4 +17,6 @@ public:
  template <typename T> void SendLn(T t){Serial1.print(t); Serial1.print("\n");}
 };
 #endif
+#else
+#error This library requires Arduino Mega.
 #endif

@@ -10,4 +10,6 @@ public:
 void Begin(long Baud=9600){DefaultSerial1F::SetBaudRate(Baud); BasicTerminalThermostatF::Begin();}
 };
 #endif
+#else
+#error This library requires Arduino Mega.
 #endif

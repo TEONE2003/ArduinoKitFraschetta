@@ -11,4 +11,6 @@ public:
  void Send(String s)override{DefaultSerial2F::Send(s);}
 };
 #endif
+#else
+#error This library requires Arduino Mega.
 #endif

@@ -9,4 +9,6 @@ public: DefaultSerial1DhtF(String *ReceivedString,bool *Readable,String Tag,uint
 void Begin(long Baud=9600){DefaultSerial1F::SetBaudRate(Baud); BasicSerialDhtF::Begin();}
 };
 #endif
+#else
+#error This library requires Arduino Mega.
 #endif

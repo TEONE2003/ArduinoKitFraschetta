@@ -11,4 +11,6 @@ void ReceiveString()override{DefaultSerial1F::ReceiveString();}
  void Send(String s)override{DefaultSerial1F::Send(s);}
 };
 #endif
+#else
+#error This library requires Arduino Mega.
 #endif

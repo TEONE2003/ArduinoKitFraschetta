@@ -19,4 +19,6 @@ public:
  void SendLn(T t){Serial3.print(t); Serial3.print("\n");}
 };
 #endif
+#else
+#error This library requires Arduino Mega.
 #endif

@@ -10,4 +10,6 @@ public:
 void Begin(long Baud=9600){DefaultSerial3F::SetBaudRate(Baud); BasicTerminalRelayF::Begin();}
 };
 #endif
+#else
+#error This library requires Arduino Mega.
 #endif

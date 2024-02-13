@@ -19,4 +19,6 @@ public:
  void SendLn(T t){Serial2.print(t); Serial2.print("\n");}
 };
 #endif
+#else
+#error This library requires Arduino Mega.
 #endif
