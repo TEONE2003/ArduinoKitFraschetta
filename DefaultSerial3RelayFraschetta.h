@@ -6,7 +6,7 @@
 class DefaultSerial3RelayF:DefaultSerial3F,public BasicTerminalRelayF{
 protected: void Send(String s)override{DefaultSerial3F::SendLn(s);}
 public:
- DefaultSerial3RelayF(String *ReceivedString,bool *Readable,String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus):BasicTerminalRelayF(Tag,Pin,Type,Save,ReceivedString,Readable),DefaultSerial3F(){}
+ DefaultSerial3RelayF(String *ReceivedString,bool *Readable,String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus):BasicTerminalRelayF(ReceivedString,Readable,Tag,Pin,Type,Save),DefaultSerial3F(){}
 void Begin(long Baud=9600){DefaultSerial3F::SetBaudRate(Baud); BasicTerminalRelayF::Begin();}
 };
 #endif
