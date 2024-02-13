@@ -1,4 +1,4 @@
-#ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
+#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
 #ifndef DefaultSerial1Fraschetta_h
 #define DefaultSerial1Fraschetta_h
 #include "BasicSerialFraschetta.h"

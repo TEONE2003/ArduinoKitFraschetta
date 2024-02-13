@@ -1,4 +1,4 @@
-#ifdef __AVR_ATmega2560__ || __AVR_ATmega1280__
+#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
 #ifndef DefaultSerial1PhotocellDuskToDawnFraschetta_h
 #define DefaultSerial1PhotocellDuskToDawnFraschetta_h
 #include "BasicTerminalPhotocellDuskToDawnFraschetta.h"
