@@ -2,9 +2,9 @@
 #ifndef ArduinoCloudTerminalRelayFraschetta_h
 #define ArduinoCloudTerminalRelayFraschetta_h
 #include <BasicTerminalRelayFraschetta.h>
-class ArduinoCloudTerminalRelayFraschetta::BasicTerminalRelayF{
+class ArduinoCloudTerminalRelayF::BasicTerminalRelayF{
 #include <ArduinoCloudTerminalConfigFraschetta.h>
-public: ArduinoCloudTerminalRelayFraschetta(),BasicTerminalRelayF();
+public: ArduinoCloudTerminalRelayF(),BasicTerminalRelayF();
 };
 #endif
 #else
