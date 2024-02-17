@@ -1,9 +1,11 @@
 #ifndef TerminalDriverObjectFraschetta_h
 #define TerminalDriverObjectFraschetta_h
 class TerminalDriverObjectF{
-private: String *ReceivedString; int NIndex; bool Subscribe; static const String IC; bool *Readable;
+private:  int NIndex; bool Subscribe; static const String IC;
 virtual void Send(String s)=0;
 protected:
+String *ReceivedString;
+bool *Readable;
 static const String SyncCommand;
 static int InstanceCounter;
 static int CountInvalidCommand;
