@@ -4,14 +4,10 @@
 #ifndef ArduinoCloudTerminalRelayFraschetta_h
 #define ArduinoCloudTerminalRelayFraschetta_h
 #include <BasicTerminalRelayFraschetta.h>
-class ArduinoCloudTerminalRelayFraschetta:BasicTerminalRelayF{
-private:
-    
-public:
-    ArduinoCloudTerminalRelayFraschetta(),BasicTerminalRelayF();
-    
+class ArduinoCloudTerminalRelayFraschetta::BasicTerminalRelayF{
+protected: void Send(String S){*BasicTerminalRelayF::ReceivedString=S;}
+public: ArduinoCloudTerminalRelayFraschetta(),BasicTerminalRelayF();
 };
-
 #endif
 #else
 #error This library requires an Arduino board with WiFi support.
