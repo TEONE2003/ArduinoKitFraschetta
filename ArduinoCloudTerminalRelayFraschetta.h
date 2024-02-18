@@ -2,7 +2,7 @@
 #ifndef ArduinoCloudTerminalRelayFraschetta_h
 #define ArduinoCloudTerminalRelayFraschetta_h
 #include <BasicTerminalRelayFraschetta.h>
-class ArduinoCloudTerminalRelayF:: public BasicTerminalRelayF{
+class ArduinoCloudTerminalRelayF: public BasicTerminalRelayF{
 #include <ArduinoCloudTerminalConfigFraschetta.h>
 public: ArduinoCloudTerminalRelayF(String *ReceivedString,bool *Readable,String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus),BasicTerminalRelayF(ReceivedString,Readable,Tag,Pin,Type,MemorizeStatus){}
 };
