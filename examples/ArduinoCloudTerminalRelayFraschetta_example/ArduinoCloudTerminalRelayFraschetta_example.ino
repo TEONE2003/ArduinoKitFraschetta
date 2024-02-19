@@ -1,8 +1,14 @@
+/*This example does not work because the code must be placed in the program with the configuration of the card.*/
+#include "arduino_secrets.h"
+#include "thingProperties.h"
 #include <ArduinoCloudTerminalRelayFraschetta.h>
 bool Readible=false;
-ArduinoCloudTerminalRelayF R(/*arduino cloud string*/,Readible,"R",13,ReverseLogic);
-void setup(){R.Begin();}
-void loop(){R.FunctionSerialRelay();}
-/*This example does not work because the code must be placed in the program with the configuration of the card.
-In the method in which the string changes you only need to write:
-Readable=true;*/
+ArduinoCloudTerminalRelayF R(&S,&Readible,"R",13,ReverseLogic);
+void setup() {
+  R.Begin();
+  delay(1500); 
+  initProperties();
+  ArduinoCloud.begin(ArduinoIoTPreferredConnection);
+}
+void loop(){ArduinoCloud.update(); R.FunctionSerialRelay();}
+void onSChange(){Readible=true;}
