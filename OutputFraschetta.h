@@ -76,7 +76,7 @@ void InvertStatus(){
  }
 }
  void Blink(uint16_t Period,UnitOfTime Unit){
-  Bli=malloc(sizeof(VirtualCycleF)); *Bli=VirtualCycleF(Period,Unit);
+  Bli= (VirtualCycleF*) malloc(sizeof(VirtualCycleF)); *Bli=VirtualCycleF(Period,Unit);
   for(uint64_t n=Bli->nTick();n>=1;n--){InvertStatus();}
  }
  void FadingLoop(uint8_t MaximumPercentage,uint16_t Period,UnitOfTime Unit){
