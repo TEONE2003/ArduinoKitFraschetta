@@ -3,7 +3,7 @@
 #include "thingProperties.h"
 #include <ArduinoCloudTerminalRelayFraschetta.h>
 bool Readible=false;
-ArduinoCloudTerminalRelayF R(&S,&Readible,"R",13,ReverseLogic);
+ArduinoCloudTerminalRelayF R(/*address of the Arduino Cloud string*/,&Readible,"R",13,ReverseLogic);
 void setup() {
   R.Begin();
   delay(1500); 
