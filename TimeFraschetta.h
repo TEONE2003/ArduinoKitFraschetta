@@ -194,16 +194,16 @@ switch(Unit){
 void ConvertTo(UnitOfTime Unit){this->Value=ConvertedTo(Unit).Value; this->Unit=Unit; }
 uint64_t Remainder(){uint64_t r=Rest; Rest=0; return r;}
  void operator=(const TimeF &t){Unit=t.Unit; Value=t.Value;}
- boolean operator==(const TimeF &b){if(Value == b.Value && Unit == b.Unit){return 1;} return 0;}
- TimeF operator+(const TimeF &b){b.ConvertTo(Unit); TimeF t(Value+b.Value,Unit); return t;}
- TimeF operator-(const TimeF &b){b.ConvertTo(Unit); TimeF t(Value-b.Value,Unit); return t;}
- TimeF operator*(const TimeF &b){b.ConvertTo(Unit); TimeF t(Value*b.Value,Unit); return t;}
- uint64_t operator/(const TimeF &b){b.ConvertTo(Unit); return Value/b.Value;}
- TimeF operator%(const TimeF &b){b.ConvertTo(Unit); TimeF t(Value%b.Value,Unit); return t;}
- boolean operator>(const TimeF &b){b.ConvertTo(Unit); if(Value > b.Value){return 1;} return 0;}
- boolean operator<(const TimeF &b){b.ConvertTo(Unit); if(Value < b.Value){return 1;} return 0;}
- boolean operator>=(const TimeF &b){b.ConvertTo(Unit); if(Value >= b.Value){return 1;} return 0;}
- boolean operator<=(const TimeF &b){b.ConvertTo(Unit); if(Value <= b.Value){return 1;} return 0;}
+ bool operator==(const TimeF &b){if(Value == b.Value && Unit == b.Unit){return 1;} return 0;}
+ TimeF operator+(TimeF b){b.ConvertTo(Unit); TimeF t(Value+b.Value,Unit); return t;}
+ TimeF operator-(TimeF b){b.ConvertTo(Unit); TimeF t(Value-b.Value,Unit); return t;}
+ TimeF operator*(TimeF b){b.ConvertTo(Unit); TimeF t(Value*b.Value,Unit); return t;}
+ uint64_t operator/(TimeF b){b.ConvertTo(Unit); return Value/b.Value;}
+ TimeF operator%(TimeF b){b.ConvertTo(Unit); TimeF t(Value%b.Value,Unit); return t;}
+ bool operator>(TimeF b){b.ConvertTo(Unit); if(Value > b.Value){return 1;} return 0;}
+ bool operator<(TimeF b){b.ConvertTo(Unit); if(Value < b.Value){return 1;} return 0;}
+ bool operator>=(TimeF b){b.ConvertTo(Unit); if(Value >= b.Value){return 1;} return 0;}
+ bool operator<=(TimeF b){b.ConvertTo(Unit); if(Value <= b.Value){return 1;} return 0;}
  TimeF(uint64_t Value=0,UnitOfTime Unit=UnitOfTime::Milliseconds){this->Unit=Unit; this->Value=Value; Rest=0; Divisor=0;}
 };
 void Wait(TimeF t){
