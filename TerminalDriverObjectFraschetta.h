@@ -36,7 +36,7 @@ static int CountInvalidCommand;
     this->ReceivedString=ReceivedString; NIndex=-1; Subscribe=false;}
 };
 const String TerminalDriverObjectF::SyncCommand="SYNC";
-const String TerminalDriverObjectF::IC="INVALID COMMAND: [";
+const String TerminalDriverObjectF::IC="INVALID COMMAND: {";
 int TerminalDriverObjectF::InstanceCounter=0;
 int TerminalDriverObjectF::CountInvalidCommand=0;
 #endif
