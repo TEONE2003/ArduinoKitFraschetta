@@ -10,30 +10,24 @@ static const String SyncCommand;
 static int InstanceCounter;
 static int CountInvalidCommand;
  void SetInvalidCommand(){
-   if(Subscribe){CountInvalidCommand+=1; Subscribe=0;} 
-   if(CountInvalidCommand==InstanceCounter) {Send(IC+ (*ReceivedString) + char(125)); CountInvalidCommand=0;}
- }
- bool CommandFound(String Command){
   if(*Readable){
-    Subscribe=1;
-    *Readable=false;
-    return Command == *ReceivedString;
-    }
+   if(Subscribe){Subscribe=false; CountInvalidCommand+=1;}
+   if(CountInvalidCommand==InstanceCounter) {*Readable=false; Subscribe=true; Send(IC+ (*ReceivedString) + char(125)); CountInvalidCommand=0;}
+   }
+
+  }
+ bool CommandFound(String Command){
+    if(*Readable && Command == *ReceivedString) {*Readable=false; CountInvalidCommand=0; return 1;}
      return false;
     }
  bool ContentCommand(String Command){
-  if(*Readable){
-    *Readable=false;
-    Subscribe=1;
-    NIndex= (*ReceivedString).indexOf(Command);
-    return NIndex>=0;
-    }
+    if(*Readable && (*ReceivedString).indexOf(Command)>=0){*Readable=false; CountInvalidCommand=0; return 1;}
      return false;
   }
  int ExtractNumber(int TagLength,uint8_t NumberDigits){NIndex+=TagLength; return (*ReceivedString).substring(NIndex+1,NIndex+NumberDigits+1).toInt();}
  TerminalDriverObjectF(String *ReceivedString,bool *Readable){
     TerminalDriverObjectF::InstanceCounter+=1; this->Readable=Readable;
-    this->ReceivedString=ReceivedString; NIndex=-1; Subscribe=false;}
+    this->ReceivedString=ReceivedString; NIndex=-1; Subscribe=true;}
 };
 const String TerminalDriverObjectF::SyncCommand="SYNC";
 const String TerminalDriverObjectF::IC="INVALID COMMAND: {";
