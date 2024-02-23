@@ -16,11 +16,11 @@ static int CountInvalidCommand;
    }
 
   }
- bool CommandFound(String Command){
+ bool CommandFound(const String &Command){
     if(*Readable && Command == *ReceivedString) {*Readable=false; CountInvalidCommand=0; return 1;}
      return false;
     }
- bool ContentCommand(String Command){
+ bool ContentCommand(const String &Command){
     if(*Readable && (*ReceivedString).indexOf(Command)>=0){*Readable=false; CountInvalidCommand=0; return 1;}
      return false;
   }
