@@ -26,7 +26,8 @@ static int CountInvalidCommand;
  int ExtractNumber(int TagLength,uint8_t NumberDigits){NIndex+=TagLength; return (*ReceivedString).substring(NIndex+1,NIndex+NumberDigits+1).toInt();}
  TerminalDriverObjectF(String *ReceivedString,bool *Readable){
     TerminalDriverObjectF::InstanceCounter+=1; this->Readable=Readable;
-    this->ReceivedString=ReceivedString; NIndex=-1; Subscribe=true;}
+    this->ReceivedString=ReceivedString; NIndex=-1; Subscribe=true;
+    }
 };
 const String TerminalDriverObjectF::SyncCommand="SYNC";
 const String TerminalDriverObjectF::IC="INVALID COMMAND: {";
