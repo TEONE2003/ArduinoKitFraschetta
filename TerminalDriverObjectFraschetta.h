@@ -12,7 +12,7 @@ static int CountInvalidCommand;
  void SetInvalidCommand(){
   if(*Readable){
    if(Subscribe){Subscribe=false; CountInvalidCommand+=1;}
-   if(CountInvalidCommand==InstanceCounter) {*Readable=false; Subscribe=true; Send(IC+ (*ReceivedString) + char(125)); CountInvalidCommand=0;}
+   if(CountInvalidCommand==InstanceCounter) {*Readable=false; Subscribe=true; Send(IC+ (*ReceivedString) + char(93)); CountInvalidCommand=0;}
    }
   }
  bool CommandFound(const String &Command){
@@ -30,7 +30,7 @@ static int CountInvalidCommand;
     }
 };
 const String TerminalDriverObjectF::SyncCommand="SYNC";
-const String TerminalDriverObjectF::IC="INVALID COMMAND: {";
+const String TerminalDriverObjectF::IC="INVALID COMMAND: [";
 int TerminalDriverObjectF::InstanceCounter=0;
 int TerminalDriverObjectF::CountInvalidCommand=0;
 #endif
