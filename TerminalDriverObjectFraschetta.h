@@ -14,7 +14,6 @@ static int CountInvalidCommand;
    if(Subscribe){Subscribe=false; CountInvalidCommand+=1;}
    if(CountInvalidCommand==InstanceCounter) {*Readable=false; Subscribe=true; Send(IC+ (*ReceivedString) + char(125)); CountInvalidCommand=0;}
    }
-
   }
  bool CommandFound(const String &Command){
     if(*Readable && Command == *ReceivedString) {*Readable=false; CountInvalidCommand=0; return 1;}
