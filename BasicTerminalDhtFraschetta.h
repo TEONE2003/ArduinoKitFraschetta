@@ -2,18 +2,18 @@
 #define BasicTerminalDhtFraschetta_h
 #include "TerminalDriverObjectFraschetta.h"
 #include "DhtFraschetta.h"
-class BasicSerialDhtF:public TerminalDriverObjectF,public DhtF{
+class BasicTerminalDhtF:public TerminalDriverObjectF,public DhtF{
 protected:
   String StringCurrentHumidityRequest,StringCurrentTemperatureRequest;
   virtual void Send(String s)=0;
-  BasicSerialDhtF(String *ReceivedString,bool *Readable, String Tag,uint8_t Pin,uint8_t Type):DhtF(Pin,Type),TerminalDriverObjectF(ReceivedString,Readable){
+  BasicTerminalDhtF(String *ReceivedString,bool *Readable, String Tag,uint8_t Pin,uint8_t Type):DhtF(Pin,Type),TerminalDriverObjectF(ReceivedString,Readable){
    StringCurrentTemperatureRequest=Tag+".T";
    StringCurrentHumidityRequest=Tag+".H";
   }
  public:
   void SendTemperature(){Send(StringCurrentTemperatureRequest+"="+String(ReadTemperature()));}
   void SendHumidity(){Send(StringCurrentHumidityRequest+"="+String(ReadHumidity()));}
-  void SerialDhtFFunction(){
+  void TerminalDhtFFunction(){
    if(CommandFound(StringCurrentTemperatureRequest)){SendTemperature();}
    else if(CommandFound(StringCurrentHumidityRequest)){SendHumidity();}
    else if(CommandFound(SyncCommand)){SendTemperature(); SendHumidity();}
