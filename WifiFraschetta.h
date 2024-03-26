@@ -1,4 +1,4 @@
-#define ARDUINO_UNOWIFIR4
+//#define ARDUINO_UNOWIFIR4
 #ifdef ARDUINO_UNOWIFIR4
 #ifndef WifiFraschetta_h
 #define WifiFraschetta_h
