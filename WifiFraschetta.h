@@ -1,4 +1,4 @@
-//#define ARDUINO_UNOWIFIR4
+#define ARDUINO_UNOWIFIR4
 #ifdef ARDUINO_UNOWIFIR4
 #ifndef WifiFraschetta_h
 #define WifiFraschetta_h
@@ -48,7 +48,10 @@ class WifiClientF::WiFiClient{
         return WiFiClient::available();
     }
 
-static bool StreamFilter(const char[] *StringArray){
+ bool StreamFilter(const char[] *StringArray){
+  #ifdef WifiDebugF
+    if(WifiClientF::available()){Serial.println("Find value...");}
+  #endif
   unsigned int size = sizeof(StringArray);
   unsigned int i=0;
   bool next=0;
@@ -65,6 +68,14 @@ static bool StreamFilter(const char[] *StringArray){
     Serial.println("string not found");
     #endif
    return false;
+}
+
+bool 200OK(){
+#ifdef WifiDebugF
+  if(StreamFilter("200 OK")){return 1;}
+  else{Serial.println("request unsuccessful"); return 0;}
+  #endif
+  return StreamFilter("200 OK");
 }
 
 #endif
