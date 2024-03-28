@@ -16,7 +16,7 @@ class BasicAdafruitFraschetta{
     virtual bool StreamFilter(const char[] *StringArray)=0;
     virtual bool 200OK()=0;
     virtual void printMethod(String Method,String Link)=0;
-    virtual void printHost()=0;
+    virtual void printHost(String &server)=0;
     virtual void printConnectionClose()=0;
     virtual void printClose()=0;
     virtual void printJson(String &Json)=0;
@@ -24,7 +24,7 @@ class BasicAdafruitFraschetta{
      bool connect(){
       stop();
       unsigned long ST=millis();
-      while(!connect(server,80)){
+      while(!connect(server.c_str(),80)){
         if(millis()-ST >=TimeoutServer){
          #ifdef BasicAdafruitDebugF
          Serial.println("Timeout, the server is not responding");
@@ -41,7 +41,7 @@ class BasicAdafruitFraschetta{
    String Download(){
      BasicAdafruitFraschetta::connect();
      printMethod("GET",link);
-     printHost();
+     printHost(server);
      printConnectionClose();
      printClose();
       #ifdef BasicAdafruitDebugF
