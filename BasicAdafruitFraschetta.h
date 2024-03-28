@@ -8,9 +8,7 @@ class BasicAdafruitFraschetta{
     const char link[] = "/api/v2/matteofraschetta/feeds/0/data?x-aio-key=e74a5c10a0b44791822a671d8ea45a85&limit=1";
     virtual bool connect(String &host,uint16_t port)=0;
     virtual void stop()=0;
-    virtual void print(const char c[])=0;
     virtual void println(const char c[])=0;
-    virtual void println()=0;
     virtual int read()=0;
     virtual String readStringUntil(char terminator)=0;
     virtual bool StreamFilter(const char[] *StringArray)=0;
@@ -51,7 +49,7 @@ class BasicAdafruitFraschetta{
      String Json = "{\"value\":\""+Value+"\"}";
      BasicAdafruitFraschetta::connect();
      printMethod("POST",link);
-     printHost();
+     printHost(server);
      println("content-type: application/json; charset=utf-8");
      printConnectionClose();
      printJson(Json.c_str());
