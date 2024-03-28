@@ -79,7 +79,7 @@ bool 200OK(){
 }
 
 void printMethod(String Method,String Link){println(Method + char(32)+ Link + " HTTP/1.1");}
-void printHost(){print("Host: "); println(server);}
+void printHost(String &server){print("Host: "); println(server);}
 void printConnectionClose(){println("Connection: close");}
 void printClose(){println();}
 void printJson(String &Json){
