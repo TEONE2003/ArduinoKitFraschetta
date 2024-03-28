@@ -5,8 +5,8 @@
 class BasicAdafruitFraschetta{
     protected:
     const char server[] = "io.adafruit.com";
-    const String link = "/api/v2/matteofraschetta/feeds/0/data?x-aio-key=e74a5c10a0b44791822a671d8ea45a85&limit=1";
-    virtual int connect(const char *host,uint16_t port)=0;
+    const char link[] = "/api/v2/matteofraschetta/feeds/0/data?x-aio-key=e74a5c10a0b44791822a671d8ea45a85&limit=1";
+    virtual bool connect(String &host,uint16_t port)=0;
     virtual void stop()=0;
     virtual void print(const char c[])=0;
     virtual void println(const char c[])=0;
@@ -15,30 +15,15 @@ class BasicAdafruitFraschetta{
     virtual String readStringUntil(char terminator)=0;
     virtual bool StreamFilter(const char[] *StringArray)=0;
     virtual bool 200OK()=0;
-    virtual void printMethod(String Method,String Link)=0;
-    virtual void printHost(String &server)=0;
+    virtual void printMethod(String Method,String &Link)=0;
+    virtual void printHost(const char[] *server)=0;
     virtual void printConnectionClose()=0;
     virtual void printClose()=0;
-    virtual void printJson(String &Json)=0;
+    virtual void printJson(const char[] *Json)=0;
     public:
-     bool connect(){
-      stop();
-      unsigned long ST=millis();
-      while(!connect(server.c_str(),80)){
-        if(millis()-ST >=TimeoutServer){
-         #ifdef BasicAdafruitDebugF
-         Serial.println("Timeout, the server is not responding");
-         #endif
-         return 0;
-        }
-      }
-      #ifdef BasicAdafruitDebugF
-      Serial.println("Connected to server");
-      #endif
-      return 1;
-    }
+     bool connect(){return connect(server,80);}
 
-   String Download(){
+    String Download(){
      BasicAdafruitFraschetta::connect();
      printMethod("GET",link);
      printHost(server);
@@ -69,7 +54,7 @@ class BasicAdafruitFraschetta{
      printHost();
      println("content-type: application/json; charset=utf-8");
      printConnectionClose();
-     printJson(Json);
+     printJson(Json.c_str());
      #ifdef BasicAdafruitDebugF
       if(200OK()){Serial.println("request successful"); return 0;}
      #else
