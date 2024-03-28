@@ -5,6 +5,7 @@
 class BasicAdafruitFraschetta{
     protected:
     const char server[] = "io.adafruit.com";
+    const String link = "/api/v2/matteofraschetta/feeds/0/data?x-aio-key=e74a5c10a0b44791822a671d8ea45a85&limit=1";
     virtual int connect(const char *host,uint16_t port)=0;
     virtual void stop()=0;
     virtual void print(const char c[])=0;
@@ -14,6 +15,11 @@ class BasicAdafruitFraschetta{
     virtual String readStringUntil(char terminator)=0;
     virtual bool StreamFilter(const char[] *StringArray)=0;
     virtual bool 200OK()=0;
+    virtual void printMethod(String Method,String Link)=0;
+    virtual void printHost()=0;
+    virtual void printConnectionClose()=0;
+    virtual void printClose()=0;
+    virtual void printJson(String &Json)=0;
     public:
      bool connect(){
       stop();
@@ -34,11 +40,10 @@ class BasicAdafruitFraschetta{
 
    String Download(){
      BasicAdafruitFraschetta::connect();
-     println("GET /api/v2/matteofraschetta/feeds/0/data?x-aio-key=e74a5c10a0b44791822a671d8ea45a85&limit=1 HTTP/1.1");
-     print("Host: ");
-     println(server);
-     println("Connection: close");
-     println();
+     printMethod("GET",link);
+     printHost();
+     printConnectionClose();
+     printClose();
       #ifdef BasicAdafruitDebugF
       Serial.println("request sent");
       if(200OK())Serial.println("request successful");
@@ -60,15 +65,11 @@ class BasicAdafruitFraschetta{
     bool Upload(String Value){
      String Json = "{\"value\":\""+Value+"\"}";
      BasicAdafruitFraschetta::connect();
-     println("POST /api/v2/matteofraschetta/feeds/0/data?x-aio-key=e74a5c10a0b44791822a671d8ea45a85&limit=1 HTTP/1.1");
-     print("Host: ");
-     println(server);
+     printMethod("POST",link);
+     printHost();
      println("content-type: application/json; charset=utf-8");
-     println("connection: close");
-     print("content-length: ");
-     println(String(sizeof(Json));
-     println();
-     println(Json);
+     printConnectionClose();
+     printJson(Json);
      #ifdef BasicAdafruitDebugF
       if(200OK()){Serial.println("request successful"); return 0;}
      #else
