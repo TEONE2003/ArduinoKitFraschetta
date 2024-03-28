@@ -70,6 +70,23 @@ class WifiClientF::WiFiClient{
    return false;
 }
 
+bool connect(const char[] *host,uint16_t port){
+      stop();
+      unsigned long ST=millis();
+      while(!connect(host,port)){
+        if(millis()-ST >=TimeoutServer){
+         #ifdef WifiDebugF
+         Serial.println("Timeout, the server is not responding");
+         #endif
+         return 0;
+        }
+      }
+      #ifdef WifiDebugF
+      Serial.println("Connected to server");
+      #endif
+      return 1;
+    }
+
 bool 200OK(){
 #ifdef WifiDebugF
   if(StreamFilter("200 OK")){return 1;}
@@ -78,11 +95,11 @@ bool 200OK(){
   return StreamFilter("200 OK");
 }
 
-void printMethod(String Method,String Link){println(Method + char(32)+ Link + " HTTP/1.1");}
-void printHost(String &server){print("Host: "); println(server);}
+void printMethod(String Method,String &Link){println(Method + char(32)+ Link + " HTTP/1.1");}
+void printHost(const char[] *server){print("Host: "); println(server);}
 void printConnectionClose(){println("Connection: close");}
 void printClose(){println();}
-void printJson(String &Json){
+void printJson(const char[] *Json){
  print("content-length: ");
  println(String(sizeof(Json)));
  println();
