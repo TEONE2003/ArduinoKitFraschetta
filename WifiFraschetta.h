@@ -4,6 +4,7 @@
 #define WifiFraschetta_h
 #define TimerAvailableF 5000
 #define BeginDelay 10000
+#define TimeoutServer 10000
 //#define WifiDebugF
 #include "WiFiS3.h"
 
@@ -105,6 +106,8 @@ void printJson(const char[] *Json){
  println(Json);
 }
 }
+
+WifiClientF WFCF;
 
 #endif
 #endif
