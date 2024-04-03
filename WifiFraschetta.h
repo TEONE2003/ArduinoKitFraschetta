@@ -110,7 +110,6 @@ void printJson(const char[] *Json){
 WifiClientF WFCF;
 
 #endif
-#endif
 #else
 #error This library requires an Arduino board with WiFi support.
 #endif
