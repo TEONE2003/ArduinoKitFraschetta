@@ -6,12 +6,12 @@
 //#define BasicAdafruitDebugF
 class BasicAdafruitFraschetta{
     protected:
-    const char server[] = "io.adafruit.com";
-    const char link[] = "/api/v2/matteofraschetta/feeds/0/data?x-aio-key=e74a5c10a0b44791822a671d8ea45a85&limit=1";
+    static const char server[] = "io.adafruit.com";
+    static const char link[] = "/api/v2/matteofraschetta/feeds/0/data?x-aio-key=e74a5c10a0b44791822a671d8ea45a85&limit=1";
     public:
-     bool connect(){return WFCF.connect(server,80);}
+    static bool connect(){return WFCF.connect(server,80);}
 
-    String Download(){
+    static String Download(){
      BasicAdafruitFraschetta::connect();
      WFCF.printMethod("GET",link);
      WFCF.printHost(server);
@@ -35,9 +35,9 @@ class BasicAdafruitFraschetta{
       return "";
     }
 
-    bool Upload(String Value){
+    static bool Upload(String Value){
      String Json = "{\"value\":\""+Value+"\"}";
-     BasicAdafruitFraschetta::connect();
+     connect();
      WFCF.printMethod("POST",link);
      WFCF.printHost(server);
      WFCF.println("content-type: application/json; charset=utf-8");
