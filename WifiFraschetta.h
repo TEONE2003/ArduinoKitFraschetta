@@ -63,7 +63,6 @@ class WifiClientF::WiFiClient{
       }
       else if (i!=0){i=0;}
     }
-  }
    #ifdef WifiDebugF
     Serial.println("string not found");
     #endif
@@ -104,6 +103,7 @@ void printJson(const char[] *Json){
  println(String(sizeof(Json)));
  println();
  println(Json);
+}
 }
 
 #endif
