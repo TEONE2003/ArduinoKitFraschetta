@@ -9,9 +9,11 @@ class BasicAdafruitFraschetta{
     const char server[] = "io.adafruit.com";
     String link;
     WifiClientF WFCF;
+    static bool i=0;
     public:
 
     BasicAdafruitFraschetta(String Username,String APIKey){
+     if(i){return this;}
      link = "/api/v2/" + Username + "/feeds/0/data?x-aio-key=" + APIKey + "&limit=1";
     }
 
@@ -55,7 +57,7 @@ class BasicAdafruitFraschetta{
       return WFCF.200OK();
      #endif
     }
-}
+};
 
 #endif
 #else
