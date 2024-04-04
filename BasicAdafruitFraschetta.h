@@ -6,12 +6,18 @@
 //#define BasicAdafruitDebugF
 class BasicAdafruitFraschetta{
     protected:
-    static const char server[] = "io.adafruit.com";
-    static const char link[] = "/api/v2/matteofraschetta/feeds/0/data?x-aio-key=e74a5c10a0b44791822a671d8ea45a85&limit=1";
+    const char server[] = "io.adafruit.com";
+    String link;
+    WifiClientF WFCF;
     public:
-    static bool connect(){return WFCF.connect(server,80);}
 
-    static String Download(){
+    BasicAdafruitFraschetta(String Username,String APIKey){
+     link = "/api/v2/" + Username + "/feeds/0/data?x-aio-key=" + APIKey + "&limit=1";
+    }
+
+    bool connect(){return WFCF.connect(server,80);}
+
+    String Download(){
      BasicAdafruitFraschetta::connect();
      WFCF.printMethod("GET",link);
      WFCF.printHost(server);
@@ -35,7 +41,7 @@ class BasicAdafruitFraschetta{
       return "";
     }
 
-    static bool Upload(String Value){
+    bool Upload(String Value){
      String Json = "{\"value\":\""+Value+"\"}";
      connect();
      WFCF.printMethod("POST",link);
