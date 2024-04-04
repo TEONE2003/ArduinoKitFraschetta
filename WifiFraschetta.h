@@ -8,12 +8,7 @@
 //#define WifiDebugF
 #include "WiFiS3.h"
 
-class WifiClientF::WiFiClient{
- private: unsigned long STimer;
- public:
- WifiClientF():WiFiClient(){STimer=0;}
-
-static void WiFiBeginF(const char* ssid, const char *passphrase){
+void WiFiBeginF(const char* ssid, const char *passphrase){
  int status =0;
       while (status != WL_CONNECTED) {
        #ifdef WifiDebugF
@@ -25,7 +20,7 @@ static void WiFiBeginF(const char* ssid, const char *passphrase){
       }
 }
 
-static void WiFiBeginF(const char* ssid){
+void WiFiBeginF(const char* ssid){
  int status =0;
       while (status != WL_CONNECTED) {
        #ifdef WifiDebugF
@@ -37,6 +32,10 @@ static void WiFiBeginF(const char* ssid){
       }
 }
 
+class WifiClientF::WiFiClient{
+ private: unsigned long STimer;
+ public:
+ WifiClientF():WiFiClient(){STimer=0;}
  int available()override{
         STimer=millis();
         while(!WiFiClient::available()){
