@@ -4,12 +4,11 @@
 #define BasicAdafruitFraschetta_h
 #include "WifiFraschetta.h"
 //#define BasicAdafruitDebugF
-class BasicAdafruitFraschetta{
+class BasicAdafruitFraschetta::WifiClientF{
     protected:
     const char server[] = "io.adafruit.com";
     String link;
-    WifiClientF WFCF;
-    BasicAdafruitFraschetta(){link = "";}
+    BasicAdafruitFraschetta():WifiClientF(){link = "";}
     BasicAdafruitFraschetta(const BasicAdafruitFraschetta&);
     BasicAdafruitFraschetta& operator= (const BasicAdafruitFraschetta&);
     public:
@@ -23,25 +22,25 @@ class BasicAdafruitFraschetta{
      link = "/api/v2/" + Username + "/feeds/0/data?x-aio-key=" + APIKey + "&limit=1";
     }
 
-    bool connect(){return WFCF.connect(server,80);}
+    bool connect(){return connect(server,80);}
 
     String Download(){
      BasicAdafruitFraschetta::connect();
-     WFCF.printMethod("GET",link);
-     WFCF.printHost(server);
-     WFCF.printConnectionClose();
-     WFCF.printClose();
+     printMethod("GET",link);
+     printHost(server);
+     printConnectionClose();
+     printClose();
       #ifdef BasicAdafruitDebugF
       Serial.println("request sent");
-      if(WFCF.200OK())Serial.println("request successful");
-      else{WFCF.stop(); return "";}
+      if(200OK())Serial.println("request successful");
+      else{stop(); return "";}
      #else
-      if(!WFCF.200OK()){WFCF.stop(); return "";}
+      if(!200OK()){stop(); return "";}
      #endif
-     if(WFCF.StreamFilter("value")){
-      WFCF.read(); WFCF.read(); WFCF.read();
-      String s= WFCF.readStringUntil('"');
-      WFCF.stop(); return s;
+     if(StreamFilter("value")){
+      read(); read(); read();
+      String s= readStringUntil('"');
+      stop(); return s;
      }
      #ifdef BasicAdafruitDebugF
       Serial.println("value not found");
@@ -52,15 +51,15 @@ class BasicAdafruitFraschetta{
     bool Upload(String Value){
      String Json = "{\"value\":\""+Value+"\"}";
      connect();
-     WFCF.printMethod("POST",link);
-     WFCF.printHost(server);
-     WFCF.println("content-type: application/json; charset=utf-8");
-     WFCF.printConnectionClose();
-     WFCF.printJson(Json.c_str());
+     printMethod("POST",link);
+     printHost(server);
+     println("content-type: application/json; charset=utf-8");
+     printConnectionClose();
+     printJson(Json.c_str());
      #ifdef BasicAdafruitDebugF
-      if(WFCF.200OK()){Serial.println("request successful"); return 0;}
+      if(200OK()){Serial.println("request successful"); return 0;}
      #else
-      return WFCF.200OK();
+      return 200OK();
      #endif
     }
 };
