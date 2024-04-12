@@ -9,11 +9,17 @@ class BasicAdafruitFraschetta{
     const char server[] = "io.adafruit.com";
     String link;
     WifiClientF WFCF;
-    static bool i=0;
+    BasicAdafruitFraschetta(){link = "";}
+    BasicAdafruitFraschetta(const BasicAdafruitFraschetta&);
+    BasicAdafruitFraschetta& operator= (const BasicAdafruitFraschetta&);
     public:
 
-    BasicAdafruitFraschetta(String Username,String APIKey){
-     if(i){return this;}
+   static BasicAdafruitFraschetta& GetInstance(){
+    static BasicAdafruitFraschetta i;
+    return i;
+    }
+
+    void begin(String Username,String APIKey){
      link = "/api/v2/" + Username + "/feeds/0/data?x-aio-key=" + APIKey + "&limit=1";
     }
 
