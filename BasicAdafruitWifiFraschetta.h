@@ -21,7 +21,7 @@ class BasicAdafruitWifiF::WifiClientF{
     return i;
     }
 
-    void begin(String Username,String APIKey){
+    void AdafruitBegin(String Username,String APIKey){
      link = "/api/v2/" + Username + "/feeds/0/data?x-aio-key=" + APIKey + "&limit=1";
     }
 
