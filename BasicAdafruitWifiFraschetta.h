@@ -5,12 +5,15 @@
 #include "WifiFraschetta.h"
 //#define BasicAdafruitDebugF
 class BasicAdafruitWifiF::WifiClientF{
+    private:
+     BasicAdafruitWifiF(const BasicAdafruitWifiF&);
+     BasicAdafruitWifiF& operator= (const BasicAdafruitWifiF&);
+     BasicAdafruitWifiF():WifiClientF(){link = "";}
     protected:
-    const char server[] = "io.adafruit.com";
-    String link;
-    BasicAdafruitWifiF():WifiClientF(){link = "";}
-    BasicAdafruitWifiF(const BasicAdafruitWifiF&);
-    BasicAdafruitWifiF& operator= (const BasicAdafruitWifiF&);
+     const char server[] = "io.adafruit.com";
+     String link;
+     String ReceivedString;
+     bool Readable;
     public:
 
    static BasicAdafruitWifiF& GetInstance(){
@@ -24,7 +27,7 @@ class BasicAdafruitWifiF::WifiClientF{
 
     bool connect(){return connect(server,80);}
 
-    String Download(){
+    void Download(){
      BasicAdafruitWifiF::connect();
      printMethod("GET",link);
      printHost(server);
@@ -40,12 +43,11 @@ class BasicAdafruitWifiF::WifiClientF{
      if(StreamFilter("value")){
       read(); read(); read();
       String s= readStringUntil('"');
-      stop(); return s;
+      stop(); ReceivedString = s; Readable=true; return;
      }
      #ifdef BasicAdafruitDebugF
       Serial.println("value not found");
      #endif
-      return "";
     }
 
     bool Upload(String Value){
