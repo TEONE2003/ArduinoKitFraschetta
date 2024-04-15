@@ -1,20 +1,20 @@
 //#define ARDUINO_UNOWIFIR4
 #ifdef ARDUINO_UNOWIFIR4
-#ifndef BasicAdafruitFraschetta_h
-#define BasicAdafruitFraschetta_h
+#ifndef BasicAdafruitWifiFraschetta_h
+#define BasicAdafruitWifiFraschetta_h
 #include "WifiFraschetta.h"
 //#define BasicAdafruitDebugF
-class BasicAdafruitFraschetta::WifiClientF{
+class BasicAdafruitWifiF::WifiClientF{
     protected:
     const char server[] = "io.adafruit.com";
     String link;
-    BasicAdafruitFraschetta():WifiClientF(){link = "";}
-    BasicAdafruitFraschetta(const BasicAdafruitFraschetta&);
-    BasicAdafruitFraschetta& operator= (const BasicAdafruitFraschetta&);
+    BasicAdafruitWifiF():WifiClientF(){link = "";}
+    BasicAdafruitWifiF(const BasicAdafruitWifiF&);
+    BasicAdafruitWifiF& operator= (const BasicAdafruitWifiF&);
     public:
 
-   static BasicAdafruitFraschetta& GetInstance(){
-    static BasicAdafruitFraschetta i;
+   static BasicAdafruitWifiF& GetInstance(){
+    static BasicAdafruitWifiF i;
     return i;
     }
 
@@ -25,7 +25,7 @@ class BasicAdafruitFraschetta::WifiClientF{
     bool connect(){return connect(server,80);}
 
     String Download(){
-     BasicAdafruitFraschetta::connect();
+     BasicAdafruitWifiF::connect();
      printMethod("GET",link);
      printHost(server);
      printConnectionClose();
