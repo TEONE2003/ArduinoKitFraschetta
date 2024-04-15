@@ -64,6 +64,8 @@ class BasicAdafruitWifiF::WifiClientF{
       return 200OK();
      #endif
     }
+
+    void Send(String s){Upload();}
 };
 
 #endif
