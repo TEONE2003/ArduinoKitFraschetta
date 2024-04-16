@@ -32,7 +32,7 @@ void WiFiBeginF(const char* ssid){
       }
 }
 
-class WifiClientF::WiFiClient{
+class WifiClientF: public WiFiClient{
  private: unsigned long STimer;
  public:
  WifiClientF():WiFiClient(){STimer=0;}
