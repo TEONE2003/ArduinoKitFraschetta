@@ -98,7 +98,7 @@ bool 200OK(){
 
 void printMethod(String Method,String &Link){println(Method + char(32)+ Link + " HTTP/1.1");}
 void printHost(const char[] *server){print("Host: "); println(server);}
-void printConnectionClose(){println("Connection: close");}
+void printConnection(String Connection){print("Connection: "); println(Connection);}
 void printClose(){println();}
 void printJson(const char[] *Json){
  print("content-length: ");
