@@ -36,10 +36,10 @@ class BasicAdafruitWifiF::WifiClientF{
      printClose();
       #ifdef BasicAdafruitDebugF
       Serial.println("request sent");
-      if(200OK())Serial.println("request successful");
+      if(OK())Serial.println("request successful");
       else{stop(); return;}
      #else
-      if(!200OK()){stop(); return;}
+      if(!OK()){stop(); return;}
      #endif
      if(StreamFilter("value")){
       read(); read(); read();
@@ -60,9 +60,9 @@ class BasicAdafruitWifiF::WifiClientF{
      printConnection("Keep-Alive");
      printJson(Json.c_str());
      #ifdef BasicAdafruitDebugF
-      if(200OK()){Serial.println("request successful"); return 1;}
+      if(OK()){Serial.println("request successful"); return 1;}
      #else
-      return 200OK();
+      return OK();
      #endif
     }
 
