@@ -6,7 +6,7 @@
 #include "BasicTerminalRelayFraschetta.h"
 #include "BasicAdafruitWifiFraschetta.h"
 
-class AdafruitTerminalRelayF::BasicTerminalRelayF{
+class AdafruitTerminalRelayF: public BasicTerminalRelayF{
 private:
  BasicAdafruitWifiF& A;
 public:
@@ -15,7 +15,6 @@ public:
   ReceivedString = &A.ReceivedString;
   Readable = &A.Readable;
 }
-
 };
 
 
