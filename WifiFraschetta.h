@@ -50,7 +50,7 @@ class WifiClientF: public WiFiClient{
    return WiFiClient::available();
   }
 
- bool StreamFilter(const char[] *StringArray){
+ bool StreamFilter(const char *StringArray){
   #ifdef WifiDebugF
     if(WifiClientF::available()){Serial.println("Find value...");}
   #endif
@@ -71,7 +71,7 @@ class WifiClientF: public WiFiClient{
    return false;
 }
 
-bool connect(const char[] *host,uint16_t port){
+bool connect(const char *host,uint16_t port){
       unsigned long ST=millis();
       while(!connect(host,port)){
         if(millis()-ST >=TimeoutServer){
@@ -96,10 +96,10 @@ bool OK(){
 }
 
 void printMethod(String Method,String &Link){println(Method + char(32)+ Link + " HTTP/1.1");}
-void printHost(const char[] *server){print("Host: "); println(server);}
-void printConnection(const char[] *Connection){print("Connection: "); println(Connection);}
+void printHost(const char *server){print("Host: "); println(server);}
+void printConnection(const char *Connection){print("Connection: "); println(Connection);}
 void printClose(){println();}
-void printJson(const char[] *Json){
+void printJson(const char *Json){
  print("content-length: ");
  println(String(sizeof(Json)));
  println();
