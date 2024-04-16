@@ -8,7 +8,7 @@ class BasicAdafruitWifiF::WifiClientF{
     private:
      BasicAdafruitWifiF(const BasicAdafruitWifiF&);
      BasicAdafruitWifiF& operator= (const BasicAdafruitWifiF&);
-     BasicAdafruitWifiF():WifiClientF(){link = ""; ReceivedString=""; Readable=false; Update=1000; STU=0;}
+     BasicAdafruitWifiF():WifiClientF(){link = ""; ReceivedString=""; Readable=false; Update=800; STU=0;}
     protected:
      const char server[] = "io.adafruit.com";
      String link,ReceivedString;
@@ -21,7 +21,7 @@ class BasicAdafruitWifiF::WifiClientF{
      return i;
     }
 
-    void AdafruitBegin(String Username,String APIKey, unsigned long Update=1000){
+    void AdafruitBegin(String Username,String APIKey, unsigned long Update=800){
      link = "/api/v2/" + Username + "/feeds/0/data?x-aio-key=" + APIKey + "&limit=1";
      this->Update=Update;
     }
@@ -32,7 +32,7 @@ class BasicAdafruitWifiF::WifiClientF{
      BasicAdafruitWifiF::connect();
      printMethod("GET",link);
      printHost(server);
-     printConnectionClose();
+     printConnection("Keep-Alive");
      printClose();
       #ifdef BasicAdafruitDebugF
       Serial.println("request sent");
@@ -57,7 +57,7 @@ class BasicAdafruitWifiF::WifiClientF{
      printMethod("POST",link);
      printHost(server);
      println("content-type: application/json; charset=utf-8");
-     printConnectionClose();
+     printConnection("Keep-Alive");
      printJson(Json.c_str());
      #ifdef BasicAdafruitDebugF
       if(200OK()){Serial.println("request successful"); return 0;}
