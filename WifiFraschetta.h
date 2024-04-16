@@ -8,14 +8,14 @@
 //#define WifiDebugF
 #include "WiFiS3.h"
 
-void WiFiBeginF(const char* ssid, const char *passphrase){
+void WiFiBeginF(const char* ssid, const char *pass){
  int status =0;
       while (status != WL_CONNECTED) {
        #ifdef WifiDebugF
         Serial.print("Attempting to connect to SSID: ");
         Serial.println(ssid);
        #endif
-       status = WiFi.begin(ssid, pass);
+       status = WiFi.begin(ssid,pass);
        delay(BeginDelay);
       }
 }
