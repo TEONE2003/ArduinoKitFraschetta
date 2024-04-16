@@ -8,21 +8,22 @@ class BasicAdafruitWifiF::WifiClientF{
     private:
      BasicAdafruitWifiF(const BasicAdafruitWifiF&);
      BasicAdafruitWifiF& operator= (const BasicAdafruitWifiF&);
-     BasicAdafruitWifiF():WifiClientF(){link = "";}
+     BasicAdafruitWifiF():WifiClientF(){link = ""; ReceivedString=""; Readable=false; Update=1000; STU=0;}
     protected:
      const char server[] = "io.adafruit.com";
-     String link;
-     String ReceivedString;
+     String link,ReceivedString;
      bool Readable;
+     unsigned long Update,STU;
     public:
 
-   static BasicAdafruitWifiF& GetInstance(){
-    static BasicAdafruitWifiF i;
-    return i;
+    static BasicAdafruitWifiF& GetInstance(){
+     static BasicAdafruitWifiF i;
+     return i;
     }
 
-    void AdafruitBegin(String Username,String APIKey){
+    void AdafruitBegin(String Username,String APIKey, unsigned long Update=1000){
      link = "/api/v2/" + Username + "/feeds/0/data?x-aio-key=" + APIKey + "&limit=1";
+     this->Update=Update;
     }
 
     bool connect(){return connect(server,80);}
@@ -36,9 +37,9 @@ class BasicAdafruitWifiF::WifiClientF{
       #ifdef BasicAdafruitDebugF
       Serial.println("request sent");
       if(200OK())Serial.println("request successful");
-      else{stop(); return "";}
+      else{stop(); return;}
      #else
-      if(!200OK()){stop(); return "";}
+      if(!200OK()){stop(); return;}
      #endif
      if(StreamFilter("value")){
       read(); read(); read();
@@ -64,6 +65,13 @@ class BasicAdafruitWifiF::WifiClientF{
       return 200OK();
      #endif
     }
+
+   void ReceiveString(){
+    if(millis() - STU == Update){
+        STU = millis();
+        Download();
+    }
+   }
 
     void Send(String s){Upload();}
 };
