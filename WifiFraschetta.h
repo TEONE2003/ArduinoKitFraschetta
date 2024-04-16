@@ -71,7 +71,7 @@ class WifiClientF: public WiFiClient{
    return false;
 }
 
-bool connect(const char *host,uint16_t port){
+int connect(const char *host,uint16_t port){
       unsigned long ST=millis();
       while(!connect(host,port)){
         if(millis()-ST >=TimeoutServer){
