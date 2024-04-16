@@ -60,7 +60,7 @@ class BasicAdafruitWifiF::WifiClientF{
      printConnection("Keep-Alive");
      printJson(Json.c_str());
      #ifdef BasicAdafruitDebugF
-      if(200OK()){Serial.println("request successful"); return 0;}
+      if(200OK()){Serial.println("request successful"); return 1;}
      #else
       return 200OK();
      #endif
