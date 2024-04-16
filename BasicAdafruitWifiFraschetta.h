@@ -4,7 +4,7 @@
 #define BasicAdafruitWifiFraschetta_h
 #include "WifiFraschetta.h"
 //#define BasicAdafruitDebugF
-class BasicAdafruitWifiF::WifiClientF{
+class BasicAdafruitWifiF: public WifiClientF{
     private:
      BasicAdafruitWifiF(const BasicAdafruitWifiF&);
      BasicAdafruitWifiF& operator= (const BasicAdafruitWifiF&);
