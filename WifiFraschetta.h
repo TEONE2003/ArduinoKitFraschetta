@@ -38,17 +38,17 @@ class WifiClientF::WiFiClient{
  WifiClientF():WiFiClient(){STimer=0;}
 
  int available()override{
-        STimer=millis();
-        while(!WiFiClient::available()){
-         if(millis()-STimer >= TimerAvailableF){
-            #ifdef WifiDebugF
-             Serial.println("Timeout, there are no data to read it");
-            #endif
-            return 0;
-         }
-        }
-        return WiFiClient::available();
+   STimer=millis();
+   while(!WiFiClient::available()){
+    if(millis()-STimer >= TimerAvailableF){
+      #ifdef WifiDebugF
+       Serial.println("Timeout, there are no data to read it");
+      #endif
+      return 0;
     }
+   }
+   return WiFiClient::available();
+  }
 
  bool StreamFilter(const char[] *StringArray){
   #ifdef WifiDebugF
@@ -72,7 +72,6 @@ class WifiClientF::WiFiClient{
 }
 
 bool connect(const char[] *host,uint16_t port){
-      stop();
       unsigned long ST=millis();
       while(!connect(host,port)){
         if(millis()-ST >=TimeoutServer){
