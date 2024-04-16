@@ -10,7 +10,7 @@ class BasicAdafruitWifiF: public WifiClientF{
      BasicAdafruitWifiF& operator= (const BasicAdafruitWifiF&);
      BasicAdafruitWifiF():WifiClientF(){link = ""; ReceivedString=""; Readable=false; Update=800; STU=0;}
     protected:
-     const char server[] = "io.adafruit.com";
+     const char server[16] = "io.adafruit.com";
      String link,ReceivedString;
      bool Readable;
      unsigned long Update,STU;
