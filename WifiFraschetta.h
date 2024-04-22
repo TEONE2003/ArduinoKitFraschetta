@@ -4,6 +4,7 @@
 #define WifiFraschetta_h
 #define TimerAvailableF 5000
 #define TimeoutServer 10000
+//#define StreamFilterDebug
 //#define WifiDebugF
 #include "WiFiS3.h"
 
@@ -43,16 +44,34 @@ class WifiClientF: public WiFiClient{
 
  bool StreamFilter(const char *StringArray){
   #ifdef WifiDebugF
-    if(WifiClientF::available()){Serial.println("Find value...");}
+    if(WifiClientF::available()){
+      Serial.print("looking for ");
+      Serial.print('"');
+      Serial.print(StringArray);
+      Serial.print('"');
+      Serial.println(" ...");
+    }
   #endif
   unsigned int size = sizeof(StringArray);
   unsigned int i=0;
   bool next=0;
     while(WifiClientF::available()){
       char c = read();
+      #ifdef StreamFilterDebug
+      Serial.print(c);
+      #endif
       if(c==StringArray[i]){
        i++;
-       if(i==size) return true;
+       if(i==size){
+        #ifdef StreamFilterDebug
+         Serial.println();
+         Serial.print('"');
+         Serial.print(StringArray);
+         Serial.print('"');
+         Serial.println(" found");
+        #endif
+        return true;
+        }
       }
       else if (i!=0){i=0;}
     }
