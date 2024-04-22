@@ -73,7 +73,7 @@ class WifiClientF: public WiFiClient{
 
 int connect(const char *host,uint16_t port){
       unsigned long ST=millis();
-      while(!connect(host,port)){
+      while(!WiFiClient::connect(host,port)){
         if(millis()-ST >=TimeoutServer){
          #ifdef WifiDebugF
          Serial.println("Timeout, the server is not responding");
