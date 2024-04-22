@@ -78,7 +78,7 @@ class BasicAdafruitWifiF: public WifiClientF{
     }
 
    void ReceiveString(){
-    if(millis() - STU == Update){
+    if(millis() - STU >= Update){
         STU = millis();
         #ifdef BasicAdafruitDebugF
          Serial.println("Updating...");
