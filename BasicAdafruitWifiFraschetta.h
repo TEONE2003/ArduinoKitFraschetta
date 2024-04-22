@@ -45,8 +45,11 @@ class BasicAdafruitWifiF: public WifiClientF{
      #endif
      if(StreamFilter("value")){
       read(); read(); read();
-      String s= readStringUntil('"');
-      stop(); ReceivedString = s; Readable=true; return;
+      /*stop();*/ ReceivedString = readStringUntil('"'); Readable=true;
+      #ifdef BasicAdafruitDebugF
+      Serial.print("value: "); Serial.print('"'); Serial.print(ReceivedString); Serial.println('"');
+      #endif
+      return;
      }
      #ifdef BasicAdafruitDebugF
       Serial.println("value not found");
@@ -71,6 +74,9 @@ class BasicAdafruitWifiF: public WifiClientF{
    void ReceiveString(){
     if(millis() - STU == Update){
         STU = millis();
+        #ifdef BasicAdafruitDebugF
+         Serial.println("Updating...");
+        #endif
         Download();
     }
    }
