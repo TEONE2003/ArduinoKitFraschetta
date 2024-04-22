@@ -6,19 +6,21 @@
 //#define BasicAdafruitDebugF
 class BasicAdafruitWifiF: public WifiClientF{
     private:
+     const char server[16] = "io.adafruit.com";
      BasicAdafruitWifiF(const BasicAdafruitWifiF&);
      BasicAdafruitWifiF& operator= (const BasicAdafruitWifiF&);
      BasicAdafruitWifiF():WifiClientF(){link = ""; ReceivedString=""; Readable=false; Update=800; STU=0;}
     protected:
-     const char server[16] = "io.adafruit.com";
-     String link,ReceivedString;
-     bool Readable;
+     
+     String link;
      unsigned long Update,STU;
     public:
-
-    static BasicAdafruitWifiF& GetInstance(){
+    String ReceivedString;
+    bool Readable;
+    
+    static BasicAdafruitWifiF* GetInstance(){
      static BasicAdafruitWifiF i;
-     return i;
+     return &i;
     }
 
     void AdafruitBegin(String Username,String APIKey,String Feed,unsigned long Update=800){
@@ -26,7 +28,7 @@ class BasicAdafruitWifiF: public WifiClientF{
      this->Update=Update;
     }
 
-    bool connect(){return connect(server,80);}
+    bool connect(){return WifiClientF::connect(server,80);}
 
     void Download(){
      BasicAdafruitWifiF::connect();
@@ -73,7 +75,7 @@ class BasicAdafruitWifiF: public WifiClientF{
     }
    }
 
-    void Send(String s){Upload();}
+    void Send(String s){Upload(s);}
 };
 
 #endif
