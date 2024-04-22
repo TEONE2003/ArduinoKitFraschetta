@@ -31,6 +31,9 @@ class BasicAdafruitWifiF: public WifiClientF{
     bool connect(){return WifiClientF::connect(server,80);}
 
     void Download(){
+     #ifdef BasicAdafruitDebugF
+      Serial.println("download value...");
+     #endif
      BasicAdafruitWifiF::connect();
      printMethod("GET",link);
      printHost(server);
@@ -57,6 +60,9 @@ class BasicAdafruitWifiF: public WifiClientF{
     }
 
     bool Upload(String Value){
+    #ifdef BasicAdafruitDebugF
+    Serial.print("upload: "); Serial.print('"'); Serial.print(Value); Serial.println('"');
+    #endif
      String Json = "{\"value\":\""+Value+"\"}";
      connect();
      printMethod("POST",link);
