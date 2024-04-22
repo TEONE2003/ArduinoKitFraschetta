@@ -3,33 +3,24 @@
 #ifndef WifiFraschetta_h
 #define WifiFraschetta_h
 #define TimerAvailableF 5000
-#define BeginDelay 10000
 #define TimeoutServer 10000
 //#define WifiDebugF
 #include "WiFiS3.h"
 
-void WiFiBeginF(const char* ssid, const char *pass){
- int status =0;
-      while (status != WL_CONNECTED) {
-       #ifdef WifiDebugF
-        Serial.print("Attempting to connect to SSID: ");
-        Serial.println(ssid);
-       #endif
-       status = WiFi.begin(ssid,pass);
-       delay(BeginDelay);
-      }
-}
-
-void WiFiBeginF(const char* ssid){
- int status =0;
-      while (status != WL_CONNECTED) {
-       #ifdef WifiDebugF
-        Serial.print("Attempting to connect to SSID: ");
-        Serial.println(ssid);
-       #endif
-       status = WiFi.begin(ssid);
-       delay(BeginDelay);
-      }
+void WiFiBeginF(const char* ssid, const char *pass=nullptr){
+ int status=0;
+  while (status != WL_CONNECTED) {
+   #ifdef WifiDebugF
+    Serial.print("Attempting to connect to SSID: ");
+    Serial.println(ssid);
+   #endif
+   if(pass==nullptr){status = WiFi.begin(ssid);}
+   else{status = WiFi.begin(ssid,pass);}
+  }
+  #ifdef WifiDebugF
+   Serial.print("Connected to: ");
+   Serial.println(ssid);
+  #endif
 }
 
 class WifiClientF: public WiFiClient{
