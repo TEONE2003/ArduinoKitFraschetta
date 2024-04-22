@@ -8,13 +8,15 @@
 
 class AdafruitTerminalRelayF: public BasicTerminalRelayF{
 private:
- BasicAdafruitWifiF& A;
+ BasicAdafruitWifiF *A; void Send(String S){A->Send(S);}
 public:
  AdafruitTerminalRelayF(String Tag,uint8_t Pin,DigitalType Type=NormalLogic,MemorizeStatus Save=DoNotSaveStatus):BasicTerminalRelayF(nullptr,nullptr,Tag,Pin,Type,Save){
   A = BasicAdafruitWifiF::GetInstance();
-  ReceivedString = &A.ReceivedString;
-  Readable = &A.Readable;
+  ReceivedString = &A->ReceivedString;
+  Readable = &A->Readable;
 }
+void AdafruitBegin(String Username,String APIKey,String Feed,unsigned long Update=800){A->AdafruitBegin(Username,APIKey,Feed,Update);}
+void ReceiveString(){A->ReceiveString();}
 };
 
 
