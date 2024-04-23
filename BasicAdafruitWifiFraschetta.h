@@ -37,6 +37,7 @@ class BasicAdafruitWifiF: public WifiClientF{
      BasicAdafruitWifiF::connect();
      printMethod("GET",link);
      printHost(server);
+     printAccept("application/json");
      printConnection("Keep-Alive");
      printClose();
       #ifdef BasicAdafruitDebugF
