@@ -113,6 +113,7 @@ bool OK(){
 void printMethod(String Method,String &Link){println(Method + char(32)+ Link + " HTTP/1.1");}
 void printHost(const char *server){print("Host: "); println(server);}
 void printConnection(const char *Connection){print("Connection: "); println(Connection);}
+void printAccept(const char *Accept){print("Accept: "); print(Accept);}
 void printClose(){println();}
 void printJson(const char *Json){
  print("content-length: ");
