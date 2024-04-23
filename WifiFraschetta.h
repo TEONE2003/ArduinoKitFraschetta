@@ -42,7 +42,7 @@ class WifiClientF: public WiFiClient{
    return WiFiClient::available();
   }
 
- bool StreamFilter(const char *StringArray){
+ bool StreamFilter(const char *StringArray,String *S=nullptr){
   #ifdef WifiDebugF
     if(WifiClientF::available()){
       Serial.print("looking for ");
@@ -52,17 +52,21 @@ class WifiClientF: public WiFiClient{
       Serial.println(" ...");
     }
   #endif
-  unsigned int size = sizeof(StringArray);
+  unsigned int length = strlen(StringArray)-1;
+  #ifdef StreamFilterDebug
+    Serial.println("length: "+ String(length+1));
+  #endif
   unsigned int i=0;
   bool next=0;
+  char c = 0;
     while(WifiClientF::available()){
-      char c = read();
+      c = read();
       #ifdef StreamFilterDebug
       Serial.print(c);
       #endif
       if(c==StringArray[i]){
        i++;
-       if(i==size){
+       if(i==length){
         #ifdef StreamFilterDebug
          Serial.println();
          Serial.print('"');
@@ -74,6 +78,7 @@ class WifiClientF: public WiFiClient{
         }
       }
       else if (i!=0){i=0;}
+      if(S!=nullptr){*S+=c;}
     }
    #ifdef WifiDebugF
     Serial.println("string not found");
@@ -99,7 +104,7 @@ int connect(const char *host,uint16_t port){
 
 bool OK(){
 #ifdef WifiDebugF
-  if(StreamFilter("200 OK")){return 1;}
+  if(StreamFilter("200 OK")){Serial.println("request successful"); return 1;}
   else{Serial.println("request unsuccessful"); return 0;}
   #endif
   return StreamFilter("200 OK");
@@ -111,7 +116,7 @@ void printConnection(const char *Connection){print("Connection: "); println(Conn
 void printClose(){println();}
 void printJson(const char *Json){
  print("content-length: ");
- println(String(sizeof(Json)));
+ println(String(strlen(Json)));
  println();
  println(Json);
 }
