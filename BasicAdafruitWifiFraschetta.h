@@ -9,7 +9,7 @@ class BasicAdafruitWifiF: public WifiClientF{
      const char server[16] = "io.adafruit.com";
      BasicAdafruitWifiF(const BasicAdafruitWifiF&);
      BasicAdafruitWifiF& operator= (const BasicAdafruitWifiF&);
-     BasicAdafruitWifiF():WifiClientF(){link = ""; ReceivedString=""; Readable=false; Update=800; STU=0;}
+     BasicAdafruitWifiF():WifiClientF(){link = ""; ReceivedString=""; Readable=false; Update=2000; STU=0;}
     protected:
      
      String link;
@@ -47,8 +47,10 @@ class BasicAdafruitWifiF: public WifiClientF{
       if(!OK()){stop(); return;}
      #endif
      if(StreamFilter("value")){
-      read(); read(); read();
-      /*stop();*/ ReceivedString = readStringUntil('"'); Readable=true;
+      read(); read(); read(); read();
+      char f ='"';
+      ReceivedString="";
+      Readable=StreamFilter(&f,&ReceivedString);
       #ifdef BasicAdafruitDebugF
       Serial.print("value: "); Serial.print('"'); Serial.print(ReceivedString); Serial.println('"');
       #endif
